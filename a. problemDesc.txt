@@ -1,0 +1,18 @@
+
+A typical Restaurant Management System has to support a complete restaurant setting, from the owner's endpoint of managing a business to the customer's endpoint of having a good dining experience. It should be neat, fast, easy-to-use, resilient to heavy loads. Analyzing the myriad of data captured and providing insights into them is also a possibility.
+
+
+
+YARA a.k.a. Yet-Another-Restaurant-App, is a one-stop solution for managing your restaurant business. It provides an interface to both the managers and customers. Owners and personnel at various levels - waiters, chef, inventory managers, billing managers, delivery managers can easily monitor their responsibilities such as customer orders, inventory levels, revenue for the day, online deliveries among others. Customers can login into the website and place online orders on the website after going through the menu of the restaurant.
+
+
+
+The application is supposed to capture and deliver large amounts of data of various types, in a quick and organized fashion. As such, databases are the ideal choice over file systems. Databases provide many advantages over file system storage such as accessibility, maintaining data integrity, concurrent access to the data, data security, data resilience.
+
+
+
+Relational databases serve our purpose.  In a restaurant setting, we typically have a lot of abstraction as entities and relationships between these entities. And as such, relational databases are a good choice modelling this abstraction. GraphDBs don't serve much purpose here since we donot have a network of relationships among entities and rather have mostly single level relationships. Timeseries DBs also don't fit with our problem statemet since we don't have extensive usage of time attributes.
+
+
+
+For developing the frontend, we are using ReactJS and for the backend, NodeJS. To implement and manage databases, we are using PostgreSQL API from NodeJS.

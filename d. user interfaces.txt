@@ -1,0 +1,157 @@
+Usecase : Login
+    form:
+        Username <text>
+        passowrd <password>
+        New User?
+        Forgot Password?
+        Login with google
+
+    Input:
+        Login credentials
+    Output:
+        Entry into website
+
+
+For Owners :-
+------------
+
+Usecase : View Employee details
+    Input:
+        Select employee to view
+    Output:
+        Employee details visible 
+
+Usecase : Delete Employee details
+    Input:
+        Select employee to Delete
+    Output:
+        Employee record deleted 
+
+Usecase : Add Employee details
+    Form:
+        Name
+        Address
+        Ph. No.
+        Status
+        Type
+        Salary
+    Input:
+        Fill the form for adding a employee
+    Output:
+        Success/Fail
+
+Usecase : View Dish details
+    Input:
+        Select dish to view details
+    Output:
+        Dish details visible 
+
+Usecase : Delete dish 
+    Input:
+        Select dish to Delete
+    Output:
+        dish record deleted 
+
+Usecase : Add Dish details
+    Form:
+        Name
+        Reciepe
+        Time taken
+        Cost
+        Type
+        Photo
+    Input:
+        Fill the form for adding a dish
+    Output:
+        Success/Fail
+
+Usecase : View and edit Restaurant details
+    Form:
+        Name
+        Address
+        Ph.No.
+        Description
+        Photo
+    Input:
+        Various details of our Restaurant
+    Output:
+        Success/Fail
+        
+Usecase : View Item details
+    Input:
+        Select Item to view details
+    Output:
+        Item details visible 
+
+Usecase : View Items purchased and used up on that day
+    Input:
+        None
+    Output:
+        Per day information on items consumed and bought
+
+Usecase : View Table Status
+    Input:
+        Select table to view Status
+    Output:
+        Status of table  - location, status are displayed
+
+Usecase : View order history details
+    Input:
+        Select order for details
+    Output:
+        Order details - cost, customer, Items, Mode - are displayed
+
+Usecase : View customer details 
+    Input:
+        Select Customer to view
+    Output:
+        Customer details - name, ph.no, address, no. of orders, no. of dishes ordered  -are displayed
+    
+Usecase : View offer details
+    Input: 
+        Select offer to display
+    Output:
+        Offer details - offerID, discount given - displayed
+
+Usercase : View delivery person details
+    Input:
+        Select delivery person to display
+    Output:
+        Display delivery person details - Primary area, Secondary area, EmployeeID
+
+
+
+For Customers :-
+---------------
+
+Usecase : View menu and select items
+    Form:
+        Various items are selected
+    Input:
+        User selects needed items and clicks "Next"
+    Output:
+        If success, user is shown CART page
+
+Usecase : View cart and confirm order   
+    Input:
+        Just confirms the order
+    Output:
+        Success/Failure
+
+Usecase: View previous orders
+    Input: 
+        Select order to view
+    Output:
+        Previous order details shown
+    
+Usecase: Change account details
+    Form:
+        Name
+        Address
+        Ph. No.
+    Input:
+        Input required details
+    Output:
+        Success/Failure
+       
+

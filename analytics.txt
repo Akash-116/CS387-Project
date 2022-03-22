@@ -1,0 +1,11 @@
+best waiters
+best dishes according to ratings
+best dishes with the particular ingredient
+worst waiters
+most used ingredients
+most often visting customers
+most ordered dishes
+most used offer
+day of the week with the most customers
+most used type of order
+best delivery person

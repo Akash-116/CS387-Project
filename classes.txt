@@ -1,0 +1,140 @@
+#1
+Title: Logging on to the system
+Description:
+	It will allow the user to log onto the website to access it.
+Trigger event:
+	It will be both automatically Triggered.
+Primary actor:
+	Everyone.
+Inputs:
+	Login details such as email/username and password.
+Preconditions:
+	No user is logged in or the previous user logged out from this computer.
+Main Success Path:
+	The correct email and password are entered and the login is successful.
+Exceptions:
+	Wrong password:
+		We will redirect to the login page and notify the user that their password is Wrong.
+Postconditions:
+	The system will take the user to the home page.
+
+#2
+Title: Changing/Adding Dishes and Menu
+Description:
+	It allows the user to change the available dishes and change the menu accordingly.
+Trigger event:
+	It is Human Triggered.
+Primary Actor:
+	Restaraunt Manager, Chef
+Inputs:
+	Dish name, new ingredients, new menu
+Preconditions:
+	The user is logged in and has appropriate privileges.
+Main Success Path:
+	If a new dish is to be added, then we add a new row to the dishes table and add appropriate rows to the dishes_items table
+	If a dish is being updated then the corresponding row is updated in the dishes table and correspondingly rows are added or deleted in the dishes_items table
+Exceptions:
+	If some constraint fails:
+		Update or Adding is unsuccessful
+Postconditions:
+	The menu will be updated and the dish added/updated.
+
+#3
+Title: Manage Table Status
+Description:
+	Allows the user to manage the status of tables (Occupied/Empty)
+Trigger event:
+	Human Triggered
+Primary Actor:
+	Headwaiter, Restaraunt Manager
+Inputs:
+	The new status of the table
+Preconditions:
+	The user is logged in and has appropriate privileges.
+Main Success Path:
+	The status column in the row corresponding to the table gets updated
+Exceptions:
+	The Table in the question may not be present, So we will give out an error message.
+Postconditions:
+	Table status gets changed.
+
+#4
+Title: Manage Orders and Customers
+Description:
+	It allows to add/remove/edit orders by customers and manage customer details.
+Trigger event:
+	It is Human Triggered.
+Primary Actor:
+	Restaraunt Manager, Billing Manager
+Inputs:
+	Order by customers, Details of customers.
+Preconditions:
+	The user should have the necessary privileges and the input data should be of appropriate types.
+Main Success Path:
+	If a new order is to be added, then we add a new row to the Orders table and add appropriate rows to the orders_dishes table
+	If a new customer is to be added, then we add a new row to the Customers table.
+Exceptions:
+	If the input data types are not proper or the user does not have the required permissions we will give an error message.
+Postconditions:
+	Order is added/updated to Orders Table or customer is added/updated to Customers Table.
+
+#5
+Title: Manage delivery People
+Description:
+	Helps manage the delivery personnel
+Trigger event:
+	Human Triggered
+Primary Actor:
+	Delivery Manager, Restaraunt Manager
+Inputs:
+	Name of the person, their details to be updated
+Preconditions:
+	The user should have the necessary privileges and the input data should be of appropriate types.
+Main Success Path:
+	If a new person is to be added, we check if the person already exists.
+	If a person's details are being changed, we check that the details are valid
+Exceptions:
+	If wrong/invalid data is input we notify the user through an error message.
+	If the user doesn't have the necessary permissions we redirect them back to the home page.
+Postconditions:
+	A new delivery person is added/ the details of that person are updated
+
+#6
+Title: Manage Items
+Description:
+	It allows user to add/remove/edit items.
+Trigger event:
+	It is Human Triggered.
+Primary Actor:
+	Restaraunt Manager, Head Waiter
+Inputs:
+	Details of items to modify/add.
+Preconditions:
+	The user should have the necessary privileges and the input data should be of appropriate types.
+Main Success Path:
+	If a new item is to be added, then we add a new row to the Items table
+	If an item is being updated then the corresponding row is updated in the Items table.
+Exceptions:
+	If the input data types are not proper or the user does not have the required permissions we will give an error message.
+Postconditions:
+	Item is added/updated to Items Table
+
+#7
+Title: Manage dishes in Cart
+Description:
+	It allows a customer to remove/add dishes to the cart.
+Trigger event:
+	It is Human Triggered.
+Primary Actor:
+	Customer
+Inputs:
+	Dish to be added/removed in cart.
+Preconditions:
+	The customer has to be logged in.
+Main Success Path:
+	If a new dish is to be added to the cart, then we add a new row to the Cart table
+	If a dish is being updated/removed then the corresponding row is updated/deleted in the Cart table.
+Exceptions:
+	If the customer is not logged in we will redirect him/her to the login page.
+Postconditions:
+	Dish is added/updated to Cart Table
