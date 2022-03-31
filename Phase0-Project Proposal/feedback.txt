@@ -1,0 +1,22 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+Need to incorporate some analytics into this primarily transactional description. Use an engine such as Spark for analytics. Top K dishes ordered, Top K dishes by the amount of a certain ingredient used etc.  This description is a good front end description.  However you must incorporate some load testing with an increasing size of the DB and do some performance benchmarking as well.
+
+
+
+
+
+
+
+
