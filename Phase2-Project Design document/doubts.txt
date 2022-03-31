@@ -1,0 +1,3 @@
+1.City in Area table
+2.B,O,E in table status
+3.What to do entry in dish_item if item is deleted from items table.
