@@ -27,7 +27,7 @@ drop function if exists insert_date_on_order;
 
 
 create table item(
-    item_id int,
+    item_id serial,
     item_name text,
     cost int,
     quan_inv int,
@@ -36,7 +36,7 @@ create table item(
 );
 
 create table dish(
-    dish_id int,
+    dish_id serial,
     dish_name text,
     recipe text,
     time_taken int,
@@ -58,21 +58,21 @@ create table dish_items(
 );
 
 create table table_status(
-    table_id int,
+    table_id serial,
     loc text,
     status text check (status in ('B','O','E')),
     primary key(table_id)
 );
 
 create table area(
-    area_id int,
+    area_id serial,
     loc text,
     city text,
     primary key(area_id)
 );
 
 create table customer_type(
-    c_type_id int,
+    c_type_id serial,
     c_type text check (c_type in ('P','VIP','N')),
     min_num_dishes int,
     max_num_dishes int,
@@ -80,7 +80,7 @@ create table customer_type(
 );
 
 create table customer(
-    c_id int,
+    c_id serial,
     name text,
     ph_no int,
     addr text,
@@ -102,7 +102,7 @@ create table cart(
 );
 
 create table employee(
-    e_id int,
+    e_id serial,
     name int,
     salary int,
     ph_no int,
@@ -120,7 +120,7 @@ create table employee(
 
 
 create table offer(
-    offer_id int,
+    offer_id serial,
     name text,
     discount int,
     primary key(offer_id)
@@ -165,7 +165,7 @@ create table day_to_day_items(
 );
 
 create table orders(
-    order_id int,
+    order_id serial,
     c_id int,
     received_time time,
     finished_time time,
