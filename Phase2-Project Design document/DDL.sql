@@ -171,11 +171,13 @@ create table orders(
     finished_time time,
     delivered_time time,
     offer_id int,
+    delivery_person int,
     status text check (status in ('Preparing','Out for delivery','Delivered','Served')),
     order_type text check (order_type in ('Online/Dine')),
     primary key(order_id),
     foreign key(c_id) references customer,
-    foreign key(offer_id) references offer
+    foreign key(offer_id) references offer,
+    foreign key(delivery_person) references employee
 );
 
 create table order_dishes(
