@@ -23,6 +23,8 @@ drop trigger if exists customer_update_on_order on orders cascade;
 drop function if exists update_customer_on_order;
 drop trigger if exists date_insert_on_order on orders cascade;
 drop function if exists insert_date_on_order;
+drop trigger if exists date_insert_on_offer on orders cascade;
+drop function if exists insert_date_on_offer;
 
 
 
@@ -237,3 +239,15 @@ create function insert_date_on_order()
     end
     $$;
 create trigger date_insert_on_order before insert on orders for each row execute procedure insert_date_on_order();
+
+create function insert_date_on_offer()
+    returns trigger
+    language plpgsql
+    as $$
+    begin
+        insert into day(dat) values(NEW.dat) on conflict on constraint day_prim do nothing;
+
+        return NEW;
+    end
+    $$;
+create trigger date_insert_on_offer before insert on offer_valid for each row execute procedure insert_date_on_offer();
