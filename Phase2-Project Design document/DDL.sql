@@ -32,7 +32,7 @@ create table item(
     item_id serial,
     item_name text,
     cost int,
-    quan_inv int,
+    quan_inv int default 0,
     unit text,
     primary key(item_id)
 );
@@ -214,7 +214,7 @@ create function update_items()
     as $$
     begin
         insert into day_to_day_items(dat,item_id,used) select CURRENT_DATE,item_id,NEW.quantity*quantity from dish_items where dish_id=NEW.dish_id on conflict on constraint day_item_prim do update set used=day_to_day_items.used+NEW.quantity*(select quantity from dish_items where dish_id=NEW.dish_id and item_id=day_to_day_items.item_id);
-
+        update item set quan_inv=item.quan_inv-(select NEW.quantity*quantity from dish_items where dish_id=NEW.dish_id and item_id=item.item_id) where item_id in (select item_id from dish_items where dish_id=NEW.dish_id);
         return NEW;
     end
     $$;
@@ -237,7 +237,7 @@ create function insert_date_on_order()
     language plpgsql
     as $$
     begin
-        insert into day(dat) values(CURRENT_DATE) on conflict on constraint day_prim do nothing;
+        insert into day(dat) values(NEW.dat) on conflict on constraint day_prim do nothing;
 
         return NEW;
     end
