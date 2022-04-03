@@ -1,0 +1,5 @@
+c_type,min_num_dishes,max_num_dishes
+Platinum,500,NULL
+Gold,100,500
+Silver,50,100
+Normal,NULL,50

@@ -63,7 +63,7 @@ for row in dish:
     dish_rows.append(new_row)
 dish_file.close()
 
-dish_items_file=open(data_path+'/dishe_items.csv')
+dish_items_file=open(data_path+'/dish_items.csv')
 dish_items=csv.reader(dish_items_file)
 dish_items_header=next(dish_items)
 dish_items_rows=[]

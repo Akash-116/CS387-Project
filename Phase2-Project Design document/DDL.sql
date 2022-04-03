@@ -75,7 +75,7 @@ create table area(
 
 create table customer_type(
     c_type_id serial,
-    c_type text check (c_type in ('P','VIP','N')),
+    c_type text check (c_type in ('Platinum','Gold','Silver','Normal')),
     min_num_dishes int,
     max_num_dishes int,
     primary key(c_type_id)
@@ -109,7 +109,7 @@ create table employee(
     salary int,
     ph_no int,
     addr text,
-    e_type text check (e_type in ('Chef','Waiter','Delivery','Manager')),
+    e_type text check (e_type in ('Chef','Waiter','Head Waiter','Delivery','Manager')),
     join_date date,
     status text check (status in ('Working','Leave','Left')),
     left_date date,
@@ -135,11 +135,11 @@ create table day(
 );
 
 create table offer_valid(
-    offer_id int,
+    offer_id int not null,
     dat date,
     dish_id int,
     c_type_id int,
-    primary key(offer_id,dat,dish_id,c_type_id),
+    unique(offer_id,dat,dish_id,c_type_id),
     foreign key(offer_id) references offer on delete cascade,
     foreign key(dat) references day on delete cascade,
     foreign key(dish_id) references dish on delete cascade,
