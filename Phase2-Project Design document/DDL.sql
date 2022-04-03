@@ -169,6 +169,8 @@ create table day_to_day_items(
 create table orders(
     order_id serial,
     c_id int,
+    table_id int,
+    dat date not null,
     received_time time,
     finished_time time,
     delivered_time time,
@@ -177,9 +179,11 @@ create table orders(
     status text check (status in ('Preparing','Out for delivery','Delivered','Served')),
     order_type text check (order_type in ('Online/Dine')),
     primary key(order_id),
-    foreign key(c_id) references customer,
-    foreign key(offer_id) references offer,
-    foreign key(delivery_person) references employee
+    foreign key(c_id) references customer on delete set null,
+    foreign key(offer_id) references offer on delete set null,
+    foreign key(delivery_person) references employee on delete set null,
+    foreign key(table_id) references table_status on delete set null,
+    foreign key(dat) references day on delete cascade
 );
 
 create table order_dishes(
