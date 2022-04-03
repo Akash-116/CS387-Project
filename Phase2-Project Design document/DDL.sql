@@ -177,7 +177,7 @@ create table orders(
     offer_id int,
     delivery_person int,
     status text check (status in ('Preparing','Out for delivery','Delivered','Served')),
-    order_type text check (order_type in ('Online/Dine')),
+    order_type text check (order_type in ('Online','Dine')),
     primary key(order_id),
     foreign key(c_id) references customer on delete set null,
     foreign key(offer_id) references offer on delete set null,
