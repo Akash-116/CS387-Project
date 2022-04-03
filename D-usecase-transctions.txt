@@ -1,0 +1,149 @@
+Transations in DB for each usecase
+
+For Everyone:-
+---------------
+
+Use Case : Login
+	
+	1. Search in DB for specific credentials
+	2. Insert new credentials into login table 
+
+	
+
+For Owners:-
+------------
+
+Use Case: View Employee details
+
+	1. Query all existing employee records's name
+	2. Return details of a single selected employee
+
+
+Use Case: Delete Employee details
+	
+	1. Delete employee record details from the table
+
+Use Case: Add Employee details
+	
+	1. Add a new entry into the employee table
+
+
+Use Case: View Dish details
+	
+	1. Query all records' names from the dish table
+	2. Return details of a selected dish
+
+Use Case: Delete dish 
+
+	1. Remove the particular dish record from database
+
+Use Case: Add Dish details
+	1. Insert a new entry to the dishes table
+
+Use Case: View and edit Restaurant details
+	1. These details will be stored as a JSON file.
+
+
+Use Case: View Item details
+	
+	1. Query all items name from the item table.
+	2. Query particular item record from the item table.
+
+
+Use Case: View Items purchased and used up on that day
+	
+	1. Fetch all items from day-to-day-items relation. 
+
+
+Use Case: View Table Status
+		
+	1. Fetch all tables from the table relation
+	2. Fetch further details about a table from the table relation
+
+Use Case: View order history details
+	
+	1. Fetch all order's few details from the orders relation
+	2. Fetch complete details of a particular order from the orders relation
+
+Use Case: View customer details 
+	1. Fetch few details of all customers from the customers relation
+	2. Fetch complete details of a particular customer.
+
+    
+Use Case: View offer details
+	1. Fetch  all offers from the offers relation
+
+Use Case: View delivery person details
+    1. Fetch all delivery person from the employees table / delivery person table
+    2. Fetch the details of a specific delivery person.
+
+
+
+For Customers:-
+---------------
+
+Use Case: View menu and select items
+    1. Fetch all items from the ITEM relation
+
+Use Case: View cart and confirm the order   
+    1. This will be stored in the frontend itself - design choice
+    2. On confirmation, insert a new order into the orders relation.
+
+Use Case: View previous orders
+    1. Fetch orders from orders table, filter on a particular customer.
+    2. Fetch a particular order detail, on selection.
+    
+Use Case: Change account details
+    1. Fetch existing account details from Customers table and login table.
+    2. Modify customer details record in the customers table.
+       
+
+
+For Chef:-
+-----------
+The relevant subset of Owner use cases - (Manage Dishes,Menu,Recipe of dishes)
+
+
+For Head Waiter:-
+------------------
+The relevant subset of Owner use cases - (Manage Table Status, Manage Waiters)
+
+Use Case: Change table status
+    1. Fetch the existing table status from the tables relation
+    2. Modify the record in the tables relation.
+
+For Inventory Manager :-
+--------------------
+The relevant subset of Owner use cases - (Manages inventory of items)
+
+Use case : Update about items
+    1. Fetch existing details about the item from the ITEMS relation.
+    2. modify the item record in the item relation
+
+
+For Billing Manager:-
+-------------------
+The relevant subset of Owner use cases - (Managers Orders and Customers)
+
+Use Case: Create an order
+    1. Add a new entry in the orders relation
+
+For Delivery Manager:-
+-------------------
+The relevant subset of Owner use cases - (Manages Delivery Persons and Area Codes)
+
+Use Case: Assign a delivery person
+    1. Fetch all delivery persons and their details.
+    1. Modify the record of a particular person.
+
+
+
+
+
+
+
+
+
+
+
+

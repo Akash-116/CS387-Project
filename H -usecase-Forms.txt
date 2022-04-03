@@ -1,0 +1,238 @@
+For Everyone:-
+---------------
+
+Use Case : Login
+    form:
+        Username <text>
+        password <password>
+        New User?
+        Forgot Password?
+        Login with google
+
+    Input:
+        Login credentials
+    Output:
+        Entry into website
+
+For Owners:-
+------------
+
+Use Case: View Employee details
+    Input:
+        Select an employee to view
+    Output:
+        Employee details visible 
+
+Use Case: Delete Employee details
+    Input:
+        Select the employee to Delete
+    Output:
+        Employee record deleted 
+
+Use Case: Add Employee details
+    Form:
+        Name
+        Address
+        Ph. No.
+        Status
+        Type
+        Salary
+    Input:
+        Fill the form for adding an employee
+    Output:
+        Success/Fail
+
+Use Case: View Dish details
+    Input:
+        Select dish to view details
+    Output:
+        Dish details visible 
+
+Use Case: Delete dish 
+    Input:
+        Select dish to Delete
+    Output:
+        dish record deleted 
+
+Use Case: Add Dish details
+    Form:
+        Name
+        Recipe
+        Time taken
+        Cost
+        Type
+        Photo
+    Input:
+        Fill the form for adding a dish
+    Output:
+        Success/Fail
+
+Use Case: View and edit Restaurant details
+    Form:
+        Name
+        Address
+        Ph.No.
+        Description
+        Photo
+    Input:
+        Various details of our Restaurant
+    Output:
+        Success/Fail
+        
+Use Case: View Item details
+    Input:
+        Select Item to view details
+    Output:
+        Item details visible 
+
+
+
+
+
+Use Case: View Items purchased and used up on that day
+    Input:
+        None
+    Output:
+        Per day information on items consumed and bought
+
+Use Case: View Table Status
+    Input:
+        Select table to view Status
+    Output:
+        Status of the table  - location, status are displayed
+
+Use Case: View order history details
+    Input:
+        Select order for details
+    Output:
+        Order details - cost, customer, Items, Mode - are displayed
+
+Use Case: View customer details 
+    Input:
+        Select Customer to view
+    Output:
+        Customer details - name, ph.no, address, no. of orders, no. of dishes ordered  -are displayed
+    
+Use Case: View offer details
+    Input: 
+        Select offer to display
+    Output:
+        Offer details - offerID, discount given - displayed
+
+Use Case: View delivery person details
+    Input:
+        Select delivery person to display
+    Output:
+        Display delivery person details - Primary area, Secondary area, EmployeeID
+
+
+For Customers:-
+---------------
+
+Use Case: View menu and select items
+    Form:
+        Various items are selected
+    Input:
+        User selects needed items and clicks "Next"
+    Output:
+        If successful, the user is shown the CART page
+
+Use Case: View cart and confirm the order   
+    Input:
+        Just confirms the order
+    Output:
+        Success/Failure
+
+Use Case: View previous orders
+    Input: 
+        Select order to view
+    Output:
+        Previous order details shown
+    
+Use Case: Change account details
+    Form:
+        Name
+        Address
+        Ph. No.
+    Input:
+        Input required details
+    Output:
+        Success/Failure
+       
+
+
+
+For Chef:-
+-----------
+The relevant subset of Owner use cases - (Manage Dishes,Menu,Recipe of dishes)
+
+
+
+For Head Waiter:-
+------------------
+The relevant subset of Owner use cases - (Manage Table Status, Manage Waiters)
+
+Use Case: Change table status
+    Form:
+        tableID
+        location
+        Status
+    Input:
+        Fill the form
+    Output:
+        success/failure
+
+
+For Inventory Manager :-
+--------------------
+The relevant subset of Owner use cases - (Manages inventory of items)
+
+Use case : Update about items
+    form:
+        itemID
+        Name
+        Market Cost
+        Quantity of inventory
+    Input :
+        fill form
+    Output:
+        Success/failure
+
+
+
+
+
+
+
+
+
+For Billing Manager:-
+-------------------
+The relevant subset of Owner use cases - (Managers Orders and Customers)
+
+Use Case: Create an order
+    form:
+        customer
+        dishes
+        Type
+        Offer
+    Input:
+        fill the  form
+    Output:
+        Success/Failure
+
+
+For Delivery Manager:-
+-------------------
+The relevant subset of Owner use cases - (Manages Delivery Persons and Area Codes)
+
+Use Case: Assign a delivery person
+    form:
+        Order
+        Customer
+        Delivery Person
+        Address
+    Input:
+        Fill the form
+    Output:
+        Success/Failure
