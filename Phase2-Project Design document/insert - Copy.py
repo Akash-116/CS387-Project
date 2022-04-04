@@ -272,9 +272,9 @@ for row in order_dishes:
     order_dishes_rows.append(new_row)
 order_dishes_file.close()
 
-relations=['item','dish','dish_items','table_status','area','customer_type','customer','employee','offer','offer_valid','orders','order_dishes']
-data=[item_rows,dish_rows,dish_items_rows,table_rows,area_rows,customer_type_rows,customer_rows,employee_rows,offer_rows,offer_valid_rows,orders_rows,order_dishes_rows]
-headers=[item_header,dish_header,dish_items_header,table_header,area_header,customer_type_header,customer_header,employee_header,offer_header,offer_valid_header,orders_header,order_dishes_header]
+relations=['item','dish','dish_items','table_status','area','day','customer_type','customer','employee','offer','offer_valid','orders','order_dishes']
+data=[item_rows,dish_rows,dish_items_rows,table_rows,area_rows,day_rows,customer_type_rows,customer_rows,employee_rows,offer_rows,offer_valid_rows,orders_rows,order_dishes_rows]
+headers=[item_header,dish_header,dish_items_header,table_header,area_header,day_header,customer_type_header,customer_header,employee_header,offer_header,offer_valid_header,orders_header,order_dishes_header]
 
 dsn="dbname="+db+" user="+user +" host="+host+" password="+pswd
 

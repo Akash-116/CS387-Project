@@ -12,11 +12,6 @@ tables=table_file.readlines()
 num_tables=len(tables)-1
 table_file.close()
 
-offer_file=open('offer.csv')
-offers=offer_file.readlines()
-num_offers=len(offers)-1
-offer_file.close()
-
 area_file=open('area.csv')
 areas=area_file.readlines()
 num_areas=len(areas)-1
@@ -37,7 +32,7 @@ num_delivers=len(delivery_persons)
 
 
 orders_file=open('orders.csv','w')
-orders_file.write('c_id,area_id,table_id,dat,received_time,finished_time,delivered_time,offer_id,delivery_person,status,order_type\n')
+orders_file.write('c_id,area_id,table_id,dat,received_time,finished_time,delivered_time,delivery_person,status,order_type\n')
 
 max_orders_per_customer=10
 C=range(1,num_customers+1)
@@ -70,7 +65,6 @@ for i in C:
         else:
             dt_m=random.randint(0,59)
         dt=str(dt_h).zfill(2)+':'+str(dt_m).zfill(2)+':00'
-        offer_id = random.randint(1,num_offers)
         order_type=random.choice(["Online","Dine"])
         if order_type=="Online":
             deliver_p=random.randint(1,num_delivers)
@@ -83,7 +77,7 @@ for i in C:
             table_id = random.randint(1,num_tables+1)
             area_id=random.randint(1,num_areas+1)
 
-        orders_file.write(str(c_id)+','+str(area_id)+','+str(table_id)+','+dat+','+rt+','+ft+','+dt+','+str(offer_id)+','+str(deliver_p)+','+str(status)+','+str(order_type)+'\n')
+        orders_file.write(str(c_id)+','+str(area_id)+','+str(table_id)+','+dat+','+rt+','+ft+','+dt+','+str(deliver_p)+','+str(status)+','+str(order_type)+'\n')
 
         
 orders_file.close()

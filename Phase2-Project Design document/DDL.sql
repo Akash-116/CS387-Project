@@ -175,14 +175,12 @@ create table orders(
     received_time time,
     finished_time time,
     delivered_time time,
-    offer_id int,
     delivery_person int,
     status text check (status in ('Preparing','Out for delivery','Delivered','Served')),
     order_type text check (order_type in ('Online','Dine')),
     primary key(order_id),
     foreign key(c_id) references customer on delete set null,
-    foreign key(area_id) references area on delete set null
-    foreign key(offer_id) references offer on delete set null,
+    foreign key(area_id) references area on delete set null,
     foreign key(delivery_person) references employee on delete set null,
     foreign key(table_id) references table_status on delete set null,
     foreign key(dat) references day on delete cascade
@@ -192,9 +190,11 @@ create table order_dishes(
     order_id int,
     dish_id int,
     quantity int,
+    offer_id int,
     primary key(order_id,dish_id),
     foreign key(order_id) references orders,
-    foreign key(dish_id) references dish
+    foreign key(dish_id) references dish,
+    foreign key(offer_id) references offer on delete set null
 );
 
 create function update_dishes()
