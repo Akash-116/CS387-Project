@@ -3,7 +3,7 @@ Bussiness Logic Controller
 For Everyone:-
 ---------------
 
-Use Case : Login
+1.Use Case : Login
 
 	1. User credentials should exist in database for them to login.
 	2. Username should be unqiue for each user.
@@ -12,76 +12,76 @@ Use Case : Login
 For Owners:-
 ------------
 
-Use Case: View Employee details
+2.Use Case: View Employee details
 
 	1. All employees from employee table are displayed
 	2. Selected employee will have a database entry
 
 
-Use Case: Delete Employee details
+3.Use Case: Delete Employee details
 
 	1. Employee details will be removed from the employee table.
 	
-Use Case: Add Employee details
+4.Use Case: Add Employee details
 
 	1. The new employee will have a unique employeeID
 	2. Name of the new employee can be same as that of an existing employee
 
-Use Case: View Dish details
+5.Use Case: View Dish details
 
 	1. All dishes in the dishes table are displayed
 	2. Selected dish must have a database entry
 
 
-Use Case: Delete dish 
+6.Use Case: Delete dish 
 
 	1. The deleted dish will be removed from the menu
 
-Use Case: Add Dish details
+7.Use Case: Add Dish details
 	1. The new dish will have a unique dishID
 	2. Name of the dish can be similar to existing dish, but not exactly the same.
 
-Use Case: View and edit Restaurant details
+8.Use Case: View and edit Restaurant details
 	1. Details and photo will be uploaded to the web.
 
         
-Use Case: View Item details
+9.Use Case: View Item details
 	1. The item details will be visible.
 
 
-Use Case: View Items purchased and used up on that day
+10.Use Case: View Items purchased and used up on that day
 	1. The items purchased and used up will be finite and positive.
 
-Use Case: View Table Status
+11.Use Case: View Table Status
 	1. The status will be free/occupied/reserved.
 
-Use Case: View order history details
+12.Use Case: View order history details
 	1. A previous order's details are visible.
 
-Use Case: View customer details 
+13.Use Case: View customer details 
     1. A registered customer's details are visible. 
 
-Use Case: View offer details
+14.Use Case: View offer details
 	1. An existing offer's details are visible
 
-Use Case: View delivery person details
+15.Use Case: View delivery person details
 	1. Employees, who are delivery people, will be visible.
 
 For Customers:-
 ---------------
 
-Use Case: View menu and select items
+16.Use Case: View menu and select items
 	1. All the items in the items relation will be visible to customers.
 	2. Cost will be finite and positive.
 
-Use Case: View cart and confirm the order   
+17.Use Case: View cart and confirm the order   
 	1. Items will be present as choosen by user.
 	2. Cost and quantity will be positive and finite.
 
-Use Case: View previous orders
+18.Use Case: View previous orders
 	1. Previous orders of a customer are displayed.
     
-Use Case: Change account details
+19.Use Case: Change account details
 	1. Old details of a customer will be displayed
 	2. After a sanitary check, new details are accepted.	
 
@@ -94,7 +94,7 @@ For Head Waiter:-
 ------------------
 The relevant subset of Owner use cases - (Manage Table Status, Manage Waiters)
 
-Use Case: Change table status
+20.Use Case: Change table status
 	1. A free table can be made busy/reserved.
 	2. A busy table can be made free.
 	3. A reserved table can be made busy/free.
@@ -103,14 +103,14 @@ For Inventory Manager :-
 --------------------
 The relevant subset of Owner use cases - (Manages inventory of items)
 
-Use case : Update about items
+21.Use case : Update about items
 	1. Used, Bought quantities should be finite, non-negative quantities.
 
 For Billing Manager:-
 -------------------
 The relevant subset of Owner use cases - (Managers Orders and Customers)
 
-Use Case: Create an order
+22.Use Case: Create an order
 	1. Bill must be connected with a customer.
 	2. FInite amount of items must be ordered.
 
@@ -118,7 +118,7 @@ For Delivery Manager:-
 -------------------
 The relevant subset of Owner use cases - (Manages Delivery Persons and Area Codes)
 
-Use Case: Assign a delivery person
+23.Use Case: Assign a delivery person
 	1. A free delivery person can be assigned.
 	2. The delivery location is preferably in the assigned area of the person.
 
