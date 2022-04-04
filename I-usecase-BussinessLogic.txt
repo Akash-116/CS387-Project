@@ -76,6 +76,12 @@ Use Case: Add an order
 Use Case: View customer details 
 	All current customers are displayed. Click on a particular customer to view them in focus.
 
+Use Case: Add a new customer
+	This option is used to reggister new customers offline.
+
+Use Case: Edit customer details
+	This option is used to edit details offline.
+
 Use Case: View offer details
 	All current offers are displayed. Offers typically allot discounts on total bill.
 
