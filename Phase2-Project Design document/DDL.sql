@@ -84,12 +84,15 @@ create table customer_type(
 create table customer(
     c_id serial,
     name text,
+    username text not null,
+    pswd text not null,
     ph_no int,
     addr text,
     num_orders int default 0,
     num_dish int default 0,
     -- c_type_id int,
-    constraint customer_prim primary key(c_id)
+    constraint customer_prim primary key(c_id),
+    constraint cus_username_unique unique(username)
     -- foreign key(c_type_id) references customer_type on delete set null
 );
 
@@ -106,6 +109,8 @@ create table cart(
 create table employee(
     e_id serial,
     name int,
+    username text not null,
+    pswd text not null,
     salary int,
     ph_no int,
     addr text,
@@ -117,7 +122,8 @@ create table employee(
     sec_area_id int,
     primary key(e_id),
     foreign key(prim_area_id) references area on delete set null,
-    foreign key(sec_area_id) references area on delete set null
+    foreign key(sec_area_id) references area on delete set null,
+    constraint emp_username_unique unique(username)
 );
 
 
