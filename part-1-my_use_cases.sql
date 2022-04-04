@@ -7,26 +7,33 @@ where user_id=u_id
 				and password=password_entered;
 
 -- 2 changing /adding dishes and menu
+
 INSERT INTO dish
 VALUES (dish_id,
-	dish_name,
-	recipe,
-	time_taken,
-	dish_type,
-	cost,
-	rating,
-	photo);
+									dish_name,
+									recipe,
+									time_taken,
+									dish_type,
+									cost,
+									rating,
+									photo);
+
 
 UPDATE dish
 SET rating =rating
 where dish_id = dish_id;
 
-INSERT INTO dish_items 
+
+INSERT INTO dish_items
 VALUES (dish_id,
-	item_id,
-	quantity);
-DELETE FROM dish_items
-WHERE dish_id = dish_id and item_id =item_id;
+									item_id,
+									quantity);
+
+
+DELETE
+FROM dish_items
+WHERE dish_id = dish_id
+				and item_id =item_id;
 
 -- 3 Manae table status
 
@@ -82,74 +89,134 @@ UPDATE employee
 SET status=new_state
 where e_id = employee_id;
 
-DELETE FROM employee WHERE e_id =employee_id;
 
+DELETE
+FROM employee
+WHERE e_id =employee_id;
 
 -- 6 Manage items
+
 INSERT INTO item
 VALUES (item_name,
-	cost,
-	quan_inv,
-	unit)
-
-UPDATE item SET quan_inv=new_quantity WHERE item_name = item_name;
+									cost,
+									quan_inv,
+									unit)
+UPDATE item
+SET quan_inv=new_quantity
+WHERE item_name = item_name;
 
 -- 8 View employee details
-SELECT * from employee where e_id= employee_id;
+
+SELECT *
+from employee
+where e_id= employee_id;
 
 -- 10 view menu
-SELECT * from dish;
-SELECT * FROM dish where dish_id = dish_id;
+
+SELECT *
+from dish;
+
+
+SELECT *
+FROM dish
+where dish_id = dish_id;
 
 -- 11 view and edit restraunt details
 -- ... idk what to write here
-
--- 12 best waiter
+ -- 12 best waiter
 -- didn't add ratings to them
+ -- 13 best dishes according to user rating
 
--- 13 best dishes according to user rating
-SELECT * from dish ORDER BY rating limit 10;
+SELECT *
+from dish
+ORDER BY rating
+limit 10;
+
 -- 14 best customer
 -- no rating feild added
+ -- 15 most ordered dish
 
--- 15 most ordered dish
-SELECT dish_name FROM
-((SELECT dish_id from order_dishes) as o_ 
-UNION
-(SELECT dish_id from cart) as c_)as d_,
-dish
+SELECT dish_name
+FROM (
+										(SELECT dish_id
+											from order_dishes) as o_
+						UNION
+										(SELECT dish_id
+											from cart) as c_)as d_,
+	dish
 where dish.dish_id =d_.dish_id
 GROUP BY dish_id
 ORDER BY count(dish_id) DESC
 limit 1;
 
 -- 16 Best day of the week
-SELECT dat from day_to_day_dishes
+
+SELECT dat
+from day_to_day_dishes
 GROUP BY dat
 ORDER BY count(dat) DESC
 limit 1;
+
 -- 17 best delivery person
 -- no ratings were added to delivery personnel
+ -- 18 view item details
 
--- 18 view item details
-SELECT * FROM item;
-SELECT * FROM item WHERE item_name =item_name;
+SELECT *
+FROM item;
+
+
+SELECT *
+FROM item
+WHERE item_name =item_name;
 
 -- 19 view table satus
-SELECT * FROM table_status WHERE table_id = table_id;
+
+SELECT *
+FROM table_status
+WHERE table_id = table_id;
 
 -- 20 order details
-SELECT * FROM orders WHERE order_id = order_id;
+
+SELECT *
+FROM orders
+WHERE order_id = order_id;
 
 -- 21 offer details
-SELECT * from offer WHERE name = name;
+
+SELECT *
+from offer
+WHERE name = name;
 
 -- 22 view prev orders
-SELECT * from orders WHERE order.c_id = c_id ORDER BY order_id DESC;
+
+SELECT *
+from orders
+WHERE order.c_id = c_id
+ORDER BY order_id DESC;
 
 -- 23 change customer details
-UPDATE customer
-SET name=name AND ph_no = ph_no AND addr=addr
-WHERE c_id = customer_id
 
---
+UPDATE customer
+SET name=name
+AND ph_no = ph_no
+AND addr=addr
+WHERE c_id = customer_id;
+
+-- 24 most frequent customers
+
+SELECT *
+FROM customer,
+
+				(SELECT c_id,
+						count(*) as freq
+					from
+					order
+					group by c_id) as a1
+WHERE a1.c_id = customer.c_id
+ORDER BY freq desc
+limit 1;
+
+
+
+-- 25 best delivery person by no.of deliveries
+select delivery_person,name from (SELECT delivery_person,count(*) as num_deliveries from orders group by delivered_person order by num_deliveries desc limit 1) as A,employee where A.delivered_person=employee.e_id;
