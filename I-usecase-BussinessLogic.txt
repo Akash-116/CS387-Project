@@ -3,87 +3,84 @@ Bussiness Logic Controller
 For Everyone:-
 ---------------
 
-1.Use Case : Login
+Use Case : Login
 
-	1. User credentials should exist in database for them to login.
-	2. Username should be unqiue for each user.
-
+	User needs to sign up at first, before logging into the web app. From next time onwards, they can directly sign in.
 
 For Owners:-
 ------------
 
-2.Use Case: View Employee details
-
-	1. All employees from employee table are displayed
-	2. Selected employee will have a database entry
-
-
-3.Use Case: Delete Employee details
-
-	1. Employee details will be removed from the employee table.
+Use Case: View Employee details
 	
-4.Use Case: Add Employee details
-
-	1. The new employee will have a unique employeeID
-	2. Name of the new employee can be same as that of an existing employee
-
-5.Use Case: View Dish details
-
-	1. All dishes in the dishes table are displayed
-	2. Selected dish must have a database entry
+	All employees previously added via the "Add Employee" option and those already existing in the database will be visible. A particular employee details can be bought into focus by clicking on it.
 
 
-6.Use Case: Delete dish 
+Use Case: Delete Employee details
 
-	1. The deleted dish will be removed from the menu
+	Employee record will be deleted. There is no way to recover these details.
+	
+Use Case: Add Employee details
 
-7.Use Case: Add Dish details
-	1. The new dish will have a unique dishID
-	2. Name of the dish can be similar to existing dish, but not exactly the same.
+	A new employee has to be added to the database using this option. The new employee can have a same name as another employee, since we will have a unique employee ID.
 
-8.Use Case: View and edit Restaurant details
-	1. Details and photo will be uploaded to the web.
+Use Case: View Dish details
+
+	All dishes added previously via the "add dish" option and those already present in the database will be displayed. A particular dish can be viewed in focus by clicking on it.
+
+
+Use Case: Delete dish 
+
+	This particular dish will be removed from the database. This operation is irreversible.
+
+Use Case: Add Dish details
+
+	A new dish is added into the menu using this option. The dish name needs to be unique, to avoid confusion for customers.	
+
+Use Case: View and edit Restaurant details
+	
+	Restaurant details can be edited and saved. We need a photo, address, ph.no and a neat description.
 
         
-9.Use Case: View Item details
-	1. The item details will be visible.
+Use Case: View Item details
+	
+	All items added previously via the "add item" option and those already present in the database will be displayed. A particular item can be viewed in focus by clicking on it.
 
 
-10.Use Case: View Items purchased and used up on that day
-	1. The items purchased and used up will be finite and positive.
+Use Case: View Items purchased and used up on that day
 
-11.Use Case: View Table Status
-	1. The status will be free/occupied/reserved.
+	Items used up will be reflected in the dishes-orders served. Items purchased will be managed by the Inventory Manager.
 
-12.Use Case: View order history details
-	1. A previous order's details are visible.
 
-13.Use Case: View customer details 
-    1. A registered customer's details are visible. 
+Use Case: View Table Status
+	The status will be free/occupied/reserved.
 
-14.Use Case: View offer details
-	1. An existing offer's details are visible
+Use Case: View order history details
+	All previous orders are displayed. Click on a particular order to view it in focus.
 
-15.Use Case: View delivery person details
-	1. Employees, who are delivery people, will be visible.
+Use Case: View customer details 
+	All current customers are displayed. Click on a particular customer to view them in focus.
+
+Use Case: View offer details
+	All current offers are displayed. Offers typically allot discounts on total bill.
+
+Use Case: View delivery person details
+	Delivary persons details are displayed. Emphasis is kept on whether they are free or currently doing a delivery.
 
 For Customers:-
 ---------------
 
-16.Use Case: View menu and select items
-	1. All the items in the items relation will be visible to customers.
-	2. Cost will be finite and positive.
+Use Case: View menu and select items
+	All items are displayed to the user. They can select a particular item for ordering. 
 
-17.Use Case: View cart and confirm the order   
-	1. Items will be present as choosen by user.
-	2. Cost and quantity will be positive and finite.
+Use Case: View cart and confirm the order   
+	After viewing their items again in cart, they can apply a offer and confirm their order. 
 
-18.Use Case: View previous orders
-	1. Previous orders of a customer are displayed.
+Use Case: View previous orders
+	All previous orders of that user are visible. Clicking on a particular order will open it in focus.
     
-19.Use Case: Change account details
-	1. Old details of a customer will be displayed
-	2. After a sanitary check, new details are accepted.	
+Use Case: Change account details
+
+	User can change their details like name, phone no., Address etc.
 
 For Chef:-
 -----------
@@ -94,31 +91,30 @@ For Head Waiter:-
 ------------------
 The relevant subset of Owner use cases - (Manage Table Status, Manage Waiters)
 
-20.Use Case: Change table status
-	1. A free table can be made busy/reserved.
-	2. A busy table can be made free.
-	3. A reserved table can be made busy/free.
+Use Case: Change table status
+	Can update the status of tables. Free table can be made busy/reserved. Busy table can be freed.
 
 For Inventory Manager :-
 --------------------
 The relevant subset of Owner use cases - (Manages inventory of items)
 
-21.Use case : Update about items
-	1. Used, Bought quantities should be finite, non-negative quantities.
+Use case : Update about items
+
+	Details about how much of which item was bought will be updated here. This will also  update the attributes of that item in the Items relation.
 
 For Billing Manager:-
 -------------------
 The relevant subset of Owner use cases - (Managers Orders and Customers)
 
-22.Use Case: Create an order
-	1. Bill must be connected with a customer.
-	2. FInite amount of items must be ordered.
+Use Case: Create an order
+	
+	Create an order manually after taking order from dine-in customers. Online customers will place orders under their own name.
 
 For Delivery Manager:-
 -------------------
 The relevant subset of Owner use cases - (Manages Delivery Persons and Area Codes)
 
-23.Use Case: Assign a delivery person
-	1. A free delivery person can be assigned.
-	2. The delivery location is preferably in the assigned area of the person.
+Use Case: Assign a delivery person
+	
+	Delivery manager will assign a delivery person to make a delivery to an online customer. Manager needs to take care of assigning the right delivery location to that delivery person.
 
