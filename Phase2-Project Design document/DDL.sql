@@ -42,7 +42,7 @@ create table dish(
     dish_name text,
     recipe text,
     time_taken int,
-    dish_type text check (dish_type in ('V','NV')),
+    dish_type text check (dish_type in ('Veg Starter','Nog-Veg Starter','Veg Main','Non-Veg Main','Deserts')),
     cost int,
     rating real,
     photo text,
