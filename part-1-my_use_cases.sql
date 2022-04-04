@@ -130,3 +130,26 @@ ORDER BY count(dat) DESC
 limit 1;
 -- 17 best delivery person
 -- no ratings were added to delivery personnel
+
+-- 18 view item details
+SELECT * FROM item;
+SELECT * FROM item WHERE item_name =item_name;
+
+-- 19 view table satus
+SELECT * FROM table_status WHERE table_id = table_id;
+
+-- 20 order details
+SELECT * FROM orders WHERE order_id = order_id;
+
+-- 21 offer details
+SELECT * from offer WHERE name = name;
+
+-- 22 view prev orders
+SELECT * from orders WHERE order.c_id = c_id ORDER BY order_id DESC;
+
+-- 23 change customer details
+UPDATE customer
+SET name=name AND ph_no = ph_no AND addr=addr
+WHERE c_id = customer_id
+
+--
