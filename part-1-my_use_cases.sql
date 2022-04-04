@@ -216,7 +216,16 @@ WHERE a1.c_id = customer.c_id
 ORDER BY freq desc
 limit 1;
 
-
-
 -- 25 best delivery person by no.of deliveries
-select delivery_person,name from (SELECT delivery_person,count(*) as num_deliveries from orders group by delivered_person order by num_deliveries desc limit 1) as A,employee where A.delivered_person=employee.e_id;
+
+select delivery_person,
+	name
+from
+				(SELECT delivery_person,
+						count(*) as num_deliveries
+					from orders
+					group by delivered_person
+					order by num_deliveries desc
+					limit 1) as A,
+	employee
+where A.delivered_person=employee.e_id;
