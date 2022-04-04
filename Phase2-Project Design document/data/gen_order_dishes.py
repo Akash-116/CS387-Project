@@ -32,7 +32,7 @@ for i in O:
         if(off_null):
             i_offer="NULL"
         else:
-            i_offer=random.randint(1,num_offers+1)
+            i_offer=random.randint(1,num_offers)
         order_dishes_file.write(str(i)+','+str(i_dish)+','+str(quan)+','+str(i_offer)+'\n')
 
 order_dishes_file.close()

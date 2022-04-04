@@ -74,8 +74,8 @@ for i in C:
         else:
             deliver_p="NULL"
             status=random.choice(['Preparing','Served'])
-            table_id = random.randint(1,num_tables+1)
-            area_id=random.randint(1,num_areas+1)
+            table_id = random.randint(1,num_tables)
+            area_id=random.randint(1,num_areas)
 
         orders_file.write(str(c_id)+','+str(area_id)+','+str(table_id)+','+dat+','+rt+','+ft+','+dt+','+str(deliver_p)+','+str(status)+','+str(order_type)+'\n')
 

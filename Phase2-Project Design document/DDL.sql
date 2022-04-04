@@ -42,7 +42,7 @@ create table dish(
     dish_name text,
     recipe text,
     time_taken int,
-    dish_type text check (dish_type in ('Veg Starter','Nog-Veg Starter','Veg Main','Non-Veg Main','Deserts')),
+    dish_type text check (dish_type in ('Veg Starter','Non-Veg Starter','Veg Main','Non-Veg Main','Deserts')),
     cost int,
     rating real,
     photo text,
@@ -86,7 +86,7 @@ create table customer(
     name text,
     username text not null,
     pswd text not null,
-    ph_no int,
+    ph_no bigint,
     addr text,
     num_orders int default 0,
     num_dish int default 0,
@@ -108,11 +108,11 @@ create table cart(
 
 create table employee(
     e_id serial,
-    name int,
+    name text,
     username text not null,
     pswd text not null,
     salary int,
-    ph_no int,
+    ph_no bigint,
     addr text,
     e_type text check (e_type in ('Chef','Waiter','Head Waiter','Delivery','Manager')),
     join_date date,
@@ -208,8 +208,8 @@ create function update_dishes()
     language plpgsql
     as $$
     begin
-        insert into day_to_day_dishes values(CURRENT_DATE,NEW.dish_id,NEW.quantity) on conflict on constraint day_dish_prim do update set dish_count=day_to_day_dishes.dish_count+NEW.quantity;
-        insert into customer(c_id,num_dish) values((select c_id from orders where order_id=NEW.order_id),NEW.quantity) on conflict on constraint customer_prim do update set num_dish=customer.num_dish+NEW.quantity;
+        insert into day_to_day_dishes values((select dat from orders where order_id=NEW.order_id),NEW.dish_id,NEW.quantity) on conflict on constraint day_dish_prim do update set dish_count=day_to_day_dishes.dish_count+NEW.quantity;
+        update customer set num_dish=customer.num_dish+NEW.quantity where c_id=(select c_id from orders where order_id=NEW.order_id);
         return NEW;
     end
     $$;
@@ -221,7 +221,7 @@ create function update_items()
     language plpgsql
     as $$
     begin
-        insert into day_to_day_items(dat,item_id,used) select CURRENT_DATE,item_id,NEW.quantity*quantity from dish_items where dish_id=NEW.dish_id on conflict on constraint day_item_prim do update set used=day_to_day_items.used+NEW.quantity*(select quantity from dish_items where dish_id=NEW.dish_id and item_id=day_to_day_items.item_id);
+        insert into day_to_day_items(dat,item_id,used) select orders.dat,item_id,NEW.quantity*quantity from dish_items,orders where dish_id=NEW.dish_id and orders.order_id=NEW.order_id on conflict on constraint day_item_prim do update set used=day_to_day_items.used+NEW.quantity*(select quantity from dish_items where dish_id=NEW.dish_id and item_id=day_to_day_items.item_id);
         update item set quan_inv=item.quan_inv-(select NEW.quantity*quantity from dish_items where dish_id=NEW.dish_id and item_id=item.item_id) where item_id in (select item_id from dish_items where dish_id=NEW.dish_id);
         return NEW;
     end
@@ -233,7 +233,7 @@ create function update_customer_on_order()
     language plpgsql
     as $$
     begin
-        insert into customer(c_id,num_orders) values(NEW.c_id,1) on conflict on constraint customer_prim do update set num_orders=customer.num_orders+1;
+        update customer set num_orders=customer.num_orders+1 where c_id=NEW.c_id;
 
         return NEW;
     end
@@ -257,8 +257,9 @@ create function insert_date_on_offer()
     language plpgsql
     as $$
     begin
-        insert into day(dat) values(NEW.dat) on conflict on constraint day_prim do nothing;
-
+        if(NEW.dat is not null) then
+            insert into day(dat) values(NEW.dat) on conflict on constraint day_prim do nothing;
+        end if;
         return NEW;
     end
     $$;

@@ -299,6 +299,7 @@ with conn:
                     temp_sql=temp_sql+col_name+','
                 if(temp_sql[-1]==','):
                     temp_sql=temp_sql[:-1]
+                temp_sql=temp_sql+')'
                 temp_sql=temp_sql+sql2
                 try:
                     extras.execute_values(c,temp_sql,data[i])
