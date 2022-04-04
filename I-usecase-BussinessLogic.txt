@@ -19,6 +19,10 @@ Use Case: Delete Employee details
 
 	Employee record will be deleted. There is no way to recover these details.
 	
+
+Use Case: Edit Employee details
+	An existing employee's details such as name, ph.no , job can be edited.
+
 Use Case: Add Employee details
 
 	A new employee has to be added to the database using this option. The new employee can have a same name as another employee, since we will have a unique employee ID.
@@ -50,13 +54,25 @@ Use Case: View Items purchased and used up on that day
 
 	Items used up will be reflected in the dishes-orders served. Items purchased will be managed by the Inventory Manager.
 
+Use Case: Update item count in the inventory
+	
+	Item count will be updated in the database. This has to reflect the orders placed and inventory bought.
+
 
 Use Case: View Table Status
 	The status will be free/occupied/reserved.
 
+Use Case: Edit table status
+	Can update the status of tables. Free table can be made busy/reserved. Busy table can be freed.
+
 Use Case: View order history details
 	All previous orders are displayed. Click on a particular order to view it in focus.
 
+Use Case: Add an order
+	
+	Create an order manually after taking order from dine-in customers. Online customers will place orders under their own name.
+
+	
 Use Case: View customer details 
 	All current customers are displayed. Click on a particular customer to view them in focus.
 
@@ -91,8 +107,6 @@ For Head Waiter:-
 ------------------
 The relevant subset of Owner use cases - (Manage Table Status, Manage Waiters)
 
-Use Case: Change table status
-	Can update the status of tables. Free table can be made busy/reserved. Busy table can be freed.
 
 For Inventory Manager :-
 --------------------
@@ -106,9 +120,6 @@ For Billing Manager:-
 -------------------
 The relevant subset of Owner use cases - (Managers Orders and Customers)
 
-Use Case: Create an order
-	
-	Create an order manually after taking order from dine-in customers. Online customers will place orders under their own name.
 
 For Delivery Manager:-
 -------------------
