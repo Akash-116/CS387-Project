@@ -35,9 +35,8 @@ orders_file=open('orders.csv','w')
 orders_file.write('c_id,area_id,table_id,dat,received_time,finished_time,delivered_time,delivery_person,status,order_type\n')
 
 max_orders_per_customer=10
-C=range(1,num_customers+1)
-for i in C:
-    c_id=random.randint(1,num_customers+1)
+C=range(1,num_customers)
+for c_id in C:
     k=random.randint(1,max_orders_per_customer)
     for j in range(k):
         dat_month = random.randint(1,12)

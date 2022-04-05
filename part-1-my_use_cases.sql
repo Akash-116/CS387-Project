@@ -211,10 +211,9 @@ FROM customer,
 						count(*) as freq
 					from
 					order
-					group by c_id) as a1
-WHERE a1.c_id = customer.c_id
-ORDER BY freq desc
-limit 1;
+					group by c_id ORDER BY freq desc limit 1) as a1
+WHERE a1.c_id = customer.c_id;
+
 
 -- 25 best delivery person by no.of deliveries
 
@@ -224,8 +223,9 @@ from
 				(SELECT delivery_person,
 						count(*) as num_deliveries
 					from orders
-					group by delivered_person
+					where delivery_person is not null
+					group by delivery_person
 					order by num_deliveries desc
 					limit 1) as A,
 	employee
-where A.delivered_person=employee.e_id;
+where A.delivery_person=employee.e_id;
