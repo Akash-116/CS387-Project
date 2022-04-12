@@ -18,23 +18,33 @@ exports.create_customer=function(req,res){
     }
     else{
         bcrypt.hash(user.pswd,saltRounds,function(err1,hash){
-            user.pswd=hash;
-            pgquery='insert into customer(name,username,pswd,ph_no,addr) values($1,$2,$3,$4::bigint,$5)';
+            if(err1){
+                res.status(500).send({
+                    success : false,
+                    message : err1.message
+                });
+            }
+            else{
+                user.pswd=hash;
+                pgquery='insert into customer(name,username,pswd,ph_no,addr) values($1,$2,$3,$4::bigint,$5)';
 
-            client.query(pgquery, [user.name,user.username,user.pswd,user.ph_no,user.addr], function(err, res1) {
-                if (err) {
-                    console.log(err.message)
-                    res.status(500).send({
-                        success: false,
-                        message: err.message
-                    });
-                } else {
-                    res.status(200).send({
-                        success: true,
-                        data: res1.rows[0].c_id
-                    });
-                }
-            });
+                client.query(pgquery, [user.name,user.username,user.pswd,user.ph_no,user.addr], function(err, res1) {
+                    if (err) {
+                        console.log(err.message);
+                        res.status(500).send({
+                            success: false,
+                            message: err.message
+                        });
+                    }
+                    else{
+                        res.status(200).send({
+                            success: true,
+                            data: res1.rows[0].c_id
+                        });
+                    }
+                });
+            }
+            
         });
     }
 }
