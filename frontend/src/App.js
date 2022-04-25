@@ -33,6 +33,7 @@ function App() {
   // const token = getToken();
 
   const { token, setToken } = useToken();
+  console.log("token is created : ", token);
 
 
   if (!token) {
