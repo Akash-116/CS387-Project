@@ -11,7 +11,7 @@ import Page1 from "./Components/page1";
 import Page2 from "./Components/page2";
 import Page3 from "./Components/page3";
 import { PageView } from "./Components/pageView";
-import Dashboard from "./Components/Dashboard/Dashboard";
+import Dashboard from "./Components/Dashboard/customer_dashboard";
 import Preferences from "./Components/Preferences/Preferences";
 import Login from "./Components/Login/Login";
 import useToken from "./Components/App/useToken";

@@ -14,7 +14,8 @@ async function loginUser(credentials) {
     body: JSON.stringify(credentials)
   })
     .then(data => {
-      // console.log("data is : ", data);
+      console.log("data TYPE is : ", typeof (data));
+      console.log("data is : ", data);
       return data.json();
     })
 }
