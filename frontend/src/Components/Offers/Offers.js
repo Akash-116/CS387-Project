@@ -42,12 +42,15 @@ const Offers = () => {
 
     return (
         <div className=' container'>
+
             <h2>Offers Page</h2>
+
             <AddOffer offersList={offersList} setOffersList={setOffersList} > </AddOffer>
-            <button onClick={e => { setOffersList([]) }}>asda</button>
+
             {offersList.map(offer => (
                 createOfferElem(offer)
             ))}
+
         </div>
     );
 };

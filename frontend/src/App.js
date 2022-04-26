@@ -17,6 +17,8 @@ import Login from "./Components/Login/Login";
 import useToken from "./Components/App/useToken";
 import Offers from "./Components/Offers/Offers";
 import Analytics from "./Components/analytics";
+import ListOrders from "./Components/Orders/list_order";
+import AddOrder from "./Components/Orders/add_order";
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -68,20 +70,23 @@ function App() {
                 <Link to="/analytics" className="nav-link">Analytics</Link>
               </li>
               <li class="nav-item">
+                <Link to="/orders" className="nav-link">Orders</Link>
+              </li>
+              <li class="nav-item">
                 <Link to="/error" className="nav-link">ErrorPg</Link>
               </li>
 
-              {/* <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                  Points Tables
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                  create
                 </a>
                 <div class="dropdown-menu">
-                  <Link to="/pointstable/2011" className="dropdown-item">PtTable-2011</Link>
+                  <Link to="/create/order" className="dropdown-item">Order</Link>
                   <Link to="/pointstable/2013" className="dropdown-item">PtTable-2013</Link>
                   <Link to="/pointstable/2015" className="dropdown-item">PtTable-2015</Link>
                   <Link to="/pointstable/2017" className="dropdown-item">PtTable-2017</Link>
                 </div>
-              </li> */}
+              </li>
 
             </ul>
             <button className=" btn btn-danger ms-1" onClick={e => setToken({ token: 'ERROR' })}>Logout</button>
@@ -115,6 +120,8 @@ function App() {
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
             <Route path="/offers" element={<Offers></Offers>} ></Route>
             <Route path="/analytics" element={<Analytics></Analytics>} ></Route>
+            <Route path="/orders" element={<ListOrders></ListOrders>} ></Route>
+            <Route path="/create/order" element={<AddOrder></AddOrder>} ></Route>
             <Route
               path="*"
               element={

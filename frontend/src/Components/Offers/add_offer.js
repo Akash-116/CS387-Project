@@ -8,16 +8,15 @@ const AddOffer = ({ offersList, setOffersList }) => {
     let newOffer = { name: null, percent: null, description: null };
 
 
-    const onSubmitForm = async (e) => {
+    // const onSubmitForm = async (e) => {
+    const onSubmitForm = (e) => {
         e.preventDefault();
         try {
             // console.log("need to add :", newOffer);
             // console.log("type of offerList :", typeof (offersList));
             // console.log("offersList : ", offersList);
             // console.log("type of setOffersList :", typeof (setOffersList));
-            var t = offersList;
-            t.push(newOffer);
-            setOffersList(t);
+            setOffersList(prevState => [...prevState, newOffer])
             // offersList.push(newOffer);
             console.log("offersList : ", offersList);
 
@@ -65,14 +64,11 @@ const AddOffer = ({ offersList, setOffersList }) => {
                 <button className="btn btn-success">Add</button>
             </form>
 
+
         </Fragment>
     );
 };
 
 
-// AddOffer.propTypes = {
-//     offersList: PropTypes.array,
-//     setOffersList: PropTypes.func.isRequired
-// }
 
 export default AddOffer;
