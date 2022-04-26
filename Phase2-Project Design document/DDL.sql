@@ -145,14 +145,6 @@ create table offer( offer_id serial, name text, discount int, primary key(offer_
 create table day( dat date, day text check (day in ('Mon','Tue','Wed','Thu','Fri','Sat','Sun')), constraint day_prim primary key(dat));
 
 
-create table offer_valid
-    ( offer_id int not null, dat date, dish_id int, c_type_id int, unique(offer_id,dat,dish_id,c_type_id),
-     foreign key(offer_id) references offer on delete cascade,
-     foreign key(dat) references day on delete cascade,
-     foreign key(dish_id) references dish on delete cascade,
-     foreign key(c_type_id) references customer_type on delete cascade);
-
-
 create table day_to_day_dishes
     ( dat date, dish_id int, dish_count int, constraint day_dish_prim primary key(dat,dish_id),
      foreign key(dat) references day on delete cascade,
