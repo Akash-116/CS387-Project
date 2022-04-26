@@ -1,11 +1,13 @@
 import React from 'react';
 
 
-const Preferences = () => (
-  <div>
-    <h2>Preferences</h2>
-  </div>
-);
+const Preferences = () => {
+  return (
+    <div>
+      <h2>Preferences</h2>
+    </div>
+  );
+};
 
 
 

@@ -15,6 +15,8 @@ import Dashboard from "./Components/Dashboard/customer_dashboard";
 import Preferences from "./Components/Preferences/Preferences";
 import Login from "./Components/Login/Login";
 import useToken from "./Components/App/useToken";
+import Offers from "./Components/Offers/Offers";
+import Analytics from "./Components/analytics";
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -60,6 +62,12 @@ function App() {
                 <Link to="/preferences" className="nav-link">Preferences</Link>
               </li>
               <li class="nav-item">
+                <Link to="/offers" className="nav-link">Offers</Link>
+              </li>
+              <li class="nav-item">
+                <Link to="/analytics" className="nav-link">Analytics</Link>
+              </li>
+              <li class="nav-item">
                 <Link to="/error" className="nav-link">ErrorPg</Link>
               </li>
 
@@ -84,8 +92,8 @@ function App() {
 
 
 
-        <div class="container-fluid text-center mt-5">
-          <h1>Hello, Role : {token.description}</h1>
+        <div class="container-fluid text-center mt-2">
+          <h4>Hello, Role : {token.description}</h4>
 
           {/* <Routes>
             <Route exact path="PV" element={<PageView></PageView>}>
@@ -105,6 +113,8 @@ function App() {
           <Routes>
             <Route path="/dashboard" element={<Dashboard></Dashboard>} ></Route>
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
+            <Route path="/offers" element={<Offers></Offers>} ></Route>
+            <Route path="/analytics" element={<Analytics></Analytics>} ></Route>
             <Route
               path="*"
               element={
