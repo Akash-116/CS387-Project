@@ -6,6 +6,9 @@ const dishRoutes=require('./api/routes/dishes');
 const orderRoutes=require('./api/routes/orders');
 const tableRoutes=require('./api/routes/tables');
 const deliveryRoutes=require('./api/routes/delivery');
+const offerRoutes=require('./api/routes/offers');
+const cartRoutes=require('./api/routes/cart');
+const analyticsRoutes=require('./api/routes/analytics');
 const bodyParser=require('body-parser');
 const dotenv = require("dotenv");
 dotenv.config();
@@ -32,6 +35,9 @@ app.use('/dishes',dishRoutes);
 app.use('/orders',orderRoutes);
 app.use('/tables',tableRoutes);
 app.use('/delivery',deliveryRoutes);
+app.use('/offers',offerRoutes);
+app.use('/cart',cartRoutes);
+app.use('/analytics',analyticsRoutes);
 
 var server=app.listen(process.env.port,function(){
     var port = server.address().port

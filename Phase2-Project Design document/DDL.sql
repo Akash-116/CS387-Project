@@ -117,7 +117,7 @@ create table employee(
     e_type text check (e_type in ('Chef','Waiter','Head Waiter','Delivery','Manager')),
     join_date date,
     status text check (status in ('Working','Leave','Left')),
-    d_status text default 'Free' check (status in ('On Delivery','Free')),
+    d_status text default 'Free' check (d_status in ('On Delivery','Free')),
     left_date date,
     prim_area_id int,
     sec_area_id int,
@@ -145,12 +145,12 @@ create table offer_valid(
     offer_id int not null,
     dat date,
     dish_id int,
-    c_type_id int,
-    unique(offer_id,dat,dish_id,c_type_id),
+    --c_type_id int,
+    unique(offer_id,dat,dish_id),
     foreign key(offer_id) references offer on delete cascade,
     foreign key(dat) references day on delete cascade,
     foreign key(dish_id) references dish on delete cascade,
-    foreign key(c_type_id) references customer_type on delete cascade
+    --foreign key(c_type_id) references customer_type on delete cascade
 );
 
 create table day_to_day_dishes(

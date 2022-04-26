@@ -146,7 +146,7 @@ exports.add_dish=function(req,res){
             else{
                 res.status(200).send({
                     success: true,
-                    data: res1.rows[0].c_id
+                    data: res1.rows[0].dish_id
                 });
             }
         });

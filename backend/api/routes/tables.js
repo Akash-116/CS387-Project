@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const tables = require('../controllers/tables.js');
+const tables = require('../controllers/tables');
 
 router.get('/all',tables.get_all_tables);
 router.get('/single/:id',tables.get_table);

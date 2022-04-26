@@ -1,6 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const dishes = require('../controllers/dishes.js');
+const dishes = require('../controllers/dishes');
 
 router.get('/all',dishes.get_all_dishes);
 router.get('/single/:id',dishes.get_dish);
