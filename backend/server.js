@@ -23,16 +23,30 @@ app.use(express.json()); //req.body
 
 app.post('/login', async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username, password, userRole } = req.body;
         console.log("body is : ", req.body);
         console.log("username is  :", username);
         console.log("password is  :", password);
-        const user = await pool.query(
-            `SELECT * 
-            FROM logindetails
+        console.log("role is  :", userRole);
+        const user;
+        if (userRole == "Customer") {
+            user = await pool.query(
+                `SELECT * 
+            FROM customer
             WHERE username = $1 and
                 password = $2`, [username, password]
-        );
+            );
+        }
+        else {
+            user = await pool.query(
+                `SELECT * 
+            FROM employee
+            WHERE username = $1 and
+                password = $2 and e_type = $3`, [username, password, userRole]
+            );
+        }
+        
+        
         // const user = await pool.query(
         //     `SELECT * 
         //     FROM logindetails`);
@@ -54,6 +68,16 @@ app.post('/login', async (req, res) => {
             description: 'INVALID'
         })
 
+    }
+})
+
+app.get("/customer_list", async (req, res) => {
+    try {
+        const user = await pool.query(`SELECT * from customer`);
+        if (user.rows.length == 0) { throw 'no customers present to be shown' }
+        res.send({
+            
+        })
     }
 })
 
