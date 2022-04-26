@@ -145,3 +145,24 @@ exports.edit_customer=function(req,res){
             
             
 }
+
+exports.get_customer_previous=function(req,res){
+    var c_id=req.params.c_id;
+
+    var pgquery='select * from orders as A,order_dishes as B,dish as C where A.c_id=$1::int and A.order_id=B.order_id and B.dish_id=C.dish_id';
+
+    client.query(pgquery,[c_id],function(err,res1){
+        if(err){
+            res.status(500).send({
+                success : false,
+                message : err.message
+            });
+        }
+        else{
+            res.status(200).send({
+                success : true,
+                data : res1.rows
+            });
+        }
+    });
+}

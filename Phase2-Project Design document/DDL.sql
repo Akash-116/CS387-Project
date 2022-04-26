@@ -117,6 +117,7 @@ create table employee(
     e_type text check (e_type in ('Chef','Waiter','Head Waiter','Delivery','Manager')),
     join_date date,
     status text check (status in ('Working','Leave','Left')),
+    d_status text default 'Free' check (status in ('On Delivery','Free')),
     left_date date,
     prim_area_id int,
     sec_area_id int,
