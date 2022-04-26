@@ -4,5 +4,8 @@ const employees = require('../controllers/employees')
 
 router.get('/get/:username/:pswd',employees.get_employee);
 router.post('/create',employees.create_employee);
+router.get('/all',employees.get_all_employees);
+router.delete('/single',employees.delete_employee);
+router.post('/edit',employees.edit_employee);
 
 module.exports=router;

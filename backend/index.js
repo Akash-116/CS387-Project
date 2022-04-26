@@ -1,6 +1,9 @@
-const express = require("express")
-const customerRoutes=require('./api/routes/customers')
-const employeeRoutes=require('./api/routes/employees')
+const express = require("express");
+const customerRoutes=require('./api/routes/customers');
+const employeeRoutes=require('./api/routes/employees');
+const itemRoutes=require('./api/routes/items');
+const dishRoutes=require('./api/routes/dishes');
+const orderRoutes=require('./api/routes/orders');
 const bodyParser=require('body-parser');
 const dotenv = require("dotenv");
 dotenv.config();
@@ -22,6 +25,9 @@ app.use(function(req,res,next){
 })
 app.use('/customer',customerRoutes)
 app.use('/employee',employeeRoutes)
+app.use('/items',itemRoutes);
+app.use('/dishes',dishRoutes);
+app.use('/orders',orderRoutes);
 
 var server=app.listen(process.env.port,function(){
     var port = server.address().port

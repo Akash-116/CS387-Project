@@ -101,3 +101,47 @@ exports.get_customer=function(req,res){
         }
     });
 }
+
+exports.get_all_customers=function(req,res){
+    
+    pgquery='select * from customer';
+
+    client.query(pgquery,  function(err, res1) {
+        if (err) {
+            console.log(err.message);
+            res.status(500).send({
+                success: false,
+                message: err.message
+            });
+        } 
+        else {
+            res.status(200).send({
+                message : true,
+                data : res1.rows
+            });
+        }
+    });
+}
+
+exports.edit_customer=function(req,res){
+    var user=req.body;    
+                
+    pgquery='update employee set name = $2,ph_no=$3::bigint,addr=$5) where username = $1';
+
+    client.query(pgquery, [user.username,user.name,user.ph_no,user.addr], function(err, res1) {
+        if (err) {
+            console.log(err.message);
+            res.status(500).send({
+                success: false,
+                message: err.message
+            });
+        }
+        else{
+            res.status(200).send({
+                success: true
+            });
+        }
+    });
+            
+            
+}
