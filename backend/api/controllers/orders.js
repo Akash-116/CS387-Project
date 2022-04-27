@@ -84,3 +84,79 @@ exports.add_order_dish=function(req,res){
         }
     });
 }
+
+exports.assign_delivery=function(req,res){
+    var data=req.body;
+    var pgquery='update orders set delivery_person=$2::int where order_id=$1::int';
+
+    client.query(pgquery,[data.order_id,data.deliver_person],function(err,res1){
+        if(err){
+            res.status(500).send({
+                success : false,
+                message : err.message
+            });
+        }
+        else{
+            res.status(200).send({
+                success : true
+            });
+        }
+    });
+}
+
+exports.assign_table=function(req,res){
+    var data=req.body;
+    var pgquery='update orders set table_id=$2::int where order_id=$1::int';
+
+    client.query(pgquery,[data.order_id,data.table_id],function(err,res1){
+        if(err){
+            res.status(500).send({
+                success : false,
+                message : err.message
+            });
+        }
+        else{
+            res.status(200).send({
+                success : true
+            });
+        }
+    });
+}
+
+exports.finished=function(req,res){
+    var data=req.body;
+    var pgquery='update orders set finished_time=CURRENT_TIME and status=$2 where order_id=$1::int';
+
+    client.query(pgquery,[data.order_id, data.status],function(err,res1){
+        if(err){
+            res.status(500).send({
+                success : false,
+                message : err.message
+            });
+        }
+        else{
+            res.status(200).send({
+                success : true
+            });
+        }
+    });
+}
+
+exports.delivered=function(req,res){
+    var data=req.body;
+    var pgquery='update orders set delivered_time=CURRENT_TIME and status="Delivered" where order_id=$1::int';
+
+    client.query(pgquery,[data.order_id],function(err,res1){
+        if(err){
+            res.status(500).send({
+                success : false,
+                message : err.message
+            });
+        }
+        else{
+            res.status(200).send({
+                success : true
+            });
+        }
+    });
+}
