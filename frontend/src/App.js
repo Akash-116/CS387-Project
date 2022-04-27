@@ -44,6 +44,8 @@ function App() {
   const { token, setToken } = useToken();
   console.log("token is created : ", token);
 
+  const [cart, setCart] = useState({})
+
 
   if (!token) {
     return <Login setToken={setToken}></Login>
@@ -117,7 +119,7 @@ function App() {
               </ul>
             }
 
-            <button className=" btn btn-danger ms-1" onClick={e => setToken({ token: 'ERROR' })}>Logout</button>
+            <button className=" btn btn-danger ms-1" onClick={e => { setToken({ token: 'ERROR' }); window.location = '/' }}>Logout</button>
           </div>
         </nav>
 
@@ -145,8 +147,8 @@ function App() {
           </Routes> */}
           <Routes>
             <Route path="/" element={<h3>Welcome to YARA</h3>} ></Route>
-            <Route path="/cart" element={<CustomerCart></CustomerCart>} ></Route>
-            <Route path="/home" element={<CustomerHome></CustomerHome>} ></Route>
+            <Route path="/cart" element={<CustomerCart cart={cart} setCart={setCart}></CustomerCart>} ></Route>
+            <Route path="/home" element={<CustomerHome cart={cart} setCart={setCart} ></CustomerHome>} ></Route>
             <Route path="/dashboard" element={<Dashboard></Dashboard>} ></Route>
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
             <Route path="/offers" element={<Offers></Offers>} ></Route>
