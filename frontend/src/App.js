@@ -19,7 +19,11 @@ import Offers from "./Components/Offers/Offers";
 import Analytics from "./Components/analytics";
 import ListOrders from "./Components/Orders/list_order";
 import AddOrder from "./Components/Orders/add_order";
+import AddDish from "./Components/Dishes/add_dish";
 import ListDishes from "./Components/Dishes/list_dish";
+import AddEmployee from "./Components/Employee/add_employee";
+import CustomerHome from "./Components/Customer/home";
+import CustomerCart from "./Components/Customer/cart";
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -45,6 +49,7 @@ function App() {
     return <Login setToken={setToken}></Login>
   }
 
+
   return (
     <Router>
       <div id='wrapper'>
@@ -57,42 +62,61 @@ function App() {
           </button>
 
           <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <Link to="/dashboard" className="nav-link">Dashboard</Link>
-              </li>
-              <li class="nav-item">
-                <Link to="/preferences" className="nav-link">Preferences</Link>
-              </li>
-              <li class="nav-item">
-                <Link to="/offers" className="nav-link">Offers</Link>
-              </li>
-              <li class="nav-item">
-                <Link to="/analytics" className="nav-link">Analytics</Link>
-              </li>
-              <li class="nav-item">
-                <Link to="/orders" className="nav-link">Orders</Link>
-              </li>
-              <li class="nav-item">
-                <Link to="/dishes" className="nav-link">Dishes</Link>
-              </li>
-              <li class="nav-item">
-                <Link to="/error" className="nav-link">ErrorPg</Link>
-              </li>
 
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                  create
-                </a>
-                <div class="dropdown-menu">
-                  <Link to="/create/order" className="dropdown-item">Order</Link>
-                  <Link to="/pointstable/2013" className="dropdown-item">PtTable-2013</Link>
-                  <Link to="/pointstable/2015" className="dropdown-item">PtTable-2015</Link>
-                  <Link to="/pointstable/2017" className="dropdown-item">PtTable-2017</Link>
-                </div>
-              </li>
+            {(token.userrole === "customer") &&
 
-            </ul>
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <Link to="/home" className="nav-link">Order</Link>
+                </li>
+                <li class="nav-item">
+                  <Link to="/cart" className="nav-link">Cart</Link>
+                </li>
+
+              </ul>
+            }
+
+
+            {!(token.userrole === "customer") &&
+
+              <ul class="navbar-nav">
+
+
+                <li class="nav-item">
+                  <Link to="/dashboard" className="nav-link">Dashboard</Link>
+                </li>
+                <li class="nav-item">
+                  <Link to="/preferences" className="nav-link">Preferences</Link>
+                </li>
+                <li class="nav-item">
+                  <Link to="/offers" className="nav-link">Offers</Link>
+                </li>
+                <li class="nav-item">
+                  <Link to="/analytics" className="nav-link">Analytics</Link>
+                </li>
+                <li class="nav-item">
+                  <Link to="/orders" className="nav-link">Orders</Link>
+                </li>
+                <li class="nav-item">
+                  <Link to="/dishes" className="nav-link">Dishes</Link>
+                </li>
+                <li class="nav-item">
+                  <Link to="/error" className="nav-link">ErrorPg</Link>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                    create
+                  </a>
+                  <div class="dropdown-menu">
+                    <Link to="/create/employee" className="dropdown-item">Employee</Link>
+                    <Link to="/create/dish" className="dropdown-item">Dish</Link>
+                    <Link to="/create/order" className="dropdown-item">Order</Link>
+                  </div>
+                </li>
+              </ul>
+            }
+
             <button className=" btn btn-danger ms-1" onClick={e => setToken({ token: 'ERROR' })}>Logout</button>
           </div>
         </nav>
@@ -102,7 +126,7 @@ function App() {
 
 
         <div class="container-fluid text-center mt-2">
-          <h4>Hello, Role : {token.description}</h4>
+          <p>Hello, Role : {token.description}</p>
 
           {/* <Routes>
             <Route exact path="PV" element={<PageView></PageView>}>
@@ -120,6 +144,9 @@ function App() {
             />
           </Routes> */}
           <Routes>
+            <Route path="/" element={<h3>Welcome to YARA</h3>} ></Route>
+            <Route path="/cart" element={<CustomerCart></CustomerCart>} ></Route>
+            <Route path="/home" element={<CustomerHome></CustomerHome>} ></Route>
             <Route path="/dashboard" element={<Dashboard></Dashboard>} ></Route>
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
             <Route path="/offers" element={<Offers></Offers>} ></Route>
@@ -127,6 +154,8 @@ function App() {
             <Route path="/orders" element={<ListOrders></ListOrders>} ></Route>
             <Route path="/dishes" element={<ListDishes></ListDishes>} ></Route>
             <Route path="/create/order" element={<AddOrder></AddOrder>} ></Route>
+            <Route path="/create/dish" element={<AddDish></AddDish>} ></Route>
+            <Route path="/create/employee" element={<AddEmployee></AddEmployee>} ></Route>
             <Route
               path="*"
               element={

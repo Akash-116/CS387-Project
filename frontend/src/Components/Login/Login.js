@@ -29,11 +29,12 @@ export default function Login({ setToken }) {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const token = await loginUser({
+    var token = await loginUser({
       username,
       password,
       userRole
     });
+    token.userrole = userRole;
     let ermg = setToken(token);
     setErrorMsg(ermg);
     // console.log("token is : ", token)

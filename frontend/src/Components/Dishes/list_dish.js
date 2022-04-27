@@ -57,7 +57,7 @@ const ListDishes = () => {
 
             <h2>Dishes Page</h2>
 
-            <AddDish dishesList={dishesList} setDishesList={setDishesList} > </AddDish>
+            {/* <AddDish dishesList={dishesList} setDishesList={setDishesList} > </AddDish> */}
 
             {allDishes.map(dish => (
                 createDishElem(dish)
