@@ -34,7 +34,7 @@ max_cus_types_per_offer=min(num_cus_types,2)
 max_dishes_per_offer=min(num_dishes,8)
 
 offer_valid_file=open('offer_valid.csv','w')
-offer_valid_file.write('offer_id,dat,dish_id,c_type_id\n')
+offer_valid_file.write('offer_id,dat,dish_id\n')
 
 D=range(1,num_dishes+1)
 C_T=range(1,num_cus_types+1)
@@ -56,13 +56,6 @@ for i in O:
             i_num_dish=random.randint(1,max_dishes_per_offer)
             i_dishes=random.sample(D,i_num_dish)
         for i_dish in i_dishes:
-            cus_type_null=random.choice([True,False])
-            if(cus_type_null):
-                i_cus_types=["NULL"]
-            else:
-                i_num_cus_types=random.randint(1,max_cus_types_per_offer)
-                i_cus_types=random.sample(C_T,i_num_cus_types)
-            for i_cus_type in i_cus_types:
-                offer_valid_file.write(str(i)+','+str(i_date)+','+str(i_dish)+','+str(i_cus_type)+'\n')
+            offer_valid_file.write(str(i)+','+str(i_date)+','+str(i_dish)+'\n')
 
 offer_valid_file.close()
