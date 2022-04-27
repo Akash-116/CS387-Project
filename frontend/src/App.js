@@ -19,6 +19,7 @@ import Offers from "./Components/Offers/Offers";
 import Analytics from "./Components/analytics";
 import ListOrders from "./Components/Orders/list_order";
 import AddOrder from "./Components/Orders/add_order";
+import ListDishes from "./Components/Dishes/list_dish";
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -73,6 +74,9 @@ function App() {
                 <Link to="/orders" className="nav-link">Orders</Link>
               </li>
               <li class="nav-item">
+                <Link to="/dishes" className="nav-link">Dishes</Link>
+              </li>
+              <li class="nav-item">
                 <Link to="/error" className="nav-link">ErrorPg</Link>
               </li>
 
@@ -121,6 +125,7 @@ function App() {
             <Route path="/offers" element={<Offers></Offers>} ></Route>
             <Route path="/analytics" element={<Analytics></Analytics>} ></Route>
             <Route path="/orders" element={<ListOrders></ListOrders>} ></Route>
+            <Route path="/dishes" element={<ListDishes></ListDishes>} ></Route>
             <Route path="/create/order" element={<AddOrder></AddOrder>} ></Route>
             <Route
               path="*"
