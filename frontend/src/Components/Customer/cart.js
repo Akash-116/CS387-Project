@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
-
 const CustomerCart = () => {
-
 
 
 
@@ -11,6 +9,7 @@ const CustomerCart = () => {
             <h1>
                 Customer Cart :
             </h1>
+
         </div>
     );
 };

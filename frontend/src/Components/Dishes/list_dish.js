@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import testDishes from '../TestData/testDishes';
 import AddDish from './add_dish';
@@ -15,6 +15,7 @@ const name2acronym = (str) => {
 }
 
 const createDishElem = (dish) => {
+
     return (
         <Fragment>
 
@@ -49,6 +50,30 @@ const ListDishes = () => {
 
     const [dishesList, setDishesList] = useState([])
     const [allDishes, setAllDishes] = useState(testDishes)
+
+
+    const getDishesList = async () => {
+        try {
+
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/all")
+            // Here, fetch defualt is GET. So, no further input
+            const jsonData = await response.json()
+
+            setAllDishes(jsonData.data);
+
+        } catch (error) {
+
+            console.error(error.message);
+
+        }
+
+    }
+
+    // fetch, everytime rendered
+    // Telling to do this effects, everytime the ListTodos is rendered...
+    useEffect(() => {
+        getDishesList();
+    }, []);
 
 
 
