@@ -6,9 +6,10 @@ router.get('/all',dishes.get_all_dishes);
 router.get('/single/:id',dishes.get_dish);
 router.post('/add',dishes.add_dish);
 router.post('/edit',dishes.edit_dish);
-router.get('/delete/:id',dishes.delete_dish);
+router.delete('/delete/:id',dishes.delete_dish);
 router.get('/dish_items/:id',dishes.get_items_dish);
-router.get('/add/:id/:item_id/:quantity',dishes.add_items_dish);
-router.get('/delete/:id/:item_id/:quantity',dishes.delete_item_dish);
+router.post('/add_item',dishes.add_items_dish);
+router.post('/edit_item',dishes.update_item_dish);
+router.delete('/delete_item',dishes.delete_item_dish);
 
 module.exports=router;

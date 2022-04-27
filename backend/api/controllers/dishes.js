@@ -37,7 +37,7 @@ exports.get_dish=function(req,res){
         }
         else{
             if(res1.rows.length<1){
-                res.status(500).status({
+                res.status(500).send({
                     success : false,
                     message : 'No Dish with that ID'
                 });
@@ -55,7 +55,7 @@ exports.get_dish=function(req,res){
 exports.delete_dish=function(req,res){
     var id=req.params.id;
     
-    pgquery='delete from dish where dish_id=$1::int';
+    pgquery='delete from dish where dish_id=$1::int returning dish_id';
 
     client.query(pgquery, [id], function(err, res1) {
         if (err) {
@@ -85,7 +85,7 @@ exports.delete_dish=function(req,res){
 exports.get_items_dish=function(req,res){
     var id=req.params.id;
 
-    pgquery='select * from dish_items where dish_id=$1';
+    pgquery='select A.*,B.item_name from dish_items as A,item as B where dish_id=$1 and A.item_id=B.item_id';
     client.query(pgquery,[id],function(err,res1){
         if(err){
             res.status(500).send({
@@ -95,7 +95,7 @@ exports.get_items_dish=function(req,res){
         }
         else{
             if(res1.rows.length<1){
-                res.status(500).status({
+                res.status(500).send({
                     success : false,
                     message : 'No Dish with that ID'
                 });
@@ -113,7 +113,7 @@ exports.get_items_dish=function(req,res){
 exports.edit_dish=function(req,res){
     var dish=req.body; 
                 
-    pgquery='update dish set dish_name = $2, recipe = $3, time_taken = $4::int) where dish_id = $1';
+    pgquery='update dish set dish_name = $2, recipe = $3, time_taken = $4::int where dish_id = $1';
 
     client.query(pgquery, [dish.dish_id, dish.dish_name, dish.recipe, dish.time_taken], function(err, res1) {
         if (err) {
@@ -134,28 +134,28 @@ exports.edit_dish=function(req,res){
 exports.add_dish=function(req,res){
     var dish=req.body;
 
-    pgquery='insert into dish(dish_name, recipe, type, time_taken) values($1,$2,$3,$4::int) returing dish_id';
-        client.query(pgquery, [dish.dish_name, dish.recipe, dish.type, dish.time_taken], function(err, res1) {
-            if (err) {
-                console.log(err.message);
-                res.status(500).send({
-                    success: false,
-                    message: err.message
-                });
-            }
-            else{
-                res.status(200).send({
-                    success: true,
-                    data: res1.rows[0].dish_id
-                });
-            }
-        });
+    pgquery='insert into dish(dish_name, recipe, dish_type, time_taken) values($1,$2,$3,$4::int) returning dish_id';
+    client.query(pgquery, [dish.dish_name, dish.recipe, dish.dish_type, dish.time_taken], function(err, res1) {
+        if (err) {
+            console.log(err.message);
+            res.status(500).send({
+                success: false,
+                message: err.message
+            });
+        }
+        else{
+            res.status(200).send({
+                success: true,
+                data: res1.rows[0].dish_id
+            });
+        }
+    });
 }
 
 exports.add_items_dish=function(req,res){
-    var id = req.params.id;
-    var item_id = req.params.item_id;
-    var quantity = req.params.quantity;
+    var id = req.body.dish_id;
+    var item_id = req.body.item_id;
+    var quantity = req.body.quantity;
 
     pgquery='insert into dish_items(dish_id, item_id, quantity) values($1::int,$2::int,$3::int)';
     client.query(pgquery,[id, item_id, quantity],function(err,res1){
@@ -174,11 +174,11 @@ exports.add_items_dish=function(req,res){
 }
 
 exports.update_item_dish=function(req,res){
-    var id = req.params.id;
-    var item_id = req.params.item_id;
-    var quantity = req.params.quantity;
+    var id = req.body.dish_id;
+    var item_id = req.body.item_id;
+    var quantity = req.body.quantity;
 
-    pgquery='update dish_items set quantity = $3::int) where dish_id = $1 and item_id = $2';
+    pgquery='update dish_items set quantity = $3::int where dish_id = $1 and item_id = $2 returning dish_id,item_id';
 
     client.query(pgquery, [id, item_id, quantity], function(err, res1) {
         if (err) {
@@ -189,18 +189,26 @@ exports.update_item_dish=function(req,res){
             });
         }
         else{
-            res.status(200).send({
-                success: true
-            });
+            if(res1.rows.length<1){
+                res.status(500).send({
+                    success : false,
+                    message : 'That item is not there in that dish'
+                });
+            }
+            else{
+                res.status(200).send({
+                    success: true
+                });
+            }
         }
     });
 }
 
 exports.delete_item_dish=function(req,res){
-    var id=req.params.id;
-    var item_id = req.params.item_id;
+    var id=req.body.dish_id;
+    var item_id = req.body.item_id;
     
-    pgquery='delete from dish_items where dish_id=$1::int and item_id=$2::int';
+    pgquery='delete from dish_items where dish_id=$1::int and item_id=$2::int returning dish_id,item_id';
 
     client.query(pgquery, [id, item_id], function(err, res1) {
         if (err) {

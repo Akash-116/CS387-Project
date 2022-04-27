@@ -17,7 +17,7 @@ exports.get_cart=function(req,res){
         }
         else{
             if(res1.rows.length<1){
-                res.status(500).status({
+                res.status(500).send({
                     success : false,
                     message : 'Nothing in the cart'
                 });

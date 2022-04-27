@@ -128,7 +128,7 @@ exports.get_all_customers=function(req,res){
 exports.edit_customer=function(req,res){
     var user=req.body;    
                 
-    pgquery='update employee set name = $2,ph_no=$3::bigint,addr=$5) where username = $1';
+    pgquery='update customer set name = $2,ph_no=$3::bigint,addr=$4 where username = $1';
 
     client.query(pgquery, [user.username,user.name,user.ph_no,user.addr], function(err, res1) {
         if (err) {
@@ -174,7 +174,7 @@ exports.give_dish_rating=function(req,res){
 
     pgquery='update order_dishes set rating=$3::real where order_id=$2::int and dish_id=$1::int';
 
-    pgquery1='update dish set rating=(rating*num_ratings+$2::real)/(num_ratings+1) , num_ratings=numratings+1 where dish_id=$1::int';
+    pgquery1='update dish set rating=(rating*num_ratings+$2::real)/(num_ratings+1) , num_ratings=num_ratings+1 where dish_id=$1::int';
 
     client.query(pgquery,[data.dish_id,data.order_id,data.rating],function(err,res1){
         if(err){
@@ -188,7 +188,7 @@ exports.give_dish_rating=function(req,res){
                 if(err1){
                     res.status(500).send({
                         success : false,
-                        message : err.message
+                        message : err1.message
                     });
                 }
                 else{

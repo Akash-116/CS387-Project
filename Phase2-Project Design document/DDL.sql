@@ -186,8 +186,8 @@ create table orders
 
 create table order_dishes
     ( order_id int, dish_id int, quantity int, offer_id int,rating real, primary key(order_id,dish_id),
-     foreign key(order_id) references orders,
-     foreign key(dish_id) references dish,
+     foreign key(order_id) references orders on delete cascade,
+     foreign key(dish_id) references dish on delete cascade,
      foreign key(offer_id) references offer on delete
      set null);
 

@@ -37,7 +37,7 @@ exports.get_table=function(req,res){
         }
         else{
             if(res1.rows.length<1){
-                res.status(500).status({
+                res.status(500).send({
                     success : false,
                     message : 'No Table with that ID'
                 });
@@ -73,10 +73,10 @@ exports.get_empty_tables=function(req,res){
 }
 
 exports.edit_table_status=function(req,res){
-    var id=req.params.id;
-    var status = req.params.status;
+    var id=req.body.table_id;
+    var status = req.body.status;
                 
-    pgquery='update table_status set status = $2 where table_id = $1';
+    pgquery='update table_status set status = $2 where table_id = $1 returning table_id';
 
     client.query(pgquery, [id, status], function(err, res1) {
         if (err) {
@@ -87,16 +87,24 @@ exports.edit_table_status=function(req,res){
             });
         }
         else{
-            res.status(200).send({
-                success: true
-            });
+            if(res1.rows.length<1){
+                res.status(500).send({
+                    success : false,
+                    message : 'No Table with that ID'
+                });
+            }
+            else{
+                res.status(200).send({
+                    success: true
+                });
+            } 
         }
     });          
 }
 
 exports.add_table=function(req,res){
     var table=req.body;
-    var pgquery='insert into orders(loc,status) values($1,$2) returning table_id';
+    var pgquery='insert into table_status(loc,status) values($1,$2) returning table_id';
 
     client.query(pgquery,[table.location,table.status],function(err,res1){
         if(err){

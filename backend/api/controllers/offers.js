@@ -27,7 +27,7 @@ exports.get_all=function(req,res){
 exports.get_offer=function(req,res){
     var id=req.params.id;
 
-    pgquery='select * from offer where offer_id=$1';
+    pgquery='select * from offer where offer_id=$1::int';
     client.query(pgquery,[id],function(err,res1){
         if(err){
             res.status(500).send({
@@ -37,7 +37,7 @@ exports.get_offer=function(req,res){
         }
         else{
             if(res1.rows.length<1){
-                res.status(500).status({
+                res.status(500).send({
                     success : false,
                     message : 'No offer with that ID'
                 });
@@ -49,7 +49,7 @@ exports.get_offer=function(req,res){
                 });
             }
         }
-    })
+    });
 }
 
 exports.add_offer=function(req,res){

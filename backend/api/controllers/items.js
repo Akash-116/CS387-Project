@@ -37,7 +37,7 @@ exports.get_item=function(req,res){
         }
         else{
             if(res1.rows.length<1){
-                res.status(500).status({
+                res.status(500).send({
                     success : false,
                     message : 'No Item with that ID'
                 });
@@ -63,7 +63,7 @@ exports.get_bought_items_today=function(req,res){
         }
         else{
             if(res1.rows.length<1){
-                res.status(500).status({
+                res.status(500).send({
                     success : false,
                     message : 'No Items bought Today'
                 });
@@ -79,9 +79,9 @@ exports.get_bought_items_today=function(req,res){
 }
 
 exports.update_item_bought=function(req,res){
-    var item_id=req.query.item_id;
-    var quantity=req.query.quantity;
-    var pgquery1='insert into day_to_day_items(dat,item_id,bought) values(CURRENT_DATE,$1::int,$2::int) on conflict on constraint day_item_prim do update set bought=bought+$2::int';
+    var item_id=req.body.item_id;
+    var quantity=req.body.quantity;
+    var pgquery1='insert into day_to_day_items(dat,item_id,bought) values(CURRENT_DATE,$1::int,$2::int) on conflict on constraint day_item_prim do update set bought=day_to_day_items.bought+$2::int returning item_id';
 
     client.query(pgquery1,[item_id,quantity],function(err,res1){
         if(err){
@@ -98,7 +98,7 @@ exports.update_item_bought=function(req,res){
                 });
             }
             else{
-                var pgquery2='update item set quan_inv=quan_inv+$2::int where item_id=$1::int';
+                var pgquery2='update item set quan_inv=quan_inv+$2::int where item_id=$1::int returning item_id';
                 client.query(pgquery2,[item_id,quantity],function(err2,res2){
                     if(err2){
                         res.status(500).send({
@@ -107,9 +107,17 @@ exports.update_item_bought=function(req,res){
                         });
                     }
                     else{
-                        res.status(200).send({
-                            success : false
-                        });
+                        if(res2.rows.length<1){
+                            res.status(500).send({
+                                success : false,
+                                message : 'No Item with that ID in items'
+                            });
+                        }
+                        else{
+                            res.status(200).send({
+                                success : true
+                            });
+                        }
                     }
                 });
             }

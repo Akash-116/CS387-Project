@@ -1,21 +1,21 @@
-dish_id,dish_name,recipe,time_taken,dish_type,cost,rating,photo
-1,chicken triple rice,-,15,Non-Veg Main,70,5,-
-2,egg triple rice,-,15,Non-Veg Main,65,5,-
-3,chicken schezwan fried rice,-,12,Non-Veg Main,65,5,-
-4,egg schezwan fried rice,-,12,Veg Main,60,5,-
-5,veg schezwan fried rice,-,12,Veg Main,55,5,-
-6,maggi,-,5,Veg Main,30,5,-
-7,tandoori chicken,-,180,Non-Veg Starter,200,5,-
-8,chilly chicken,-,120,Non-Veg Starter,200,5,-
-9,butter chicken,-,30,Non-Veg Main,250,5,-
-10,veg manchuria,-,10,Veg Starter,160,5,-
-11,egg spring rolls,-,20,Non-Veg Starter,180,5,-
-12,mixed veg curry,-,30,Veg Main,220,5,-
-13,kadai veg,-,30,Veg Main,220,5,-
-14,apollo fish,-,35,Non-Veg Main,300,5,-
-15,chicken dum biryani,-,180,Non-Veg Main,260,5,-
-16,chicken tikka biryani,-,180,Non-Veg Main,270,5,-
-17,veg pulao,-,60,Veg Main,200,5,-
-18,paneer tikka masala,-,30,Veg Main,210,5,-
-19,palak paneer,-,30,Veg Main,200,5,-
-20,butter naan,-,15,Veg Main,55,5,-
+dish_name,recipe,time_taken,dish_type,cost,rating,photo
+chicken triple rice,-,15,Non-Veg Main,70,5,-
+egg triple rice,-,15,Non-Veg Main,65,5,-
+chicken schezwan fried rice,-,12,Non-Veg Main,65,5,-
+egg schezwan fried rice,-,12,Veg Main,60,5,-
+veg schezwan fried rice,-,12,Veg Main,55,5,-
+maggi,-,5,Veg Main,30,5,-
+tandoori chicken,-,180,Non-Veg Starter,200,5,-
+chilly chicken,-,120,Non-Veg Starter,200,5,-
+butter chicken,-,30,Non-Veg Main,250,5,-
+veg manchuria,-,10,Veg Starter,160,5,-
+egg spring rolls,-,20,Non-Veg Starter,180,5,-
+mixed veg curry,-,30,Veg Main,220,5,-
+kadai veg,-,30,Veg Main,220,5,-
+apollo fish,-,35,Non-Veg Main,300,5,-
+chicken dum biryani,-,180,Non-Veg Main,260,5,-
+chicken tikka biryani,-,180,Non-Veg Main,270,5,-
+veg pulao,-,60,Veg Main,200,5,-
+paneer tikka masala,-,30,Veg Main,210,5,-
+palak paneer,-,30,Veg Main,200,5,-
+butter naan,-,15,Veg Main,55,5,-
