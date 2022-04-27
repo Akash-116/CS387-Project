@@ -120,24 +120,24 @@ for row in customer:
     customer_rows.append(new_row)
 customer_file.close()
 
-customer_type_file = open(data_path+'/customer_type.csv')
-customer_type = csv.reader(customer_type_file)
-customer_type_header = next(customer_type)
-customer_type_rows = []
-for row in customer_type:
-    new_row = []
-    for i in range(len(row)):
-        col = row[i]
-        if(col == 'NULL'):
-            new_row.append(None)
-        else:
-            try:
-                temp = int(col)
-                new_row.append(temp)
-            except:
-                new_row.append(col)
-    customer_type_rows.append(new_row)
-customer_type_file.close()
+# customer_type_file = open(data_path+'/customer_type.csv')
+# customer_type = csv.reader(customer_type_file)
+# customer_type_header = next(customer_type)
+# customer_type_rows = []
+# for row in customer_type:
+#     new_row = []
+#     for i in range(len(row)):
+#         col = row[i]
+#         if(col == 'NULL'):
+#             new_row.append(None)
+#         else:
+#             try:
+#                 temp = int(col)
+#                 new_row.append(temp)
+#             except:
+#                 new_row.append(col)
+#     customer_type_rows.append(new_row)
+# customer_type_file.close()
 
 area_file = open(data_path+'/area.csv')
 area = csv.reader(area_file)
@@ -272,11 +272,11 @@ for row in order_dishes:
     order_dishes_rows.append(new_row)
 order_dishes_file.close()
 
-relations = ['item', 'dish', 'dish_items', 'table_status', 'area', 'customer_type',
+relations = ['item', 'dish', 'dish_items', 'table_status', 'area', 
              'customer', 'employee', 'offer', 'offer_valid', 'orders', 'order_dishes']
-data = [item_rows, dish_rows, dish_items_rows, table_rows, area_rows, customer_type_rows,
+data = [item_rows, dish_rows, dish_items_rows, table_rows, area_rows, 
         customer_rows, employee_rows, offer_rows, offer_valid_rows, orders_rows, order_dishes_rows]
-headers = [item_header, dish_header, dish_items_header, table_header, area_header, customer_type_header,
+headers = [item_header, dish_header, dish_items_header, table_header, area_header, 
            customer_header, employee_header, offer_header, offer_valid_header, orders_header, order_dishes_header]
 
 dsn = "dbname="+db+" user="+user + " host="+host+" password="+pswd
