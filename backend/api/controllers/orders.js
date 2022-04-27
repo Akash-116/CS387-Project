@@ -89,7 +89,7 @@ exports.assign_delivery=function(req,res){
     var data=req.body;
     var pgquery='update orders set delivery_person=$2::int where order_id=$1::int';
 
-    client.query(pgquery,[data.order_id,data.deliver_person],function(err,res1){
+    client.query(pgquery,[data.order_id,data.delivery_person],function(err,res1){
         if(err){
             res.status(500).send({
                 success : false,
@@ -125,7 +125,7 @@ exports.assign_table=function(req,res){
 
 exports.finished=function(req,res){
     var data=req.body;
-    var pgquery='update orders set finished_time=CURRENT_TIME and status=$2 where order_id=$1::int';
+    var pgquery='update orders set finished_time=CURRENT_TIME, status=$2 where order_id=$1::int';
 
     client.query(pgquery,[data.order_id, data.status],function(err,res1){
         if(err){
@@ -144,7 +144,7 @@ exports.finished=function(req,res){
 
 exports.delivered=function(req,res){
     var data=req.body;
-    var pgquery='update orders set delivered_time=CURRENT_TIME and status="Delivered" where order_id=$1::int';
+    var pgquery="update orders set delivered_time=CURRENT_TIME, status='Delivered' where order_id=$1::int";
 
     client.query(pgquery,[data.order_id],function(err,res1){
         if(err){
