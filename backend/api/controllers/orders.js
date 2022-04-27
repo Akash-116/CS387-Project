@@ -27,7 +27,7 @@ exports.get_single_order=function(req,res){
     var order_id=req.params.order_id;
     var pgquery='select A.*,C.dish_id,C.dish_name,C.dish_type,C.cost,B.offer_id from orders as A,order_dishes as B,dish as C where A.order_id=$1::int and B.order_id=A.order_id and B.dish_id=C.dish_id';
 
-    client.query(pgquery,function(req,res1){
+    client.query(pgquery,[order_id],function(err,res1){
         if(err){
             res.status(500).send({
                 success : false,
@@ -45,7 +45,7 @@ exports.get_single_order=function(req,res){
 
 exports.add_order=function(req,res){
     var order=req.body;
-    var pgquery='insert into orders(c_id,area_id,dat,received_time,status,order_type) values($1::int,$2::int,CURRENT_DATE,CURRENT_TIME,"Preparing",$3) returning order_id';
+    var pgquery="insert into orders(c_id,area_id,dat,received_time,status,order_type) values($1::int,$2::int,CURRENT_DATE,CURRENT_TIME,'Preparing',$3) returning order_id";
 
     client.query(pgquery,[order.c_id,order.area_id,order.order_type],function(err,res1){
         if(err){

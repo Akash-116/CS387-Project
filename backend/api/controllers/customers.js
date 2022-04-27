@@ -10,10 +10,10 @@ exports.create_customer=function(req,res){
     var user=req.body;
     
     if(!user.pswd){
-        console.log('UserName Not given')
+        console.log('Password Not given')
         res.status(500).send({
             success: false,
-            message: 'UserName Not given'
+            message: 'Password Not given'
         });
     }
     else{

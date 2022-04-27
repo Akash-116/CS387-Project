@@ -1,6 +1,7 @@
 const { Client } = require("pg")
 const dotenv = require("dotenv");
-const { use } = require("../routes/customers");
+const bcrypt=require('bcrypt')
+const saltRounds=10
 dotenv.config();
 const client = new Client({ user: process.env.user, database: process.env.db, password: process.env.pswd, host: process.env.host, port: process.env.psql_port })
 client.connect()
@@ -9,10 +10,10 @@ exports.create_employee=function(req,res){
     var user=req.body;
     
     if(!user.pswd){
-        console.log('UserName Not given')
+        console.log('Password Not given')
         res.status(500).send({
             success: false,
-            message: 'UserName Not given'
+            message: 'Password Not given'
         });
     }
     else{
@@ -25,9 +26,9 @@ exports.create_employee=function(req,res){
             }
             else{
                 user.pswd=hash;
-                pgquery='insert into employee(name,username,pswd,salary,ph_no,addr,e_type,join_date,status) values($1,$2,$3,$4::int,$5::bigint,$6,$7,$8,$9) returning e_id';
+                pgquery='insert into employee(name,username,pswd,salary,ph_no,addr,e_type,join_date,status) values($1,$2,$3,$4::int,$5::bigint,$6,$7,CURRENT_DATE,$8) returning e_id';
 
-                client.query(pgquery, [user.name,user.username,user.pswd,user.salary,user.ph_no,user.addr,user.e_type,CURRENT_DATE,'Working'], function(err, res1) {
+                client.query(pgquery, [user.name,user.username,user.pswd,user.salary,user.ph_no,user.addr,user.e_type,'Working'], function(err, res1) {
                     if (err) {
                         console.log(err.message);
                         res.status(500).send({
@@ -49,8 +50,8 @@ exports.create_employee=function(req,res){
 }
 
 exports.get_employee=function(req,res){
-    var username=req.params.username;
-    var pswd=req.params.pswd;
+    var username=req.query.username;
+    var pswd=req.query.pswd;
     pgquery='select * from employee where username=$1::text';
 
     client.query(pgquery, [username], function(err, res1) {
@@ -123,11 +124,11 @@ exports.get_all_employees=function(req,res){
 }
 
 exports.delete_employee=function(req,res){
-    var username=req.body.username;
+    var e_id=req.body.e_id;
     
-    pgquery='delete from employee where username=$1::text';
+    pgquery='delete from employee where e_id=$1::int returning e_id';
 
-    client.query(pgquery, [username], function(err, res1) {
+    client.query(pgquery, [e_id], function(err, res1) {
         if (err) {
             console.log(err.message)
             res.status(500).send({
@@ -137,10 +138,10 @@ exports.delete_employee=function(req,res){
         } else {
             var rows=res1.rows;
             if(rows.length==0){
-                console.log('No user with that UserName');
+                console.log('No user with that ID');
                 res.status(500).send({
                     success: false,
-                    message: 'No user with that UserName'
+                    message: 'No user with that ID'
                 });
             }
             else{
@@ -156,9 +157,9 @@ exports.delete_employee=function(req,res){
 exports.edit_employee=function(req,res){
     var user=req.body;    
                 
-    pgquery='update employee set name = $2,salary=$3::int,ph_no=$4::bigint,addr=$5,e_type=$5,status=$6) where username = $1';
+    pgquery='update employee set name = $2,salary=$3::int,ph_no=$4::bigint,addr=$5,e_type=$6,status=$7 where e_id = $1::int';
 
-    client.query(pgquery, [user.username,user.name,user.salary,user.ph_no,user.addr,user.e_type,user.status], function(err, res1) {
+    client.query(pgquery, [user.e_id,user.name,user.salary,user.ph_no,user.addr,user.e_type,user.status], function(err, res1) {
         if (err) {
             console.log(err.message);
             res.status(500).send({
