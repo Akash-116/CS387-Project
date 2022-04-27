@@ -26,7 +26,7 @@ exports.create_customer=function(req,res){
             }
             else{
                 user.pswd=hash;
-                pgquery='insert into customer(name,username,pswd,ph_no,addr) values($1,$2,$3,$4::bigint,$5)';
+                pgquery='insert into customer(name,username,pswd,ph_no,addr) values($1,$2,$3,$4::bigint,$5) RETURNING c_id';
 
                 client.query(pgquery, [user.name,user.username,user.pswd,user.ph_no,user.addr], function(err, res1) {
                     if (err) {
@@ -37,6 +37,7 @@ exports.create_customer=function(req,res){
                         });
                     }
                     else{
+                        console.log(res1.rows);
                         res.status(200).send({
                             success: true,
                             data: res1.rows[0].c_id
@@ -50,8 +51,9 @@ exports.create_customer=function(req,res){
 }
 
 exports.get_customer=function(req,res){
-    var username=req.params.username;
-    var pswd=req.params.pswd;
+    var username=req.query.username;
+    var pswd=req.query.pswd;
+    console.log(username);
     pgquery='select * from customer where username=$1::text';
 
     client.query(pgquery, [username], function(err, res1) {
@@ -162,6 +164,38 @@ exports.get_customer_previous=function(req,res){
             res.status(200).send({
                 success : true,
                 data : res1.rows
+            });
+        }
+    });
+}
+
+exports.give_dish_rating=function(req,res){
+    var data=req.body;
+
+    pgquery='update order_dishes set rating=$3::real where order_id=$2::int and dish_id=$1::int';
+
+    pgquery1='update dish set rating=(rating*num_ratings+$2::real)/(num_ratings+1) , num_ratings=numratings+1 where dish_id=$1::int';
+
+    client.query(pgquery,[data.dish_id,data.order_id,data.rating],function(err,res1){
+        if(err){
+            res.status(500).send({
+                success : false,
+                message : err.message
+            });
+        }
+        else{
+            client.query(pgquery1,[data.dish_id,data.rating],function(err1,res2){
+                if(err1){
+                    res.status(500).send({
+                        success : false,
+                        message : err.message
+                    });
+                }
+                else{
+                    res.status(200).send({
+                        success : true
+                    });
+                }
             });
         }
     });

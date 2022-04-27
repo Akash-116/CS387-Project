@@ -25,7 +25,7 @@ exports.create_employee=function(req,res){
             }
             else{
                 user.pswd=hash;
-                pgquery='insert into employee(name,username,pswd,salary,ph_no,addr,e_type,join_date,status) values($1,$2,$3,$4::int,$5::bigint,$6,$7,$8,$9)';
+                pgquery='insert into employee(name,username,pswd,salary,ph_no,addr,e_type,join_date,status) values($1,$2,$3,$4::int,$5::bigint,$6,$7,$8,$9) returning e_id';
 
                 client.query(pgquery, [user.name,user.username,user.pswd,user.salary,user.ph_no,user.addr,user.e_type,CURRENT_DATE,'Working'], function(err, res1) {
                     if (err) {

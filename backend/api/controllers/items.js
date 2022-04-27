@@ -121,7 +121,7 @@ exports.update_item_bought=function(req,res){
 exports.add_item=function(req,res){
     var item=req.body;
 
-    pgquery='insert into item(item_name,cost,unit) values($1,$2::int,$3)';
+    pgquery='insert into item(item_name,cost,unit) values($1,$2::int,$3) returning item_id';
         client.query(pgquery, [item.item_name,item.cost,item.unit], function(err, res1) {
             if (err) {
                 console.log(err.message);

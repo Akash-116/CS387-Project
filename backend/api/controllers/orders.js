@@ -45,7 +45,7 @@ exports.get_single_order=function(req,res){
 
 exports.add_order=function(req,res){
     var order=req.body;
-    var pgquery='insert into orders(c_id,area_id,dat,received_time,status,order_type) values($1::int,$2::int,CURRENT_DATE,CURRENT_TIME,"Preparing",$3)';
+    var pgquery='insert into orders(c_id,area_id,dat,received_time,status,order_type) values($1::int,$2::int,CURRENT_DATE,CURRENT_TIME,"Preparing",$3) returning order_id';
 
     client.query(pgquery,[order.c_id,order.area_id,order.order_type],function(err,res1){
         if(err){

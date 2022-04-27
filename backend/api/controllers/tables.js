@@ -96,7 +96,7 @@ exports.edit_table_status=function(req,res){
 
 exports.add_table=function(req,res){
     var table=req.body;
-    var pgquery='insert into orders(loc,status) values($1,$2)';
+    var pgquery='insert into orders(loc,status) values($1,$2) returning table_id';
 
     client.query(pgquery,[table.location,table.status],function(err,res1){
         if(err){

@@ -134,7 +134,7 @@ exports.edit_dish=function(req,res){
 exports.add_dish=function(req,res){
     var dish=req.body;
 
-    pgquery='insert into dish(dish_name, recipe, type, time_taken) values($1,$2,$3,$4::int)';
+    pgquery='insert into dish(dish_name, recipe, type, time_taken) values($1,$2,$3,$4::int) returing dish_id';
         client.query(pgquery, [dish.dish_name, dish.recipe, dish.type, dish.time_taken], function(err, res1) {
             if (err) {
                 console.log(err.message);

@@ -55,7 +55,7 @@ exports.get_offer=function(req,res){
 exports.add_offer=function(req,res){
     var offer=req.body;
 
-    pgquery='insert into offer(name, discount) values($1,$2::int)';
+    pgquery='insert into offer(name, discount) values($1,$2::int) returning offer_id';
         client.query(pgquery, [offer.name, offer.discount], function(err, res1) {
             if (err) {
                 console.log(err.message);

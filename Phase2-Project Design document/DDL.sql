@@ -79,7 +79,7 @@ drop function if exists insert_date_on_offer;
 create table item( item_id serial, item_name text, cost int, quan_inv int default 0, unit text, primary key(item_id));
 
 
-create table dish( dish_id serial, dish_name text, recipe text, time_taken int, dish_type text check (dish_type in ('Veg Starter','Non-Veg Starter','Veg Main','Non-Veg Main','Deserts')), cost int, rating real, photo text, primary key(dish_id));
+create table dish( dish_id serial, dish_name text, recipe text, time_taken int, dish_type text check (dish_type in ('Veg Starter','Non-Veg Starter','Veg Main','Non-Veg Main','Deserts')), cost int, rating real,num_ratings int default 0, photo text, primary key(dish_id));
 
 
 create table dish_items
@@ -171,7 +171,7 @@ create table orders
 
 
 create table order_dishes
-    ( order_id int, dish_id int, quantity int, offer_id int, primary key(order_id,dish_id),
+    ( order_id int, dish_id int, quantity int, offer_id int,rating real, primary key(order_id,dish_id),
      foreign key(order_id) references orders,
      foreign key(dish_id) references dish,
      foreign key(offer_id) references offer on delete
