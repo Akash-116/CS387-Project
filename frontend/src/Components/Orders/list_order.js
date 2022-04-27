@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
+import { Location } from 'react-router-dom';
 
 import testOrders from '../TestData/testOrders';
 
@@ -25,20 +26,25 @@ const createOrderElem = (order) => {
 const ListOrders = () => {
 
 
-    const [ordersList, setOrdersList] = useState(testOrders);
+    const [ordersList, setOrdersList] = useState([]);
 
 
-    const getOffersList = async () => {
+    const getOrdersList = async () => {
+        // console.log("A");
         try {
-
+            // console.log(process.env.REACT_APP_BACKEND_SERVER)
             const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/orders/all")
             // Here, fetch defualt is GET. So, no further input
-            const jsonData = await response.json()
-
-            setOrdersList(jsonData.data);
+            const jsonData = await response.json();
+            if(jsonData.success){
+                setOrdersList(jsonData.data);
+            }
+            else{
+                alert("Something Went Wrong");
+                console.log(jsonData.message);
+            }
 
         } catch (error) {
-
             console.error(error.message);
 
         }
@@ -48,7 +54,7 @@ const ListOrders = () => {
     // fetch, everytime rendered
     // Telling to do this effects, everytime the ListTodos is rendered...
     useEffect(() => {
-        getOffersList();
+        getOrdersList();
     }, []);
 
 

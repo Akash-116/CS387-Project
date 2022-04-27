@@ -5,19 +5,37 @@ import './Login.css';
 
 async function loginUser(credentials) {
   // console.log("Credentials stringfy : ", JSON.stringify(credentials));
-
-  return fetch('http://localhost:8080/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(credentials)
-  })
-    .then(data => {
-      console.log("data TYPE is : ", typeof (data));
-      console.log("data is : ", data);
-      return data.json();
+  console.log(credentials.role);
+  if(credentials.role=="customer"){
+    return fetch(process.env.REACT_APP_BACKEND_SERVER+'/customer/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
     })
+      .then(data => {
+        console.log("data TYPE is : ", typeof (data));
+        console.log("data is : ", data);
+        return data.json();
+      });
+  }
+  else{
+    return fetch(process.env.REACT_APP_BACKEND_SERVER+'/employee/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(credentials)
+    })
+      .then(data => {
+        console.log("data TYPE is : ", typeof (data));
+        console.log("data is : ", data);
+        return data.json();
+      })
+  }
+
+  
 }
 
 
@@ -30,9 +48,9 @@ export default function Login({ setToken }) {
   const handleSubmit = async e => {
     e.preventDefault();
     var token = await loginUser({
-      username,
-      password,
-      userRole
+      username : username,
+      pswd : password,
+      role : userRole
     });
     token.userrole = userRole;
     let ermg = setToken(token);

@@ -51,8 +51,8 @@ exports.create_customer=function(req,res){
 }
 
 exports.get_customer=function(req,res){
-    var username=req.query.username;
-    var pswd=req.query.pswd;
+    var username=req.body.username;
+    var pswd=req.body.pswd;
     console.log(username);
     pgquery='select * from customer where username=$1::text';
 
@@ -61,6 +61,7 @@ exports.get_customer=function(req,res){
             console.log(err.message)
             res.status(500).send({
                 success: false,
+                token : 'ERROR',
                 message: err.message
             });
         } else {
@@ -69,6 +70,7 @@ exports.get_customer=function(req,res){
                 console.log('No user with that UserName');
                 res.status(500).send({
                     success: false,
+                    token : 'ERROR',
                     message: 'No user with that UserName'
                 });
             }
@@ -80,6 +82,7 @@ exports.get_customer=function(req,res){
                         console.log(err1.message)
                         res.status(500).send({
                             success: false,
+                            token : 'ERROR',
                             message: err1.message
                         });
                     }
@@ -88,12 +91,14 @@ exports.get_customer=function(req,res){
                             console.log('Incorrect Password')
                             res.status(500).send({
                                 success: false,
+                                token : 'ERROR',
                                 message: 'Incorrect Password'
                             });
                         }
                         else{
                             res.status(200).send({
                                 success: true,
+                                token : 'VALID',
                                 data : rows[0]
                             });
                         }

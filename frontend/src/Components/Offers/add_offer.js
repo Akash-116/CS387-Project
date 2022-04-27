@@ -5,20 +5,38 @@ import React, { Fragment } from 'react';
 
 const AddOffer = ({ offersList, setOffersList }) => {
 
-    let newOffer = { name: null, percent: null, description: null };
+    let newOffer = { name: null, discount: null, description: null };
 
 
     // const onSubmitForm = async (e) => {
-    const onSubmitForm = (e) => {
+    const onSubmitForm = async (e) => {
         e.preventDefault();
         try {
-            // console.log("need to add :", newOffer);
+            console.log("need to add :", newOffer);
             // console.log("type of offerList :", typeof (offersList));
             // console.log("offersList : ", offersList);
             // console.log("type of setOffersList :", typeof (setOffersList));
-            setOffersList(prevState => [...prevState, newOffer])
+
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/add",{
+                method : "POST",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify(newOffer)
+            });
+            
+            const jsonData = await response.json();
+            if(jsonData.success){
+                setOffersList(prevState => [...prevState, newOffer]);
+                
+            }
+            else{
+                alert("Something Went Wrong");
+                console.log(jsonData.message);
+            }
+            
             // offersList.push(newOffer);
             console.log("offersList : ", offersList);
+
+            window.location.reload();
 
         } catch (error) {
             console.error(error.message);
@@ -57,8 +75,8 @@ const AddOffer = ({ offersList, setOffersList }) => {
                     <p>Percent</p>
                     <input type="number"
                         className="form-control"
-                        value={newOffer.percent}
-                        onChange={e => newOffer.percent = e.target.value}
+                        value={newOffer.discount}
+                        onChange={e => newOffer.discount = e.target.value}
                     />
                 </label>
                 <button className="btn btn-success">Add</button>

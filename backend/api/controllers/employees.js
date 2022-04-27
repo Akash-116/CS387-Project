@@ -26,9 +26,9 @@ exports.create_employee=function(req,res){
             }
             else{
                 user.pswd=hash;
-                pgquery='insert into employee(name,username,pswd,salary,ph_no,addr,e_type,join_date,status) values($1,$2,$3,$4::int,$5::bigint,$6,$7,CURRENT_DATE,$8) returning e_id';
+                pgquery='insert into employee(name,username,pswd,salary,ph_no,addr,e_type,join_date,status,prim_area_id,sec_area_id) values($1,$2,$3,$4::int,$5::bigint,$6,$7,CURRENT_DATE,$8,$9,$10) returning e_id';
 
-                client.query(pgquery, [user.name,user.username,user.pswd,user.salary,user.ph_no,user.addr,user.e_type,'Working'], function(err, res1) {
+                client.query(pgquery, [user.name,user.username,user.pswd,user.salary,user.ph_no,user.addr,user.e_type,'Working',user.prim_area_id,user.sec_area_id], function(err, res1) {
                     if (err) {
                         console.log(err.message);
                         res.status(500).send({
@@ -50,8 +50,8 @@ exports.create_employee=function(req,res){
 }
 
 exports.get_employee=function(req,res){
-    var username=req.query.username;
-    var pswd=req.query.pswd;
+    var username=req.body.username;
+    var pswd=req.body.pswd;
     pgquery='select * from employee where username=$1::text';
 
     client.query(pgquery, [username], function(err, res1) {
@@ -59,6 +59,7 @@ exports.get_employee=function(req,res){
             console.log(err.message)
             res.status(500).send({
                 success: false,
+                token : 'ERROR',
                 message: err.message
             });
         } else {
@@ -67,6 +68,7 @@ exports.get_employee=function(req,res){
                 console.log('No user with that UserName');
                 res.status(500).send({
                     success: false,
+                    token : 'ERROR',
                     message: 'No user with that UserName'
                 });
             }
@@ -78,6 +80,7 @@ exports.get_employee=function(req,res){
                         console.log(err1.message)
                         res.status(500).send({
                             success: false,
+                            token : 'ERROR',
                             message: err1.message
                         });
                     }
@@ -86,12 +89,14 @@ exports.get_employee=function(req,res){
                             console.log('Incorrect Password')
                             res.status(500).send({
                                 success: false,
+                                token : 'ERROR',
                                 message: 'Incorrect Password'
                             });
                         }
                         else{
                             res.status(200).send({
                                 success: true,
+                                token : 'VALID',
                                 data : rows[0]
                             });
                         }
