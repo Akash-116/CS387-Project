@@ -83,7 +83,8 @@ create table dish( dish_id serial, dish_name text, recipe text, time_taken int, 
 
 
 create table dish_items
-    ( dish_id int, item_id int, quantity int, primary key(dish_id,item_id),
+    ( dish_id int not null, item_id int not null, quantity int,
+     constraint dish_item_unique unique(dish_id,item_id),
      foreign key(dish_id) references dish on delete cascade,
      foreign key(item_id) references item on delete
      set null);

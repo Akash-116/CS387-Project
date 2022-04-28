@@ -158,7 +158,7 @@ exports.add_items_dish=function(req,res){
     var item_id = req.body.item_id;
     var quantity = req.body.quantity;
 
-    pgquery='insert into dish_items(dish_id, item_id, quantity) values($1::int,$2::int,$3::int) returning dish_id,item_id';
+    pgquery='insert into dish_items(dish_id, item_id, quantity) values($1::int,$2::int,$3::int) on conflict on  constraint dish_item_unique do update set quantity=dish_items.quantity+$3::int returning dish_id,item_id';
     client.query(pgquery,[id, item_id, quantity],function(err,res1){
         if(err){
             console.log("Err",err.message);
