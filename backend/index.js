@@ -11,8 +11,7 @@ const cartRoutes = require('./api/routes/cart');
 const analyticsRoutes = require('./api/routes/analytics');
 const areaRoutes = require('./api/routes/areas');
 const bodyParser = require('body-parser');
-const dotenv = require("dotenv");
-dotenv.config();
+
 
 var app = express()
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -44,4 +43,7 @@ app.use('/areas', areaRoutes);
 var server = app.listen(process.env.port, function () {
     var port = server.address().port
     console.log("app listening at http://localhost:%s", port)
-})
+});
+
+
+

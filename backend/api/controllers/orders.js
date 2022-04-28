@@ -1,8 +1,4 @@
-const { Client } = require("pg")
-const dotenv = require("dotenv");
-dotenv.config();
-const client = new Client({ user: process.env.user, database: process.env.db, password: process.env.pswd, host: process.env.host, port: process.env.psql_port })
-client.connect()
+const client=require("../../connectDB");
 
 exports.get_all_orders=function(req,res){
     var pgquery='select * from orders';
