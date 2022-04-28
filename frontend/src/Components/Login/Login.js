@@ -44,7 +44,6 @@ async function loginUser(credentials) {
   
 }
 
-
 export default function Login({ setToken,setsgnup }) {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
@@ -89,10 +88,8 @@ export default function Login({ setToken,setsgnup }) {
           <p>Role</p>
           <select className='form-select' onChange={e => setUserRole(e.target.value)}>
             <option hidden disabled selected value="none"> -- select an option -- </option>
-            <option value="admin">Admin</option>
-            <option value="manager">Manager</option>
-            <option value="delivery">Delivery</option>
-            <option value="customer">Customer</option>
+            <option value="Employee">Employee</option>
+            <option value="Customer">Customer</option>
           </select>
         </label>
         <br />

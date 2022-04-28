@@ -7,9 +7,9 @@ import csv
 # start=time.time()
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--name', default='cs387project')
+parser.add_argument('--name', default='db-project')
 parser.add_argument('--user', default='postgres')
-parser.add_argument('--pswd', required=True)
+parser.add_argument('--pswd', default='postgres')
 parser.add_argument('--host', default='127.0.0.1')
 parser.add_argument('--port', default='5432')
 parser.add_argument('--ddl', default='./DDL.sql')
@@ -294,7 +294,7 @@ num_relations = len(relations)
 
 with conn:
     with conn.cursor() as c:
-        try:
+        # try:
             c.execute(open(ddl_path, "r").read())
             for i in range(num_relations):
                 temp_sql = sql1+relations[i]+'('
@@ -304,12 +304,12 @@ with conn:
                     temp_sql = temp_sql[:-1]
                 temp_sql = temp_sql+')'
                 temp_sql = temp_sql+sql2
-                try:
-                    extras.execute_values(c, temp_sql, data[i])
-                except:
-                    print(f"Insertion of relation {relations[i]} got error")
-                    break
-        except:
-            print('Error in excuting ddl file')
+                # try:
+                extras.execute_values(c, temp_sql, data[i])
+        #         except:
+        #             print(f"Insertion of relation {relations[i]} got error")
+        #             break
+        # except:
+        #     print('Error in excuting ddl file')
     c.close()
 conn.close()
