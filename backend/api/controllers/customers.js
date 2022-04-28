@@ -53,7 +53,7 @@ exports.get_customer = function (req, res) {
     var pswd = req.body.pswd;
     console.log(username);
     pgquery = 'select * from customer where username=$1::text';
-    // console.log(req.session);
+    
     client.query(pgquery, [username], function (err, res1) {
         if (err) {
             console.log(err.message)
@@ -94,8 +94,11 @@ exports.get_customer = function (req, res) {
                             });
                         }
                         else {
-                            console.log("wowww")
-                            // req.session.isAuth = true;
+                            req.session.login = true;
+                            req.session.id = rows[0].c_id;
+                            req.session.role = 'customer';
+
+                            console.log(req.session);
                             res.status(200).send({
                                 success: true,
                                 token: 'VALID',
@@ -107,33 +110,41 @@ exports.get_customer = function (req, res) {
             }
         }
     });
+    
 }
 
 exports.get_all_customers = function (req, res) {
-
-    pgquery = 'select * from customer';
-
-    client.query(pgquery, function (err, res1) {
-        if (err) {
-            console.log(err.message);
-            res.status(500).send({
-                success: false,
-                message: err.message
-            });
-        }
-        else {
-            res.status(200).send({
-                success: true,
-                data: res1.rows
-            });
-        }
-    });
+    if (req.session.role != 'manager'){
+        res.status(500).send({
+            success: false,
+            message: 'no access'
+        });
+    }
+    else{
+        pgquery = 'select * from customer';
+        client.query(pgquery, function (err, res1) {
+            if (err) {
+                console.log(err.message);
+                res.status(500).send({
+                    success: false,
+                    message: err.message
+                });
+            }
+            else {
+                res.status(200).send({
+                    success: true,
+                    data: res1.rows
+                });
+            }
+        });
+    }
 }
 
 exports.edit_customer = function (req, res) {
     var user = req.body;
 
     pgquery = 'update customer set username=$1, name = $2,ph_no=$3::bigint,addr=$4 where c_id=$5::int';
+    // if((req.session.role != 'customer'))
 
     client.query(pgquery, [user.username, user.name, user.ph_no, user.addr,user.c_id], function (err, res1) {
         if (err) {

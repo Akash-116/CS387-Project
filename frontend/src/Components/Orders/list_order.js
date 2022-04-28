@@ -145,6 +145,8 @@ const ListOrders = () => {
                     previousLinkClassName={"page-link"}
                     nextLinkClassName={"page-link"}
                     disabledLinkClassName={"page-link"}
+                    renderOnZeroPageCount={e => (<h3>Nothing to see here...</h3>)}
+
                 />
 
             </div>

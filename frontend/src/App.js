@@ -183,7 +183,7 @@ function App() {
             <Route path="/cart" element={<CustomerCart cart={cart} setCart={setCart}></CustomerCart>} ></Route>
             <Route path="/home" element={<CustomerHome cart={cart} setCart={setCart} ></CustomerHome>} ></Route>
             <Route path="/customer/details" element={<CustomerDetails token={token} setToken={setToken} ></CustomerDetails>} ></Route>
-            <Route path="/customer/prevorders" element={<PrevOrder  ></PrevOrder>} ></Route>
+            <Route path="/customer/prevorders" element={<PrevOrder  token={token}></PrevOrder>} ></Route>
             <Route path="/dashboard" element={<Dashboard></Dashboard>} ></Route>
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
             <Route path="/offers" element={<Offers></Offers>} ></Route>

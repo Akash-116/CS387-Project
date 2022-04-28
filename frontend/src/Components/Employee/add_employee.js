@@ -23,7 +23,7 @@ const AddEmployee = () => {
     const [addr, setaddr] = useState(null);
     
     const [newid, setnewid] = useState(null);
-    const [areas, setareas] = useState([])
+    const [areas, setareas] = useState([]);
 
 
 

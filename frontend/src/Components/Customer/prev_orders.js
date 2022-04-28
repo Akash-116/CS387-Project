@@ -52,8 +52,8 @@ const CreateOrderElem = ({ order }) => {
 };
 
 
-const PrevOrder = () => {
-
+const PrevOrder = ({token}) => {
+    const user=token.data;
 
     const [ordersList, setOrdersList] = useState([]);
 
@@ -62,7 +62,7 @@ const PrevOrder = () => {
         // console.log("A");
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/previous_orders/1")
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/previous_orders/"+user.c_id);
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if (jsonData.success) {
@@ -147,6 +147,8 @@ const PrevOrder = () => {
                     previousLinkClassName={"page-link"}
                     nextLinkClassName={"page-link"}
                     disabledLinkClassName={"page-link"}
+                    renderOnZeroPageCount={e => (<h3>Nothing to see here...</h3>)}
+
                 />
 
             </div>
