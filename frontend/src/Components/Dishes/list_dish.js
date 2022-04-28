@@ -25,7 +25,6 @@ const EachDish = ({ dish, enableOrdering = false, cart = null, setCart = null })
 
     const [counter, setCounter] = useState(countFromCart(dish, cart, enableOrdering))
 
-
     const decrementCount = (dish) => {
         var tcounter = counter;
         if (counter > 0) {
@@ -95,7 +94,7 @@ const EachDish = ({ dish, enableOrdering = false, cart = null, setCart = null })
 
 const ListDishes = ({ enableOrdering = false, cart = null, setCart = null }) => {
 
-    const [allDishes, setAllDishes] = useState(testDishes)
+    const [allDishes, setAllDishes] = useState([])
     const [cart2, setCart2] = useState({ 1: "initial" })
 
     const getDishesList = async () => {

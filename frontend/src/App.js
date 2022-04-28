@@ -24,8 +24,12 @@ import ListDishes from "./Components/Dishes/list_dish";
 import AddEmployee from "./Components/Employee/add_employee";
 import CustomerHome from "./Components/Customer/home";
 import CustomerCart from "./Components/Customer/cart";
+<<<<<<< Updated upstream
 import AddCustomer from "./Components/Customer/add_customer";
 import SignUp from "./Components/Customer/signup";
+=======
+import CustomerDetails from "./Components/Customer/details";
+>>>>>>> Stashed changes
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -82,6 +86,9 @@ function App() {
                 </li>
                 <li class="nav-item">
                   <Link to="/cart" className="nav-link">Cart</Link>
+                </li>
+                <li class="nav-item">
+                  <Link to="/customer/details" className="nav-link">Profile</Link>
                 </li>
 
               </ul>
@@ -159,6 +166,7 @@ function App() {
             <Route path="/" element={<h3>Welcome to YARA</h3>} ></Route>
             <Route path="/cart" element={<CustomerCart cart={cart} setCart={setCart}></CustomerCart>} ></Route>
             <Route path="/home" element={<CustomerHome cart={cart} setCart={setCart} ></CustomerHome>} ></Route>
+            <Route path="/customer/details" element={<CustomerDetails  ></CustomerDetails>} ></Route>
             <Route path="/dashboard" element={<Dashboard></Dashboard>} ></Route>
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
             <Route path="/offers" element={<Offers></Offers>} ></Route>
