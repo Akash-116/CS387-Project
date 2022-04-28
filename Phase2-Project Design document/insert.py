@@ -295,6 +295,7 @@ num_relations = len(relations)
 with conn:
     with conn.cursor() as c:
         # try:
+            c.execute('set datestyle to "ISO, DMY";show datestyle;')
             c.execute(open(ddl_path, "r").read())
             for i in range(num_relations):
                 temp_sql = sql1+relations[i]+'('

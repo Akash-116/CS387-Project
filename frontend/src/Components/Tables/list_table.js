@@ -3,56 +3,73 @@ import AddTable from './add_table';
 //not done yet
 
 
-import tablesListTest from "./tablesListTest";
+// import tablesListTest from "./tablesListTest";
 // import tablesList from "./tablesListTest";
-async function loginUser(credentials) {
-	// console.log("Credentials stringfy : ", JSON.stringify(credentials));
 
-	return fetch('http://localhost:8080/login', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(credentials)
-	})
-		.then(data => {
-			console.log("data TYPE is : ", typeof (data));
-			console.log("data is : ", data);
-			return data.json();
-		})
-}
-const handleSubmit = async e => {
-	e.preventDefault();
-	const token = await loginUser({
-		username,
-		password,
-		userRole
-	});
-	let ermg = setToken(token);
-	setErrorMsg(ermg);
-	// console.log("token is : ", token)
-}
 
-const createTableElem = (table) => {
+const CreateTableElem = ({table}) => {
+
+	const [status, setTableStatus] = useState(table.status);
+	console.log("tryna create");
+
+
+	let newTableStatus = { table_id: table.table_id, status: status };
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/tables/edit", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(newTableStatus)
+			});
+			const jsonData = await response.json();
+			if (jsonData.success) {
+				setTableStatus(prevState => [...prevState, newTableStatus]);
+
+			}
+			else {
+				alert("Something Went Wrong");
+				console.log(jsonData.message);
+			}
+			window.location.reload();
+
+
+		} catch (error) {
+			console.error(error.message);
+		}
+		// console.log("token is : ", token)
+	}
+	var st;
+	if (table.status === "O") {
+		st = "occupied";
+	}
+	else {
+		st = "unoccupied";
+	}
+	console.log("tryna return");
 	return (
 		<Fragment>
-			<div className=' border  m-3 shadow rounded'>
-				<h3><u>{table.id}</u> </h3>
-				<p>{table.location} </p>
-				<form onSubmit={handleSubmit}>
-					<label>
-						<p>Role</p>
+			<tr>
+				<th>{table.table_id}</th>
+				<th>{table.loc} </th>
+				<th className='text-center'><form onSubmit={handleSubmit}>
+					<table className='table'>
+						<th>
+
 						<select className='form-select' onChange={e => setTableStatus(e.target.value)}>
-							<option hidden disabled selected value={table.status}> {table.status} </option>
-							<option value="occupied">occupied</option>
-							<option value="not occupied">not occupied</option>
+							<option hidden disabled selected value={table.status}> {st} </option>
+							<option value="O">occupied</option>
+							<option value="E">not occupied</option>
 						</select>
-					</label>
-					<div>
+						</th>
+					<th>
 						<button className='btn btn-warning' type="submit">Update</button>
-					</div>
-				</form>
-			</div>
+						</th>
+					</table>
+						
+				</form></th>
+				
+			</tr>
 		</Fragment>
 	);
 };
@@ -63,19 +80,39 @@ const Tables = () => {
 
 
 
-	const [tablesList, setTablesList] = useState(tablesListTest);
+	const [tablesList, setTablesList] = useState([]);
 	// var tablesList = tempTablesList;
 
-	const updateTablesList = (t) => {
-		setTablesList(t);
+	const getTablesList = async () => {
+
+		try {
+			// console.log(process.env.REACT_APP_BACKEND_SERVER)
+			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/tables/all")
+			// Here, fetch defualt is GET. So, no further input
+			const jsonData = await response.json();
+			if (jsonData.success) {
+				setTablesList(jsonData.data);
+			}
+			else {
+				// console.log(jsonData.message);
+				alert("Something Went Wrong");
+
+			}
+
+		} catch (error) {
+			console.error(error.message);
+
+		}
+
 	}
 	console.log("type of tableList :", typeof (tablesList));
 	console.log("tablesList : ", tablesList);
 	// tablesList.push("Asaks");
 
 	useEffect(() => {
-		console.log("TablesList changed")
-	}, [tablesList])
+		console.log("TablesList changed");
+		getTablesList();
+	}, [])
 
 
 	return (
@@ -83,11 +120,24 @@ const Tables = () => {
 
 			<h2>Tables Page</h2>
 
+			{/* <AddTable tablesList={tablesList} setTablesList={setTablesList} > </AddTable> */}
+			<div className=' border  m-3 shadow rounded'><table className='table table-hover'>
+				<tr>
+					<th>ID</th>
+					<th>Location</th>
+					<th>Status</th>
+					{/* <th></th> */}
+				</tr>
+				{tablesList.map(table => {
+					console.log(table);
+					return <CreateTableElem table={table}></CreateTableElem>;
+				}
 
-			{tablesList.map(table => (
-				createTableElem(table)
-			))}
-			<button className = 'btn btn-primary' type="submit" >Add new Table </button>
+				)}
+			</table></div>
+			
+			
+			{/* <button className = 'btn btn-primary' type="submit" >Add new Table </button> */}
 
 		</div>
 	);

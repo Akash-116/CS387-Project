@@ -28,6 +28,8 @@ import AddCustomer from "./Components/Customer/add_customer";
 import SignUp from "./Components/Customer/signup";
 import CustomerDetails from "./Components/Customer/details";
 import PrevOrder from "./Components/Customer/prev_orders";
+import AddTable from "./Components/Tables/add_table";
+import Tables from "./Components/Tables/list_table";
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -115,6 +117,9 @@ function App() {
                     <Link to="/analytics" className="nav-link">Analytics</Link>
                   </li>
                   <li class="nav-item">
+                    <Link to="/tables" className="nav-link">Tables</Link>
+                  </li>
+                  <li class="nav-item">
                     <Link to="/orders" className="nav-link">Orders</Link>
                   </li>
                   <li class="nav-item">
@@ -133,6 +138,7 @@ function App() {
                       <Link to="/create/employee" className="dropdown-item">Employee</Link>
                       <Link to="/create/dish" className="dropdown-item">Dish</Link>
                       <Link to="/create/order" className="dropdown-item">Order</Link>
+                      <Link to="/create/table" className="dropdown-item">Table</Link>
                     </div>
                   </li>
                 </ul>
@@ -178,10 +184,13 @@ function App() {
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
             <Route path="/offers" element={<Offers></Offers>} ></Route>
             <Route path="/analytics" element={<Analytics></Analytics>} ></Route>
+            <Route path="/tables" element={<Tables></Tables>} ></Route>
+
             <Route path="/orders" element={<ListOrders></ListOrders>} ></Route>
             <Route path="/dishes" element={<ListDishes></ListDishes>} ></Route>
             <Route path="/create/order" element={<AddOrder></AddOrder>} ></Route>
             <Route path="/create/dish" element={<AddDish></AddDish>} ></Route>
+            <Route path="/create/table" element={<AddTable></AddTable>} ></Route>
             <Route path="/create/employee" element={<AddEmployee></AddEmployee>} ></Route>
             <Route path="/create/customer" element={<AddCustomer></AddCustomer>}></Route>
             <Route

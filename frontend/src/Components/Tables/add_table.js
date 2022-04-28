@@ -3,22 +3,38 @@ import React, { Fragment } from 'react';
 
 
 
-const AddOffer = ({ tablesList, setTablesList }) => {
+const AddTable = ({ tablesList, setTablesList }) => {
 
-	let newTable = { name: null, percent: null, description: null };
+	let newTable = { location: null };
 
 
 	// const onSubmitForm = async (e) => {
-	const onSubmitForm = (e) => {
+	const onSubmitForm = async (e) => {
 		e.preventDefault();
 		try {
 			// console.log("need to add :", newTable);
-			// console.log("type of offerList :", typeof (offersList));
-			// console.log("offersList : ", offersList);
-			// console.log("type of setOffersList :", typeof (setOffersList));
-			setTablesList(prevState => [...prevState, newTable])
-			// offersList.push(newTable);
+			// console.log("type of tableList :", typeof (tablesList));
+			// console.log("tablesList : ", tablesList);
+			// console.log("type of setTablesList :", typeof (setTablesList));
+			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/tables/add", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(newTable)
+			});
+			const jsonData = await response.json();
+
+			if (jsonData.success) {
+				setTablesList(prevState => [...prevState, newTable]);
+
+			}
+			else {
+				alert("Something Went Wrong");
+				console.log(jsonData.message);
+			}
+			// tablesList.push(newTable);
 			console.log("tablesList : ", tablesList);
+			window.location.reload();
+
 
 		} catch (error) {
 			console.error(error.message);
@@ -37,16 +53,18 @@ const AddOffer = ({ tablesList, setTablesList }) => {
 
 			<form className="d-flex m-5" onSubmit={onSubmitForm}>
 
-				<label>
-					<p>Location</p>
-					<input type="text"
+				<table className="table">
+					<th className='fs-5'>Location</th>
+					<th><input type="text"
 						className="form-control"
-						value={newTable.name}
-						onChange={e => newTable.name = e.target.value}
-					/>
-				</label>
+						value={newTable.location}
+						onChange={e => newTable.location = e.target.value}
+					/></th>
+					<th><button className="btn btn-success">Add</button></th>
+					
+				</table>
 				
-				<button className="btn btn-success">Add</button>
+				
 			</form>
 
 
