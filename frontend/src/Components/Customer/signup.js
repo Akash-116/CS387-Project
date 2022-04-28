@@ -3,7 +3,7 @@ import React, { Fragment, useState } from 'react';
 
 
 
-const SignUp = ({setsgnup}) => {
+const SignUp = ({ setsgnup }) => {
 
     // const [selectedImage, setSelectedImage] = useState(null);
     setsgnup(true);
@@ -12,7 +12,7 @@ const SignUp = ({setsgnup}) => {
     const [phno, setphno] = useState(null);
     const [pswd, setpswd] = useState(null);
     const [addr, setaddr] = useState(null);
-    
+
     const [newid, setnewid] = useState(null);
 
 
@@ -21,41 +21,41 @@ const SignUp = ({setsgnup}) => {
         // const onSubmitForm = (e) => {
         e.preventDefault();
         try {
-            
-            var customer={};
-            if(phno===""){
-                customer={
-                    username : username,
-                    name : name,
-                    pswd : pswd,
-                    addr : addr
-                }
-            }
-            else{
-                customer={
-                    username : username,
-                    name : name,
-                    pswd : pswd,
-                    ph_no : phno,
-                    addr : addr
-                }
-            }
-            
 
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/create",{
-                method : "POST",
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(customer)
+            var customer = {};
+            if (phno === "") {
+                customer = {
+                    username: username,
+                    name: name,
+                    pswd: pswd,
+                    addr: addr
+                }
+            }
+            else {
+                customer = {
+                    username: username,
+                    name: name,
+                    pswd: pswd,
+                    ph_no: phno,
+                    addr: addr
+                }
+            }
+
+
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/create", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(customer)
             });
-            
+
             const jsonData = await response.json();
-            if(jsonData.success){
+            if (jsonData.success) {
                 setnewid(jsonData.data);
                 alert("Success");
                 setsgnup(false);
-                // window.location="/";
+                window.location = "/";
             }
-            else{
+            else {
                 alert("Something Went Wrong");
                 console.log(jsonData.message);
             }
@@ -83,8 +83,8 @@ const SignUp = ({setsgnup}) => {
                         <label for="eusername" class="col-sm-3 col-form-label">Username : </label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="eusername"
-                            value={username}
-                            onChange={e=>setusername(e.target.value)}>
+                                value={username}
+                                onChange={e => setusername(e.target.value)}>
                             </input>
                         </div>
                     </div>
@@ -92,8 +92,8 @@ const SignUp = ({setsgnup}) => {
                         <label for="ename" class="col-sm-3 col-form-label">Name : </label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="ename"
-                            value={name}
-                            onChange={e=>{setname(e.target.value)}}>
+                                value={name}
+                                onChange={e => { setname(e.target.value) }}>
                             </input>
                         </div>
                     </div>
@@ -101,8 +101,8 @@ const SignUp = ({setsgnup}) => {
                         <label for="ephno" class="col-sm-3 col-form-label">Ph. No : </label>
                         <div class="col-sm-7">
                             <input type="number" class="form-control" id="ephno"
-                            value={phno}
-                            onChange={e=>setphno(e.target.value)}>
+                                value={phno}
+                                onChange={e => setphno(e.target.value)}>
                             </input>
                         </div>
                     </div>
@@ -110,8 +110,8 @@ const SignUp = ({setsgnup}) => {
                         <label for="epwd" class="col-sm-3 col-form-label">Password : </label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="epwd"
-                            value={pswd}
-                            onChange={e=>{setpswd(e.target.value)}}>
+                                value={pswd}
+                                onChange={e => { setpswd(e.target.value) }}>
                             </input>
                         </div>
                     </div>
@@ -119,16 +119,21 @@ const SignUp = ({setsgnup}) => {
                         <label for="eaddress" class="col-sm-3 col-form-label">Address : </label>
                         <div class="col-sm-7">
                             <textarea class="form-control" id="eaddress"
-                            value={addr}
-                            onChange={e=>{setaddr(e.target.value)}}>
+                                value={addr}
+                                onChange={e => { setaddr(e.target.value) }}>
                             </textarea>
                         </div>
                     </div>
 
 
 
-                    <button type="submit" class="btn btn-primary" disabled={!username || !pswd || username === "" || pswd===""}>Register</button>
+                    <button type="submit" class="btn btn-primary" disabled={!username || !pswd || username === "" || pswd === ""}>Register</button>
                 </form>
+
+                <div>
+                    Already have an account?
+                    Go to <button onClick={e => setsgnup(false)}> login</button>
+                </div>
             </div>
 
 

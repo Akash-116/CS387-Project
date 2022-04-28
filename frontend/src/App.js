@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
-import { Fragment,useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, } from "react-router-dom";
 
 import { useState } from "react";
@@ -50,14 +50,14 @@ function App() {
 
   const [cart, setCart] = useState({})
 
-  // useEffect(() => {
-  //   setsgnup(false);
-  // }, [])
-  
+  useEffect(() => {
+    setsgnup(false);
+  }, [])
+
   if (!token && !sgnup) {
     return <Login setToken={setToken} setsgnup={setsgnup}></Login>
   }
-  else if(sgnup){
+  else if (sgnup) {
     return <SignUp setsgnup={setsgnup}></SignUp>
   }
 
@@ -124,7 +124,7 @@ function App() {
                     create
                   </a>
                   <div class="dropdown-menu">
-                  <Link to="/create/customer" className="dropdown-item">Customer</Link>
+                    <Link to="/create/customer" className="dropdown-item">Customer</Link>
                     <Link to="/create/employee" className="dropdown-item">Employee</Link>
                     <Link to="/create/dish" className="dropdown-item">Dish</Link>
                     <Link to="/create/order" className="dropdown-item">Order</Link>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router,Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import PropTypes from "prop-types";
 import './Login.css';
 import SignUp from "../Customer/signup";
@@ -10,9 +10,9 @@ import SignUp from "../Customer/signup";
 async function loginUser(credentials) {
   // console.log("Credentials stringfy : ", JSON.stringify(credentials));
   console.log(credentials.role);
-  if(credentials.role==="customer"){
+  if (credentials.role === "customer") {
     console.log("if");
-    return fetch(process.env.REACT_APP_BACKEND_SERVER+'/customer/login', {
+    return fetch(process.env.REACT_APP_BACKEND_SERVER + '/customer/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -25,9 +25,9 @@ async function loginUser(credentials) {
         return data.json();
       });
   }
-  else{
+  else {
     console.log("else");
-    return fetch(process.env.REACT_APP_BACKEND_SERVER+'/employee/login', {
+    return fetch(process.env.REACT_APP_BACKEND_SERVER + '/employee/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -41,10 +41,10 @@ async function loginUser(credentials) {
       })
   }
 
-  
+
 }
 
-export default function Login({ setToken,setsgnup }) {
+export default function Login({ setToken, setsgnup }) {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [userRole, setUserRole] = useState("none");
@@ -53,9 +53,9 @@ export default function Login({ setToken,setsgnup }) {
   const handleSubmit = async e => {
     e.preventDefault();
     var token = await loginUser({
-      username : username,
-      pswd : password,
-      role : userRole
+      username: username,
+      pswd: password,
+      role: userRole
     });
     token.userrole = userRole;
     let ermg = setToken(token);
@@ -67,8 +67,8 @@ export default function Login({ setToken,setsgnup }) {
   //   setsgnup(true);
   // }
 
-  
-  
+
+
 
   return (
     <div className="login-wrapper mt-5">
@@ -88,8 +88,8 @@ export default function Login({ setToken,setsgnup }) {
           <p>Role</p>
           <select className='form-select' onChange={e => setUserRole(e.target.value)}>
             <option hidden disabled selected value="none"> -- select an option -- </option>
-            <option value="Employee">Employee</option>
-            <option value="Customer">Customer</option>
+            <option value="employee">Employee</option>
+            <option value="customer">Customer</option>
           </select>
         </label>
         <br />
@@ -101,13 +101,21 @@ export default function Login({ setToken,setsgnup }) {
           <button className='btn btn-primary' type="submit" disabled={username === "" || password === "" || userRole === "none"} >Submit</button>
         </div>
       </form>
-      <Router>
-      <div>Didn't have a Customer account?<Link to="/signup">signup</Link></div>
-      {/* <div>Didn't have a Customer account?<button className='btn btn-primary' type='submit'>signup</button> </div> */}
-      <Routes>
-        <Route path="/signup" element={<SignUp setsgnup={setsgnup}></SignUp>}></Route>
-      </Routes>
-      </Router>
+
+
+      <div>
+        Didn't have a Customer account?
+        <button className='btn btn-primary' onClick={e => setsgnup(true)} >signup</button>
+        {/* <button className='btn btn-primary' onClick={e => console.log("Clicked")} >signup</button> */}
+      </div>
+
+
+      {/* <Router>
+        <div>Didn't have a Customer account?<Link to="/signup">signup</Link></div>
+        <Routes>
+          <Route path="/signup" element={<SignUp setsgnup={setsgnup}></SignUp>}></Route>
+        </Routes>
+      </Router> */}
     </div>
   )
 }
