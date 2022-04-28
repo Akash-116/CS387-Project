@@ -11,6 +11,7 @@ async function loginUser(credentials) {
   // console.log("Credentials stringfy : ", JSON.stringify(credentials));
   console.log(credentials.role);
   if(credentials.role==="customer"){
+    console.log("if");
     return fetch(process.env.REACT_APP_BACKEND_SERVER+'/customer/login', {
       method: 'POST',
       headers: {
@@ -25,6 +26,7 @@ async function loginUser(credentials) {
       });
   }
   else{
+    console.log("else");
     return fetch(process.env.REACT_APP_BACKEND_SERVER+'/employee/login', {
       method: 'POST',
       headers: {

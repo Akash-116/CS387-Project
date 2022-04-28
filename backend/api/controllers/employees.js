@@ -50,8 +50,11 @@ exports.create_employee=function(req,res){
 }
 
 exports.get_employee=function(req,res){
+    console.log("Get Employee");
     var username=req.body.username;
     var pswd=req.body.pswd;
+    console.log(username);
+    console.log(pswd);
     pgquery='select * from employee where username=$1::text';
 
     client.query(pgquery, [username], function(err, res1) {

@@ -53,7 +53,7 @@ const SignUp = ({setsgnup}) => {
                 setnewid(jsonData.data);
                 alert("Success");
                 setsgnup(false);
-                window.location="/";
+                // window.location="/";
             }
             else{
                 alert("Something Went Wrong");
@@ -127,7 +127,7 @@ const SignUp = ({setsgnup}) => {
 
 
 
-                    <button type="submit" class="btn btn-primary" disabled={!username || !pswd || username === "" || pswd===""}>Submit</button>
+                    <button type="submit" class="btn btn-primary" disabled={!username || !pswd || username === "" || pswd===""}>Register</button>
                 </form>
             </div>
 

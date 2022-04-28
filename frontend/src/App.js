@@ -50,9 +50,9 @@ function App() {
 
   const [cart, setCart] = useState({})
 
-  useEffect(() => {
-    setsgnup(false);
-  }, [])
+  // useEffect(() => {
+  //   setsgnup(false);
+  // }, [])
   
   if (!token && !sgnup) {
     return <Login setToken={setToken} setsgnup={setsgnup}></Login>
