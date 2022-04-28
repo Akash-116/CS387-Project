@@ -30,6 +30,7 @@ import CustomerDetails from "./Components/Customer/details";
 import PrevOrder from "./Components/Customer/prev_orders";
 import AddTable from "./Components/Tables/add_table";
 import Tables from "./Components/Tables/list_table";
+import DeliveryPersons from "./Components/Delivery/list_delivery_personnel";
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -117,6 +118,9 @@ function App() {
                     <Link to="/analytics" className="nav-link">Analytics</Link>
                   </li>
                   <li class="nav-item">
+                    <Link to="/delivery_persons" className="nav-link">DeliveryPersons</Link>
+                  </li>
+                  <li class="nav-item">
                     <Link to="/tables" className="nav-link">Tables</Link>
                   </li>
                   <li class="nav-item">
@@ -185,6 +189,7 @@ function App() {
             <Route path="/offers" element={<Offers></Offers>} ></Route>
             <Route path="/analytics" element={<Analytics></Analytics>} ></Route>
             <Route path="/tables" element={<Tables></Tables>} ></Route>
+            <Route path="/delivery_persons" element={<DeliveryPersons></DeliveryPersons>} ></Route>
 
             <Route path="/orders" element={<ListOrders></ListOrders>} ></Route>
             <Route path="/dishes" element={<ListDishes></ListDishes>} ></Route>

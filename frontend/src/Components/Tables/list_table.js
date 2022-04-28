@@ -10,7 +10,7 @@ import AddTable from './add_table';
 const CreateTableElem = ({table}) => {
 
 	const [status, setTableStatus] = useState(table.status);
-	console.log("tryna create");
+	// console.log("tryna create");
 
 
 	let newTableStatus = { table_id: table.table_id, status: status };
@@ -46,7 +46,7 @@ const CreateTableElem = ({table}) => {
 	else {
 		st = "unoccupied";
 	}
-	console.log("tryna return");
+	// console.log("tryna return");
 	return (
 		<Fragment>
 			<tr>
@@ -122,18 +122,21 @@ const Tables = () => {
 
 			{/* <AddTable tablesList={tablesList} setTablesList={setTablesList} > </AddTable> */}
 			<div className=' border  m-3 shadow rounded'><table className='table table-hover'>
-				<tr>
+				<thead>
+					<tr>
 					<th>ID</th>
 					<th>Location</th>
 					<th>Status</th>
 					{/* <th></th> */}
 				</tr>
-				{tablesList.map(table => {
+				</thead>
+				<tbody>{tablesList.map(table => {
 					console.log(table);
 					return <CreateTableElem table={table}></CreateTableElem>;
 				}
 
-				)}
+				)}</tbody>
+				
 			</table></div>
 			
 			

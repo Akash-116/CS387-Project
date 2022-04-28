@@ -51,7 +51,7 @@ exports.delete_cart=function(req,res){
             }
             else{
                 res.status(200).send({
-                    message : true
+                    success : true
                 });
             }
         }

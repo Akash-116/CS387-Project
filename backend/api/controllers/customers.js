@@ -123,7 +123,7 @@ exports.get_all_customers = function (req, res) {
         }
         else {
             res.status(200).send({
-                message: true,
+                success: true,
                 data: res1.rows
             });
         }
