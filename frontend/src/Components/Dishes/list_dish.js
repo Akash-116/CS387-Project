@@ -105,7 +105,7 @@ const ListDishes = ({ enableOrdering = false, cart = null, setCart = null }) => 
     const getDishesList = async () => {
         try {
 
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/all")
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/all", {credentials: 'include'})
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json()
 
