@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router,Link, Route, Routes } from 'react-router-dom';
 import PropTypes from "prop-types";
 import './Login.css';
+import SignUp from "../Customer/signup";
+
+
 
 
 async function loginUser(credentials) {
   // console.log("Credentials stringfy : ", JSON.stringify(credentials));
   console.log(credentials.role);
-  if(credentials.role=="customer"){
+  if(credentials.role==="customer"){
     return fetch(process.env.REACT_APP_BACKEND_SERVER+'/customer/login', {
       method: 'POST',
       headers: {
@@ -39,7 +43,7 @@ async function loginUser(credentials) {
 }
 
 
-export default function Login({ setToken }) {
+export default function Login({ setToken,setsgnup }) {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
   const [userRole, setUserRole] = useState("none");
@@ -58,6 +62,12 @@ export default function Login({ setToken }) {
     // console.log("token is : ", token)
   }
 
+  // const MakeSignupTrue=()=>{
+  //   setsgnup(true);
+  // }
+
+  
+  
 
   return (
     <div className="login-wrapper mt-5">
@@ -92,6 +102,13 @@ export default function Login({ setToken }) {
           <button className='btn btn-primary' type="submit" disabled={username === "" || password === "" || userRole === "none"} >Submit</button>
         </div>
       </form>
+      <Router>
+      <div>Didn't have a Customer account?<Link to="/signup">signup</Link></div>
+      {/* <div>Didn't have a Customer account?<button className='btn btn-primary' type='submit'>signup</button> </div> */}
+      <Routes>
+        <Route path="/signup" element={<SignUp setsgnup={setsgnup}></SignUp>}></Route>
+      </Routes>
+      </Router>
     </div>
   )
 }

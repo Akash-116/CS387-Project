@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
-import { Fragment, } from "react";
+import { Fragment,useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, } from "react-router-dom";
 
 import { useState } from "react";
@@ -24,6 +24,8 @@ import ListDishes from "./Components/Dishes/list_dish";
 import AddEmployee from "./Components/Employee/add_employee";
 import CustomerHome from "./Components/Customer/home";
 import CustomerCart from "./Components/Customer/cart";
+import AddCustomer from "./Components/Customer/add_customer";
+import SignUp from "./Components/Customer/signup";
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -42,13 +44,20 @@ function App() {
   // const token = getToken();
 
   const { token, setToken } = useToken();
+  const [sgnup, setsgnup] = useState(false);
   console.log("token is created : ", token);
 
   const [cart, setCart] = useState({})
 
-
-  if (!token) {
-    return <Login setToken={setToken}></Login>
+  useEffect(() => {
+    setsgnup(false);
+  }, [])
+  
+  if (!token && !sgnup) {
+    return <Login setToken={setToken} setsgnup={setsgnup}></Login>
+  }
+  else if(sgnup){
+    return <SignUp setsgnup={setsgnup}></SignUp>
   }
 
 
@@ -111,6 +120,7 @@ function App() {
                     create
                   </a>
                   <div class="dropdown-menu">
+                  <Link to="/create/customer" className="dropdown-item">Customer</Link>
                     <Link to="/create/employee" className="dropdown-item">Employee</Link>
                     <Link to="/create/dish" className="dropdown-item">Dish</Link>
                     <Link to="/create/order" className="dropdown-item">Order</Link>
@@ -158,6 +168,7 @@ function App() {
             <Route path="/create/order" element={<AddOrder></AddOrder>} ></Route>
             <Route path="/create/dish" element={<AddDish></AddDish>} ></Route>
             <Route path="/create/employee" element={<AddEmployee></AddEmployee>} ></Route>
+            <Route path="/create/customer" element={<AddCustomer></AddCustomer>}></Route>
             <Route
               path="*"
               element={

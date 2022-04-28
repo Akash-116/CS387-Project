@@ -1,11 +1,12 @@
-import React, { Fragment, useState} from 'react';
+import React, { Fragment, useState } from 'react';
 
 
 
-const AddCustomer = () => {
+
+const SignUp = ({setsgnup}) => {
 
     // const [selectedImage, setSelectedImage] = useState(null);
-
+    setsgnup(true);
     const [username, setusername] = useState(null);
     const [name, setname] = useState(null);
     const [phno, setphno] = useState(null);
@@ -16,28 +17,11 @@ const AddCustomer = () => {
 
 
 
-    // let newDish = {
-    //     dish_name: null,
-    //     recipe: null,
-    //     time_taken: null,
-    //     dish_type: null,
-    //     cost: null,
-    //     rating: null,
-    //     photo: null,
-    // };
-
-
     const onSubmitForm = async (e) => {
         // const onSubmitForm = (e) => {
         e.preventDefault();
         try {
-            // console.log("need to add :", newDish);
-            // console.log("type of offerList :", typeof (offersList));
-            // console.log("offersList : ", offersList);
-            // console.log("type of setOffersList :", typeof (setOffersList));
-            // setDishesList(prevState => [...prevState, newDish])
-            // offersList.push(newDish);
-            // console.log("offersList : ", offersList);
+            
             var customer={};
             if(phno===""){
                 customer={
@@ -68,12 +52,14 @@ const AddCustomer = () => {
             if(jsonData.success){
                 setnewid(jsonData.data);
                 alert("Success");
+                setsgnup(false);
+                window.location="/";
             }
             else{
                 alert("Something Went Wrong");
                 console.log(jsonData.message);
             }
-            window.location.reload();
+            // window.location.reload();
 
         } catch (error) {
             console.error(error.message);
@@ -87,7 +73,7 @@ const AddCustomer = () => {
     return (
         <Fragment>
             <div>
-                <h2>Add a Customer here</h2>
+                <h2>Register</h2>
             </div>
 
             <div className='container border pt-5 pb-5'>
@@ -152,4 +138,4 @@ const AddCustomer = () => {
 
 
 
-export default AddCustomer;
+export default SignUp;
