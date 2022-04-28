@@ -24,12 +24,9 @@ import ListDishes from "./Components/Dishes/list_dish";
 import AddEmployee from "./Components/Employee/add_employee";
 import CustomerHome from "./Components/Customer/home";
 import CustomerCart from "./Components/Customer/cart";
-<<<<<<< Updated upstream
 import AddCustomer from "./Components/Customer/add_customer";
 import SignUp from "./Components/Customer/signup";
-=======
 import CustomerDetails from "./Components/Customer/details";
->>>>>>> Stashed changes
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
