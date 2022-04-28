@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 const bcrypt=require('bcrypt');
 const saltRounds=10;
-const client=require("../../connectDB");
+const client=require("../../connectDB").client;
 
 exports.create_employee=function(req,res){
     var user=req.body;

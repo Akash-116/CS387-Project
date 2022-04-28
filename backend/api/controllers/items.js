@@ -1,4 +1,4 @@
-const client=require("../../connectDB");
+const client=require("../../connectDB").client;
 
 exports.get_all_items=function(req,res){
     pgquery='select * from item';

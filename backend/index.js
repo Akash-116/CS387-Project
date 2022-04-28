@@ -12,8 +12,10 @@ const analyticsRoutes = require('./api/routes/analytics');
 const areaRoutes = require('./api/routes/areas');
 const bodyParser = require('body-parser');
 
+const sessobj=require("./connectDB").sessobj;
 
 var app = express()
+app.use(sessobj);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('images'))
@@ -44,6 +46,3 @@ var server = app.listen(process.env.port, function () {
     var port = server.address().port
     console.log("app listening at http://localhost:%s", port)
 });
-
-
-

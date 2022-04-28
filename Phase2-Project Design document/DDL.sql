@@ -75,6 +75,21 @@ drop function if exists update_customer_on_order;
 
 -- drop function if exists insert_date_on_offer;
 
+drop table if exists "session" cascade ;
+
+drop index if exists "IDX_session_expire" ;
+
+CREATE TABLE "session" (
+  "sid" varchar NOT NULL COLLATE "default",
+	"sess" json NOT NULL,
+	"expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+CREATE INDEX "IDX_session_expire" ON "session" ("expire");
+
 
 create table item( item_id serial, item_name text, cost int, quan_inv int default 0, unit text, primary key(item_id));
 

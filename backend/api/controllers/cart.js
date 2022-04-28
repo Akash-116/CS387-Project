@@ -1,4 +1,4 @@
-const client=require("../../connectDB");
+const client=require("../../connectDB").client;
 
 exports.get_cart=function(req,res){
     var id=req.params.id;

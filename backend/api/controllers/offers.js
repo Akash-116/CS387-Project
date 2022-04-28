@@ -1,4 +1,4 @@
-const client=require("../../connectDB");
+const client=require("../../connectDB").client;
 
 
 exports.get_all=function(req,res){

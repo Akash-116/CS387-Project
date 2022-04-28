@@ -1,4 +1,4 @@
-const client=require("../../connectDB");
+const client=require("../../connectDB").client;
 
 exports.get_all_tables=function(req,res){
     pgquery='select * from table_status';
