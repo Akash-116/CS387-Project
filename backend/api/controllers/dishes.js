@@ -2,7 +2,7 @@ const client=require("../../connectDB").client;
 
 exports.get_all_dishes=function(req,res){
     pgquery='select * from dish';
-    console.log(req.session.isAuth);
+    // console.log(req.session.isAuth);
 
     client.query(pgquery,  function(err, res1) {
         if (err) {
