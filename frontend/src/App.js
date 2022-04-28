@@ -27,6 +27,7 @@ import CustomerCart from "./Components/Customer/cart";
 import AddCustomer from "./Components/Customer/add_customer";
 import SignUp from "./Components/Customer/signup";
 import CustomerDetails from "./Components/Customer/details";
+import PrevOrder from "./Components/Customer/prev_orders";
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -69,71 +70,79 @@ function App() {
         <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
           <Link to="/" className="navbar-brand m-4">YARA</Link>
 
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+          <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
           </button>
 
-          <div class="collapse navbar-collapse" id="collapsibleNavbar">
+          <div class="justify-content-between collapse navbar-collapse" id="collapsibleNavbar">
 
-            {(token.userrole === "customer") &&
+            <div className="d-flex">
+              {(token.userrole === "customer") &&
 
-              <ul class="navbar-nav">
-                <li class="nav-item">
-                  <Link to="/home" className="nav-link">Order</Link>
-                </li>
-                <li class="nav-item">
-                  <Link to="/cart" className="nav-link">Cart</Link>
-                </li>
-                <li class="nav-item">
-                  <Link to="/customer/details" className="nav-link">Profile</Link>
-                </li>
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <Link to="/home" className="nav-link">Order</Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/cart" className="nav-link">Cart</Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/customer/details" className="nav-link">Profile</Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/customer/prevorders" className="nav-link">Prev Orders</Link>
+                  </li>
 
-              </ul>
-            }
-
-
-            {!(token.userrole === "customer") &&
-
-              <ul class="navbar-nav">
+                </ul>
+              }
 
 
-                <li class="nav-item">
-                  <Link to="/dashboard" className="nav-link">Dashboard</Link>
-                </li>
-                <li class="nav-item">
-                  <Link to="/preferences" className="nav-link">Preferences</Link>
-                </li>
-                <li class="nav-item">
-                  <Link to="/offers" className="nav-link">Offers</Link>
-                </li>
-                <li class="nav-item">
-                  <Link to="/analytics" className="nav-link">Analytics</Link>
-                </li>
-                <li class="nav-item">
-                  <Link to="/orders" className="nav-link">Orders</Link>
-                </li>
-                <li class="nav-item">
-                  <Link to="/dishes" className="nav-link">Dishes</Link>
-                </li>
-                <li class="nav-item">
-                  <Link to="/error" className="nav-link">ErrorPg</Link>
-                </li>
+              {!(token.userrole === "customer") &&
 
-                <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                    create
-                  </a>
-                  <div class="dropdown-menu">
-                    <Link to="/create/customer" className="dropdown-item">Customer</Link>
-                    <Link to="/create/employee" className="dropdown-item">Employee</Link>
-                    <Link to="/create/dish" className="dropdown-item">Dish</Link>
-                    <Link to="/create/order" className="dropdown-item">Order</Link>
-                  </div>
-                </li>
-              </ul>
-            }
+                <ul class="navbar-nav">
 
-            <button className=" btn btn-danger ms-1" onClick={e => { setToken({ token: 'ERROR' }); window.location = '/' }}>Logout</button>
+
+                  <li class="nav-item">
+                    <Link to="/dashboard" className="nav-link">Dashboard</Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/preferences" className="nav-link">Preferences</Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/offers" className="nav-link">Offers</Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/analytics" className="nav-link">Analytics</Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/orders" className="nav-link">Orders</Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/dishes" className="nav-link">Dishes</Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/error" className="nav-link">ErrorPg</Link>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                      create
+                    </a>
+                    <div class="dropdown-menu">
+                      <Link to="/create/customer" className="dropdown-item">Customer</Link>
+                      <Link to="/create/employee" className="dropdown-item">Employee</Link>
+                      <Link to="/create/dish" className="dropdown-item">Dish</Link>
+                      <Link to="/create/order" className="dropdown-item">Order</Link>
+                    </div>
+                  </li>
+                </ul>
+              }
+            </div>
+            <div className="d-flex me-5">
+              <button className=" btn btn-danger ms-1" onClick={e => { setToken({ token: 'ERROR' }); window.location = '/' }}>Logout</button>
+            </div>
+
+
           </div>
         </nav>
 
@@ -164,6 +173,7 @@ function App() {
             <Route path="/cart" element={<CustomerCart cart={cart} setCart={setCart}></CustomerCart>} ></Route>
             <Route path="/home" element={<CustomerHome cart={cart} setCart={setCart} ></CustomerHome>} ></Route>
             <Route path="/customer/details" element={<CustomerDetails  ></CustomerDetails>} ></Route>
+            <Route path="/customer/prevorders" element={<PrevOrder  ></PrevOrder>} ></Route>
             <Route path="/dashboard" element={<Dashboard></Dashboard>} ></Route>
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
             <Route path="/offers" element={<Offers></Offers>} ></Route>

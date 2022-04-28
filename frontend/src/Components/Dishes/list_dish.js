@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react';
 
 import testDishes from '../TestData/testDishes';
-
+import ReactPaginate from 'react-paginate';
 
 const name2acronym = (str) => {
     try {
@@ -126,19 +126,84 @@ const ListDishes = ({ enableOrdering = false, cart = null, setCart = null }) => 
     }, []);
 
 
+    /* PAGINATION ELEMENTS */
+    const dishesPerPage = 6;
+
+    const [pageNumber, setPageNumber] = useState(0);
+    const pagesVisited = pageNumber * dishesPerPage;
+
+    const dishesListPage = allDishes
+        .slice(pagesVisited, pagesVisited + dishesPerPage)
+        .map(dish => (
+            <EachDish dish={dish} enableOrdering={enableOrdering} cart={cart} setCart={setCart} ></EachDish>
+        ));
+
+    const pageCount = Math.ceil(allDishes.length / dishesPerPage);
+
+    const changePage = ({ selected }) => {
+        setPageNumber(selected);
+    };
+    /* PAGINATION ELEMENTS */
+
     return (
         <div className=' container'>
 
-            <h2>Dishes Page</h2>
-            <p>{cart2[1]}</p>
+            {(enableOrdering) &&
+                <Fragment>
 
-            {/* <AddDish dishesList={dishesList} setDishesList={setDishesList} > </AddDish> */}
+                    <h2>Dishes Page</h2>
+                    <p>{cart2[1]}</p>
 
-            {allDishes.map(dish => (
-                <EachDish dish={dish} enableOrdering={enableOrdering} cart={cart} setCart={setCart} ></EachDish>
-            ))}
-            {/* <EachDish dish={allDishes[0]} enableOrdering={enableOrdering} cart={cart} setCart={setCart} ></EachDish> */}
+                    {/* <AddDish dishesList={dishesList} setDishesList={setDishesList} > </AddDish> */}
 
+                    {allDishes.map(dish => (
+                        <EachDish dish={dish} enableOrdering={enableOrdering} cart={cart} setCart={setCart} ></EachDish>
+                    ))}
+                    {/* <EachDish dish={allDishes[0]} enableOrdering={enableOrdering} cart={cart} setCart={setCart} ></EachDish> */}
+                </Fragment>
+
+            }
+            {!(enableOrdering) &&
+                <Fragment>
+
+
+                    {dishesListPage}
+
+                    {/* So elaborate classes, so that the bootstrap matches this pagination implementation */}
+                    <div className='container justify-content-center'>
+
+                        <ReactPaginate
+                            previousLabel={"< "}
+                            nextLabel={">"}
+                            pageCount={pageCount}
+                            onPageChange={changePage}
+
+                            pageRangeDisplayed={1}
+                            marginPagesDisplayed={2}
+
+                            containerClassName={"pagination"}
+
+                            breakClassName={"page-item"}
+                            pageClassName={"page-item"}
+                            previousClassName={"page-item"}
+                            disabledClassName={"page-item"}
+                            nextClassName={"page-item"}
+                            activeClassName={"page-item bg-warning"}
+
+                            pageLinkClassName={"page-link"}
+                            breakLinkClassName={"page-link"}
+                            activeLinkClassName={"page-link bg-info"}
+                            previousLinkClassName={"page-link"}
+                            nextLinkClassName={"page-link"}
+                            disabledLinkClassName={"page-link"}
+
+                            renderOnZeroPageCount={e => (<h3>Nothing to see here...</h3>)}
+                        />
+
+                    </div>
+                </Fragment>
+
+            }
         </div>
     );
 };

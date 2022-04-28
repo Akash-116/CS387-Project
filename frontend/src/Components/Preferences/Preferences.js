@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PaginationComp from '../Pagination';
 
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -36,6 +37,11 @@ const Preferences = () => {
   return (
     <div>
       <h5>Preferences - Ths is a dummy component (rough work kinda)</h5>
+
+      <p>3. Lets try Pagination</p>
+      <PaginationComp></PaginationComp>
+
+
       <p>1. Lets try creating a nice table first</p>
       <div className='container'>
         <form>
@@ -100,6 +106,8 @@ const Preferences = () => {
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
+
+      <p>2. Lets try creating a upload Image component</p>
 
       <UploadAndDisplayImage></UploadAndDisplayImage>
 
