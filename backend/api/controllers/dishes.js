@@ -134,8 +134,8 @@ exports.edit_dish=function(req,res){
 exports.add_dish=function(req,res){
     var dish=req.body;
 
-    pgquery='insert into dish(dish_name, recipe, dish_type, time_taken) values($1,$2,$3,$4::int) returning dish_id';
-    client.query(pgquery, [dish.dish_name, dish.recipe, dish.dish_type, dish.time_taken], function(err, res1) {
+    pgquery='insert into dish(dish_name, recipe, dish_type, time_taken,cost) values($1,$2,$3,$4::int,$5::int) returning dish_id';
+    client.query(pgquery, [dish.dish_name, dish.recipe, dish.dish_type, dish.time_taken,dish.cost], function(err, res1) {
         if (err) {
             console.log(err.message);
             res.status(500).send({
@@ -153,22 +153,34 @@ exports.add_dish=function(req,res){
 }
 
 exports.add_items_dish=function(req,res){
+    console.log(req.body);
     var id = req.body.dish_id;
     var item_id = req.body.item_id;
     var quantity = req.body.quantity;
 
-    pgquery='insert into dish_items(dish_id, item_id, quantity) values($1::int,$2::int,$3::int)';
+    pgquery='insert into dish_items(dish_id, item_id, quantity) values($1::int,$2::int,$3::int) returning dish_id,item_id';
     client.query(pgquery,[id, item_id, quantity],function(err,res1){
         if(err){
+            console.log("Err",err.message);
             res.status(500).send({
                 success : false,
                 message : err.message
             });
         }
         else{
-            res.status(200).send({
-                success: true
-            });
+            if(res1.rows.length<1){
+                console.log("Else:","No item with that id pair");
+                res.status(500).send({
+                    success : false,
+                    message : "No item with that id pair"
+                })
+            }
+            else{
+                res.status(200).send({
+                    success: true
+                });
+            }
+            
         }
     })
 }

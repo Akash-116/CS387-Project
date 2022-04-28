@@ -4,13 +4,18 @@ import testDishes from '../TestData/testDishes';
 
 
 const name2acronym = (str) => {
-    const strArr = str.split(' ');
-    let res = '';
-    strArr.forEach(el => {
-        const [char] = el;
-        res += char;
-    });
-    return res;
+    try {
+        const strArr = str.split(' ');
+        let res = '';
+        strArr.forEach(el => {
+            const [char] = el;
+            res += char;
+        });
+        return res;
+    
+    } catch (error) {
+        return ''
+    }
 }
 
 const countFromCart = (dish, cart, enableOrdering) => {
