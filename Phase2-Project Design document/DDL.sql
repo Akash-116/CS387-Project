@@ -75,6 +75,21 @@ drop function if exists update_customer_on_order;
 
 -- drop function if exists insert_date_on_offer;
 
+drop table if exists "session" cascade ;
+
+drop index if exists "IDX_session_expire" ;
+
+CREATE TABLE "session" (
+  "sid" varchar NOT NULL COLLATE "default",
+	"sess" json NOT NULL,
+	"expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+CREATE INDEX "IDX_session_expire" ON "session" ("expire");
+
 
 create table item( item_id serial, item_name text, cost int, quan_inv int default 0, unit text, primary key(item_id));
 
@@ -83,7 +98,8 @@ create table dish( dish_id serial, dish_name text, recipe text, time_taken int, 
 
 
 create table dish_items
-    ( dish_id int, item_id int, quantity int, primary key(dish_id,item_id),
+    ( dish_id int not null, item_id int not null, quantity int,
+     constraint dish_item_unique unique(dish_id,item_id),
      foreign key(dish_id) references dish on delete cascade,
      foreign key(item_id) references item on delete
      set null);

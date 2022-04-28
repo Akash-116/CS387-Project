@@ -1,10 +1,8 @@
-const { Client } = require("pg")
 const dotenv = require("dotenv");
 const bcrypt = require('bcrypt')
 const saltRounds = 10
-dotenv.config();
-const client = new Client({ user: process.env.user, database: process.env.db, password: process.env.pswd, host: process.env.host, port: process.env.psql_port })
-client.connect()
+
+const client=require("../../connectDB").client;
 
 exports.create_customer = function (req, res) {
     var user = req.body;
@@ -55,7 +53,7 @@ exports.get_customer = function (req, res) {
     var pswd = req.body.pswd;
     console.log(username);
     pgquery = 'select * from customer where username=$1::text';
-
+    // console.log(req.session);
     client.query(pgquery, [username], function (err, res1) {
         if (err) {
             console.log(err.message)
@@ -96,6 +94,8 @@ exports.get_customer = function (req, res) {
                             });
                         }
                         else {
+                            console.log("wowww")
+                            // req.session.isAuth = true;
                             res.status(200).send({
                                 success: true,
                                 token: 'VALID',
@@ -133,9 +133,9 @@ exports.get_all_customers = function (req, res) {
 exports.edit_customer = function (req, res) {
     var user = req.body;
 
-    pgquery = 'update customer set name = $2,ph_no=$3::bigint,addr=$4 where username = $1';
+    pgquery = 'update customer set username=$1, name = $2,ph_no=$3::bigint,addr=$4 where c_id=$5::int';
 
-    client.query(pgquery, [user.username, user.name, user.ph_no, user.addr], function (err, res1) {
+    client.query(pgquery, [user.username, user.name, user.ph_no, user.addr,user.c_id], function (err, res1) {
         if (err) {
             console.log(err.message);
             res.status(500).send({

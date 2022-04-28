@@ -178,7 +178,7 @@ function App() {
             <Route path="/" element={<h3>Welcome to YARA</h3>} ></Route>
             <Route path="/cart" element={<CustomerCart cart={cart} setCart={setCart}></CustomerCart>} ></Route>
             <Route path="/home" element={<CustomerHome cart={cart} setCart={setCart} ></CustomerHome>} ></Route>
-            <Route path="/customer/details" element={<CustomerDetails  ></CustomerDetails>} ></Route>
+            <Route path="/customer/details" element={<CustomerDetails token={token} setToken={setToken} ></CustomerDetails>} ></Route>
             <Route path="/customer/prevorders" element={<PrevOrder  ></PrevOrder>} ></Route>
             <Route path="/dashboard" element={<Dashboard></Dashboard>} ></Route>
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>

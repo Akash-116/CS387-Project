@@ -1,15 +1,59 @@
 import React, { useState } from 'react';
 
 
-const CustomerDetails = () => {
+const CustomerDetails = ({token,setToken}) => {
+    console.log(token);
+    const user=token.data;
 
-    const [cUsername, setCUsername] = useState()
-    const [cName, setCName] = useState()
-    const [cPhNo, setCPhNo] = useState()
-    const [cAddress, setCAddress] = useState()
-    const [cNumDish, setCNumDish] = useState(15)
-    const [cNumOrder, setCNumOrder] = useState(25)
-    const [editDetails, setEditDetails] = useState(false)
+    const [cUsername, setCUsername] = useState(user.username);
+    const [cName, setCName] = useState(user.name);
+    const [cPhNo, setCPhNo] = useState(user.ph_no);
+    const [cAddress, setCAddress] = useState(user.addr);
+    const [cNumDish, setCNumDish] = useState(user.num_orders);
+    const [cNumOrder, setCNumOrder] = useState(user.num_dish);
+    const [editDetails, setEditDetails] = useState(false);
+
+
+    const SaveEditDetails=async ()=>{
+        var new_user={
+            username : cUsername,
+            name : cName,
+            ph_no : cPhNo,
+            addr : cAddress,
+            c_id : user.c_id
+        }
+        try {
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/edit",{
+                method : "POST",
+                headers : {"Content-Type" : "application/json"},
+                body : JSON.stringify(new_user)
+            });
+            
+            const jsonData = await response.json();
+            if(jsonData.success){
+                alert("Success");
+                setEditDetails(false);
+                new_user.num_dish=cNumDish;
+                new_user.num_orders=cNumOrder;
+                var new_token={
+                    success : token.success,
+                    token : token.token,
+                    data : new_user,
+                    userrole : token.userrole
+                }
+                setToken(new_token);
+            }
+            else{
+                alert("Something Went Wrong");
+                console.log(jsonData.message);
+            }
+
+        } catch (error) {
+            console.error(error.message);
+            alert("Error connecting backend");
+        }
+    }
+
 
     return (
 
@@ -82,7 +126,7 @@ const CustomerDetails = () => {
                         {/* <button type="submit" class="btn btn-primary">Submit</button> */}
 
                         <button disabled={editDetails} class="btn btn-primary m-3" onClick={e => { e.preventDefault(); setEditDetails(true) }} >Edit</button>
-                        <button disabled={!editDetails} class="btn btn-primary m-3" onClick={e => { e.preventDefault(); setEditDetails(false) }} >Save</button>
+                        <button disabled={!editDetails} class="btn btn-primary m-3" onClick={e => { e.preventDefault(); SaveEditDetails() }} >Save</button>
                     </form>
                 </div>
             </div>
