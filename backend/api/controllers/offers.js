@@ -101,3 +101,40 @@ exports.add_dishes_offer=function(req,res){
         })
     }
 }
+
+exports.delete_offer=function(req,res){
+    var id=req.params.id;
+    if((req.session.role != 'Manager')){
+        res.status(500).send({
+            success: false,
+            message: 'no access'
+        });
+    }
+    else{
+        pgquery='delete from offer where offer_id=$1::int returning offer_id';
+
+        client.query(pgquery, [id], function(err, res1) {
+            if (err) {
+                console.log(err.message)
+                res.status(500).send({
+                    success: false,
+                    message: err.message
+                });
+            } else {
+                var rows=res1.rows;
+                if(rows.length==0){
+                    console.log('No offer with that id');
+                    res.status(500).send({
+                        success: false,
+                        message: 'No offer with that id'
+                    });
+                }
+                else{
+                    res.status(200).send({
+                        success : true
+                    });
+                }
+            }
+        });
+    }
+}
