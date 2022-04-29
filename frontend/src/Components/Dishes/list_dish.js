@@ -142,11 +142,13 @@ const EachDish = ({ token, dish, enableOrdering = false, cart = null, setCart = 
                     </div>
                     {/* Ratings */}
                     <div className='d-flex'>
-                        <p> {[...Array(dish.rating)].map(e => <i className='text-warning fa fa-star'></i>)}   </p>
+                        <p> {[...Array(Math.floor(dish.rating))].map(e => <i className='text-warning fa fa-star'></i>)}   </p>
                     </div>
-                    <div className='d-flex'>
-                        <button className='btn btn-danger' onClick={onDelete}>Delete</button>
-                    </div>
+                    {(!enableOrdering) &&
+                        <div className='d-flex'>
+                            <button className='btn btn-danger' onClick={onDelete}>Delete</button>
+                        </div>
+                    }
 
                     {(enableOrdering) &&
                         <div>
