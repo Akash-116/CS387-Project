@@ -65,10 +65,19 @@ const EditEmployee = ({ token, setToken }) => {
 		// const onSubmitForm = (e) => {
 		var new_employee = {
 			username: username,
+			d_status: user.d_status,
 			name: name,
 			ph_no: phno,
 			addr: addr,
-			e_id: user.e_id
+			e_id: user.e_id,
+			e_type: user.e_type,
+			join_date: user.join_date,
+			left_date: user.left_date,
+			prim_area_id: user.prim_area_id,
+			pswd: user.pswd,
+			salary: user.salary,
+			sec_area_id: user.sec_area_id,
+			status: user.status
 		}
 		try {
 			// console.log("need to add :", newDish);

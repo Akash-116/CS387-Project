@@ -166,9 +166,9 @@ function App() {
 
                   {(token.data.e_type === "Manager") &&
                     <ul class="navbar-nav">
-                      {/* <li class="nav-item">
+                      <li class="nav-item">
                         <Link to="/edit_details" className="nav-link">Details</Link>
-                      </li> */}
+                      </li>
 
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
@@ -223,9 +223,9 @@ function App() {
                   {(token.data.e_type === "Billing Manager") &&
                     <ul class="navbar-nav">
 
-                      {/* <li class="nav-item">
+                      <li class="nav-item">
                         <Link to="/edit_details" className="nav-link">Details</Link>
-                      </li> */}
+                      </li>
 
                       <li class="nav-item">
                         <Link to="/offers" className="nav-link">Offers</Link>
@@ -262,9 +262,9 @@ function App() {
                   {(token.data.e_type === "Chef") &&
                     <ul class="navbar-nav">
 
-                      {/* <li class="nav-item">
+                      <li class="nav-item">
                         <Link to="/edit_details" className="nav-link">Details</Link>
-                      </li> */}
+                      </li>
 
                       <li class="nav-item">
                         <Link to="/offers" className="nav-link">Offers</Link>
@@ -293,9 +293,9 @@ function App() {
                   }
                   {(token.data.e_type === "Head Waiter") &&
                     <ul class="navbar-nav">
-                      {/* <li class="nav-item">
+                      <li class="nav-item">
                         <Link to="/edit_details" className="nav-link">Details</Link>
-                      </li> */}
+                      </li>
 
                       <li class="nav-item">
                         <Link to="/offers" className="nav-link">Offers</Link>
@@ -328,9 +328,9 @@ function App() {
                   }
                   {(token.data.e_type === "Delivery") &&
                     <ul class="navbar-nav">
-                      {/* <li class="nav-item">
+                      <li class="nav-item">
                         <Link to="/edit_details" className="nav-link">Details</Link>
-                      </li> */}
+                      </li>
 
 
                       <li class="nav-item">
