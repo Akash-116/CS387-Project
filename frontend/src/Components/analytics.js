@@ -63,6 +63,27 @@ const bestDishTable = (bestdish) => {
 
     );
 }
+
+const bestRatedTable = (bestrate) => {
+    return (
+        <div className='contianer border rounded-15 shadow m-5'>
+
+            <h4>Most Rated Dishes</h4>
+            <table className='table table-hover'>
+                <tbody>
+                    {bestrate.map((each, idx) => (
+                        <tr>
+                            <td>{idx + 1}</td>
+                            <td>{each.dish_name}</td>
+                        </tr>
+
+                    ))}
+                </tbody>
+            </table>
+        </div>
+
+    );
+}
 const bestDayTable = (bestday) => {
     return (
         <div className='contianer border rounded-15 shadow m-5'>
@@ -91,6 +112,7 @@ const Analytics = () => {
     const [bestdel, setbestdel] = useState([]);
     const [bestday, setbestday] = useState([]);
     const [bestdish, setbestdish] = useState([]);
+    const [rateddish, setrateddish] = useState([]);
 
 
     const GetBestDish = async () => {
@@ -102,6 +124,27 @@ const Analytics = () => {
             console.log("getbestDish : ", jsonData)
             if (jsonData.success) {
                 setbestdish(jsonData.data);
+            }
+            else {
+                alert(jsonData.message + " in Best Dish");
+                console.log(jsonData.message);
+            }
+
+        } catch (error) {
+            console.error(error.message);
+            alert('Error connecting to Database');
+        }
+    }
+
+    const GetRatedDish = async () => {
+        try {
+            // console.log(process.env.REACT_APP_BACKEND_SERVER)
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/analytics/most_rated_dishes", { credentials: 'include' })
+            // Here, fetch defualt is GET. So, no further input
+            const jsonData = await response.json();
+            console.log("getbestDish : ", jsonData)
+            if (jsonData.success) {
+                setrateddish(jsonData.data);
             }
             else {
                 alert(jsonData.message + " in Best Dish");
@@ -184,6 +227,7 @@ const Analytics = () => {
         GetBestDay();
         GetFreqCus();
         GetBestDel();
+        GetRatedDish();
     }, [])
 
 
@@ -213,6 +257,15 @@ const Analytics = () => {
 
                     </div>
                 </div>
+
+                <div className="row">
+                    <div className='col-md-3'></div>
+                    <div className='col-md-6'>
+                        {bestRatedTable(rateddish)}
+                    </div>
+                    <div className='col-md-3'></div>
+                </div>
+
             </div>
 
         </Fragment>

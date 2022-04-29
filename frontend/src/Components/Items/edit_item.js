@@ -42,9 +42,7 @@ const EditItem = () => {
         try {
             var itemUpdate = {
                 item_id: curItem.item_id,
-                item_name: curItem.item_name,
-                quantity: curItemCount,
-                cost: curItem.cost
+                quantity: curItemCount
             }
             const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/items/update_item_bought", {
                 method: "POST",
@@ -54,18 +52,6 @@ const EditItem = () => {
             });
             const jsonData = await response.json();
             if (jsonData.success) {
-                // var dish_id=jsonData.data;
-                // setNewid(dish_id);
-                // console.log(items);
-                // items.forEach(item=>{
-                //     console.log(item.item_name,item.item_id);
-                //     var dish_item={
-                //         dish_id : dish_id,
-                //         item_id : item.item_id,
-                //         quantity : item.quantity
-                //     }
-                //     Add_Dish_item(dish_item);
-                // });
                 alert("Success");
                 window.location.reload();
             }
@@ -90,7 +76,7 @@ const EditItem = () => {
     return (
 
         <Fragment>
-            <h3>Edit an Item:</h3>
+            <h3>Bought an Item:</h3>
 
 
             <form onSubmit={onSubmitForm}>
