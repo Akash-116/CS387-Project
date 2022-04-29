@@ -33,6 +33,7 @@ import Tables from "./Components/Tables/list_table";
 import DeliveryPersons from "./Components/Delivery/list_delivery_personnel";
 import ListCustomers from "./Components/Customer/list_customer";
 import ListEmployees from "./Components/Employee/list_employee";
+import ListItems from "./Components/Items/list_items";
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -123,6 +124,9 @@ function App() {
                     <Link to="/offers" className="nav-link">Offers</Link>
                   </li>
                   <li class="nav-item">
+                    <Link to="/items" className="nav-link">Items</Link>
+                  </li>
+                  <li class="nav-item">
                     <Link to="/analytics" className="nav-link">Analytics</Link>
                   </li>
                   <li class="nav-item">
@@ -195,6 +199,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard></Dashboard>} ></Route>
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
             <Route path="/customers" element={<ListCustomers></ListCustomers>} ></Route>
+            <Route path="/items" element={<ListItems></ListItems>} ></Route>
             <Route path="/employees" element={<ListEmployees></ListEmployees>} ></Route>
             <Route path="/offers" element={<Offers></Offers>} ></Route>
             <Route path="/analytics" element={<Analytics></Analytics>} ></Route>
