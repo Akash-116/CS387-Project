@@ -1,7 +1,51 @@
 const client = require("../../connectDB").client;
 
+exports.get_all_orders_count = function (req, res) {
+    var pgquery = `select count(*) from orders`;
+
+    if ((req.session.role != 'Manager') && (req.session.role != 'Billing Manager') && (req.session.role != 'Head Waiter')) {
+        res.status(500).send({
+            success: false,
+            message: 'no access'
+        });
+    }
+    else {
+        client.query(pgquery, function (err, res1) {
+            if (err) {
+                res.status(500).send({
+                    success: false,
+                    message: err.message
+                });
+            }
+            else {
+                res.status(200).send({
+                    success: true,
+                    data: res1.rows[0]
+                });
+            }
+        });
+    }
+}
 exports.get_all_orders = function (req, res) {
-    var pgquery = 'select * from orders';
+    console.log("ELABORATE :  GET orders/all queries : offset=", req.query?.offset, " limit=", req.query?.limit)
+    if ((req.query.offset) && (req.query.limit)) {
+
+        var pgquery = `
+        (select *, 1 as statusrank from orders
+        where (status='Preparing') or (status='Out for delivery')
+        )
+        union
+        (select *, 2 as  statusrank from orders
+        where (status='Delivered') or (status='Served')
+        )
+        order by statusrank
+        offset ${req.query.offset}
+        limit ${req.query.limit}`;
+    }
+    else {
+        var pgquery = `select * from orders order by  order_id`;
+
+    }
     if ((req.session.role != 'Manager') && (req.session.role != 'Billing Manager') && (req.session.role != 'Head Waiter')) {
         res.status(500).send({
             success: false,

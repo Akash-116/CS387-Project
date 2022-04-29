@@ -29,19 +29,46 @@ const CreateEmployeeElem = ({ emp }) => {
     return (
         <Fragment>
 
-            <div className='border p-3 m-3 shadow rounded'>
+            <div className='border container  shadow rounded-15 overflow-hidden mt-3'>
                 <div className='row'>
-                    <div className='col-sm-12'>
-                        <h3><b>EID </b> : {emp.e_id} - {emp.name} </h3>
-                        <h3><b>username. </b> : {emp.username} </h3>
-                        <h3><b>Ph.No. </b> : {emp.ph_no} </h3>
-                        <h3><b>Address </b> : {emp.addr} </h3>
-                        <h3><b>e_type </b> : {emp.e_type} </h3>
-                        <h3><b>salary </b> : {emp.salary} </h3>
-                        <h3><b>status </b> : {emp.status} </h3>
-                        <button className='btn btn-danger' onClick={onDelete}>
-                        Delete
-                        </button>
+                    <div className='col-sm-3 bg-grey-grad d-flex justify-content-center
+                        align-items-center'>
+
+                        <i className='fas fa-id-card fa-6x	'></i>
+                    </div>
+                    <div className='col-sm-9  pb-3 p-0'>
+                        <div className='mt-3 pb-1 ms-3 d-flex flex-column align-items-start '>
+                            <div className='d-flex justify-content-between align-self-stretch pe-4'>
+                                <h3 className='text-capitalize'>{emp.name} </h3>
+                                <button className='btn btn-danger' onClick={onDelete}>
+                                    Delete
+                                </button>
+
+
+                            </div>
+                            <hr className='align-self-stretch'></hr>
+                            <div className='container'>
+
+                                <div className=' row '>
+                                    <div className='col-sm-6 d-flex flex-column align-items-start'>
+
+                                        <p className='m-0'><b>Employee ID </b> : {emp.e_id} </p>
+                                        <p className='m-0'><b>username </b> : {emp.username} </p>
+                                        <p className='m-0'><b>Ph.No. </b> : {emp.ph_no} </p>
+                                    </div>
+                                    <div className='col-sm-6 d-flex flex-column align-items-start'>
+                                        <p className='m-0'><b>Address </b> : {emp.addr} </p>
+                                        <p className='m-0'><b>Role </b> : {emp.e_type} </p>
+                                        <p className='m-0'><b>salary </b> : {emp.salary} </p>
+                                        <p className='m-0'><b>status </b> : {emp.status} </p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
 
                     </div>
                 </div>
@@ -49,7 +76,10 @@ const CreateEmployeeElem = ({ emp }) => {
 
             </div>
 
-        </Fragment>
+
+
+
+        </Fragment >
     );
 };
 
@@ -64,14 +94,14 @@ const ListEmployees = () => {
         // console.log("A");
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/employee/all", {credentials: 'include'})
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/employee/all", { credentials: 'include' })
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if (jsonData.success) {
                 setEmployeesList(jsonData.data);
             }
             else {
-                alert(jsonData.message+"");
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
             }
 
@@ -122,7 +152,7 @@ const ListEmployees = () => {
             {employeesListPage}
 
             {/* So elaborate classes, so that the bootstrap matches this pagination implementation */}
-            <div className='container justify-content-center'>
+            <div className='container d-flex m-2 justify-content-center'>
 
                 <ReactPaginate
                     previousLabel={"< "}

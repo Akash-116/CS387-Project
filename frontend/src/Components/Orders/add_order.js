@@ -399,7 +399,7 @@ const AddOrder = () => {
                                 show_selected_dishes(dish)
                             ))}
                             {(add_dish && !cantadd) &&
-                                <button type="button" onClick={e => Toggle_add_dish()}>Add Dish</button>}
+                                <button className='mt-3 btn btn-primary' type="button" onClick={e => Toggle_add_dish()}>Add Dish</button>}
                             {(!add_dish && !cantadd) &&
                                 <div>
                                     <label>Dish:</label>
@@ -413,7 +413,7 @@ const AddOrder = () => {
                                     <input type="number" class="form-control" id="dishtimetaken"
                                         value={currentdishquan}
                                         onChange={e => setCurrentdishquan(e.target.value)}></input>
-                                    <button type="button" onClick={e => Add_cur_dish()}>Add</button>
+                                    <button className=' mt-4 btn btn-primary' type="button" onClick={e => Add_cur_dish()}>Add</button>
                                 </div>
                             }
                         </div>
@@ -431,8 +431,11 @@ const AddOrder = () => {
                     </div>
                     <div class="row mb-3">
                         <label for="dishingredients" class="col-sm-4 col-form-label">Total Cost : </label>
-                        <div class="col-sm-6">
-                            {cost_after_dis}
+                        <div class="row mb-3 ">
+                            <label class="col-sm-4 col-form-label">Total Cost : </label>
+                            <div class="col-sm-6">
+                                {cost_after_dis}
+                            </div>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Add Order</button>

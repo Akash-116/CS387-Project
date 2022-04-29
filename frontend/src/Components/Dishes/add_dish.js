@@ -163,7 +163,7 @@ const AddDish = ({ dishesList, setDishesList }) => {
                                 show_selected_items(item)
                             ))}
                             {(add_item) &&
-                                <button type="button" onClick={e => Toggle_add_item()}>Add Item</button>}
+                                <button className='mt-4 btn btn-primary' type="button" onClick={e => Toggle_add_item()}>Add Item</button>}
                             {(!add_item) &&
                                 <div>
                                     <label>Item:</label>
@@ -177,7 +177,7 @@ const AddDish = ({ dishesList, setDishesList }) => {
                                     <input type="number" class="form-control" id="dishtimetaken"
                                         value={currentitemquan}
                                         onChange={e => setCurrentitemquan(e.target.value)}></input>
-                                    <button type="button" onClick={e => Add_cur_item()}>Add</button>
+                                    <button className='btn btn-primary mt-4' type="button" onClick={e => Add_cur_item()}>Add</button>
                                 </div>
                             }
                         </div>

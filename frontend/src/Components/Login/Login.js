@@ -74,50 +74,59 @@ export default function Login({ setToken, setsgnup }) {
 
   return (
     <div className="login-wrapper mt-5">
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <p>Username</p>
-          <input className='form-control' type="text" onChange={e => setUsername(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          <p>Password</p>
-          <input className='form-control' type="password" onChange={e => setPassword(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          <p>Role</p>
-          <select className='form-select' onChange={e => setUserRole(e.target.value)}>
-            <option hidden disabled selected value="none"> -- select an option -- </option>
-            <option value="employee">Employee</option>
-            <option value="customer">Customer</option>
-          </select>
-        </label>
-        <br />
-        <label>
-          <p className='text-danger' >{errorMsg}</p>
-        </label>
-        <br />
-        <div>
-          <button className='btn btn-primary' type="submit" disabled={username === "" || password === "" || userRole === "none"} >Submit</button>
+
+      <h2>YARA</h2>
+      <div className='border rounded-15 mt-5 p-8 shadow'>
+
+        <h1>Login</h1>
+
+
+        <form onSubmit={handleSubmit}>
+
+          <label>
+            <p>Username</p>
+            <input className='form-control' type="text" onChange={e => setUsername(e.target.value)} />
+          </label>
+          <br />
+
+          <label>
+            <p>Password</p>
+            <input className='form-control' type="password" onChange={e => setPassword(e.target.value)} />
+          </label>
+          <br />
+
+          <label>
+            <p>Role</p>
+            <select className='form-select' onChange={e => setUserRole(e.target.value)}>
+              <option hidden disabled selected value="none"> -- select an option -- </option>
+              <option value="employee">Employee</option>
+              <option value="customer">Customer</option>
+            </select>
+          </label>
+          <br />
+
+          <label>
+            <p className='text-danger' >{errorMsg}</p>
+          </label>
+          <br />
+
+          <div>
+            <button className='btn btn-primary' type="submit" disabled={username === "" || password === "" || userRole === "none"} >Submit</button>
+          </div>
+
+        </form>
+
+
+        <div className='mt-5'>
+          Didn't have a Customer account?
+          <br></br>
+          <button className=' mt-3 btn btn-primary' onClick={e => setsgnup(true)} >Sign Up</button>
         </div>
-      </form>
 
 
-      <div>
-        Didn't have a Customer account?
-        <button className='btn btn-primary' onClick={e => setsgnup(true)} >signup</button>
-        {/* <button className='btn btn-primary' onClick={e => console.log("Clicked")} >signup</button> */}
       </div>
 
 
-      {/* <Router>
-        <div>Didn't have a Customer account?<Link to="/signup">signup</Link></div>
-        <Routes>
-          <Route path="/signup" element={<SignUp setsgnup={setsgnup}></SignUp>}></Route>
-        </Routes>
-      </Router> */}
     </div>
   )
 }

@@ -17,23 +17,23 @@ const AddOffer = ({ offersList, setOffersList }) => {
             // console.log("offersList : ", offersList);
             // console.log("type of setOffersList :", typeof (setOffersList));
 
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/add",{
-                method : "POST",
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(newOffer),
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(newOffer),
                 credentials: 'include'
             });
-            
+
             const jsonData = await response.json();
-            if(jsonData.success){
+            if (jsonData.success) {
                 setOffersList(prevState => [...prevState, newOffer]);
-                
+
             }
-            else{
-                alert(jsonData.message+"");
+            else {
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
             }
-            
+
             // offersList.push(newOffer);
             console.log("offersList : ", offersList);
 
@@ -58,39 +58,33 @@ const AddOffer = ({ offersList, setOffersList }) => {
                 <table className='table table-borderless'>
                     <tbody>
 
-                    <tr>
-                        <th>Name</th>
-                        <th>Description</th>
-                        <th>Percentage Discount</th>
-                        <th></th>
-                        
-                    </tr>
-                    <tr>
-                        <th><input type="text"
-                            className="form-control"
-                            value={newOffer.name}
-                            onChange={e => newOffer.name = e.target.value}
-                        /></th>
-                        <th><input type="text"
-                            className="form-control"
-                            value={newOffer.description}
-                            onChange={e => newOffer.description = e.target.value}
-                        /></th>
-                        <th>
-                            <input type="number"
+                        <tr>
+                            <th>Name</th>
+                            <th>Percentage Discount</th>
+                            <th></th>
+
+                        </tr>
+                        <tr>
+                            <th><input type="text"
                                 className="form-control"
-                                value={newOffer.discount}
-                                onChange={e => newOffer.discount = e.target.value}
-                            />
-                        </th>
-                        <th>
-                            <button className="btn btn-success">Add</button>
-                        </th>
+                                value={newOffer.name}
+                                onChange={e => newOffer.name = e.target.value}
+                            /></th>
+                            <th>
+                                <input type="number"
+                                    className="form-control"
+                                    value={newOffer.discount}
+                                    onChange={e => newOffer.discount = e.target.value}
+                                />
+                            </th>
+                            <th>
+                                <button className="btn btn-success">Add</button>
+                            </th>
                         </tr>
                     </tbody>
 
                 </table>
-                
+
             </form>
 
 
