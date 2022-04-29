@@ -57,9 +57,10 @@ function App() {
 
   const [cart, setCart] = useState({})
   const [cartOffer, setCartOffer] = useState({ offer_id: -1, name: "None", discount: 0 })
+
   useEffect(() => {
     setsgnup(false);
-  }, [])
+  }, []);
 
   if (!token && !sgnup) {
     return <Login setToken={setToken} setsgnup={setsgnup}></Login>
@@ -69,29 +70,29 @@ function App() {
   }
 
 
-  const Logout= async (e)=>{
+  const Logout = async (e) => {
     e.preventDefault();
     try {
-			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/logout", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				credentials: 'include'
-			});
-			const jsonData = await response.json();
+      const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: 'include'
+      });
+      const jsonData = await response.json();
 
-			if (jsonData.success) {
-        setToken({ token: 'ERROR' }); 
+      if (jsonData.success) {
+        setToken({ token: 'ERROR' });
         window.location = '/';
-			}
-			else {
-				alert(jsonData.message+"");
-				console.log(jsonData.message);
-			}
+      }
+      else {
+        alert(jsonData.message + "");
+        console.log(jsonData.message);
+      }
 
-		} catch (error) {
-			console.error(error.message);
+    } catch (error) {
+      console.error(error.message);
       alert("Error connecting to backend");
-		}
+    }
   }
 
 
@@ -219,7 +220,7 @@ function App() {
           <Routes>
             <Route path="/" element={<h3>Welcome to YARA</h3>} ></Route>
             <Route path="/cart" element={<CustomerCart cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerCart>} ></Route>
-            <Route path="/home" element={<CustomerHome cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerHome>} ></Route>
+            <Route path="/home" element={<CustomerHome token={token} cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerHome>} ></Route>
             <Route path="/customer/details" element={<CustomerDetails token={token} setToken={setToken}></CustomerDetails>} ></Route>
             <Route path="/customer/prevorders" element={<PrevOrder token={token}></PrevOrder>} ></Route>
             <Route path="/dashboard" element={<Dashboard></Dashboard>} ></Route>

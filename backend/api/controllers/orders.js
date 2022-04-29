@@ -92,7 +92,7 @@ exports.add_order_dish = function (req, res) {
         });
     }
     else{
-        var pgquery='insert into order_dishes values($1::int,$2::int,$3::int,$4::int)';
+        var pgquery='insert into order_dishes values($1::int,$2::int,$3::int,$4::int) on conflict on order_dish_unique do update set quantity=order_dishes.quantity+$3::int returning dish_id,order_id';
         client.query(pgquery,[order_id,dish_id,quantity,offer_id],function(err,res1){
             if(err){
                 res.status(500).send({
@@ -101,9 +101,17 @@ exports.add_order_dish = function (req, res) {
                 });
             }
             else{
-                res.status(200).send({
-                    success : true
-                });
+                if(res1.rows.length<1){
+                    res.status(500).send({
+                        success : false,
+                        message : "Dish Not Added to Order"
+                    });
+                }
+                else{
+                    res.status(200).send({
+                        success : true
+                    });
+                }
             }
         });
     }

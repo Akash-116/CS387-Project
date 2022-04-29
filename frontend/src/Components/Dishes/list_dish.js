@@ -26,15 +26,55 @@ const countFromCart = (dish, cart, enableOrdering) => {
     }
 }
 
-const EachDish = ({ dish, enableOrdering = false, cart = null, setCart = null }) => {
+const EachDish = ({ token, dish, enableOrdering = false, cart = null, setCart = null }) => {
 
-    const [counter, setCounter] = useState(countFromCart(dish, cart, enableOrdering))
+    const [counter, setCounter] = useState(0);
+    // console.log(token);
+
+    const UpdateCounter = () => {
+        setCounter(countFromCart(dish, cart, enableOrdering));
+    }
+
+
+    const UpdateInCart = async (dish_id, count) => {
+        console.log("UpdateInCart");
+        console.log(token);
+        try {
+            var cart_dish = {
+                c_id: token.data.c_id,
+                dish_id: dish_id,
+                quantity: count
+            }
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/cart/add_dish_cart", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(cart_dish),
+                credentials: 'include'
+            });
+            const jsonData = await response.json();
+            if (!jsonData.success) {
+                alert(jsonData.message + "");
+                console.log(jsonData.message);
+                return false;
+            }
+            return true;
+
+        } catch (error) {
+            console.error(error.message);
+            return false;
+        }
+    }
 
     const decrementCount = (dish) => {
         var tcounter = counter;
         if (counter > 0) {
-            setCounter(counter => (counter - 1))
-            tcounter--;
+            if (UpdateInCart(dish.dish_id, tcounter - 1)) {
+                tcounter--;
+                setCounter(counter => (counter - 1));
+            }
+            else {
+                console.log("Decrement Failed");
+            }
         }
         var tcart = { ...cart };
 
@@ -49,14 +89,22 @@ const EachDish = ({ dish, enableOrdering = false, cart = null, setCart = null })
 
     const incrementCount = (dish) => {
         var tcounter = counter;
-        setCounter(counter => (counter + 1))
-        tcounter++;
+
+        if (UpdateInCart(dish.dish_id, tcounter + 1)) {
+            setCounter(counter => (counter + 1))
+            tcounter++;
+        }
         var tcart = { ...cart };
         if (!(tcart[dish.dish_id])) { tcart[dish.dish_id] = {} }
         tcart[dish.dish_id]["dish"] = dish;
         tcart[dish.dish_id]["count"] = tcounter;
         setCart(tcart);
     }
+
+    useEffect(() => {
+        UpdateCounter();
+    }, [cart]);
+
 
     return (
         <Fragment>
@@ -97,15 +145,16 @@ const EachDish = ({ dish, enableOrdering = false, cart = null, setCart = null })
 }
 
 
-const ListDishes = ({ enableOrdering = false, cart = null, setCart = null }) => {
+const ListDishes = ({ token, enableOrdering = false, cart = null, setCart = null }) => {
 
     const [allDishes, setAllDishes] = useState([])
-    const [cart2, setCart2] = useState({ 1: "initial" })
+    const [cart2, setCart2] = useState({ 1: "initial" });
+    // console.log(token);
 
     const getDishesList = async () => {
         try {
 
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/all", {credentials: 'include'})
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/all", { credentials: 'include' })
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json()
 
@@ -135,7 +184,7 @@ const ListDishes = ({ enableOrdering = false, cart = null, setCart = null }) => 
     const dishesListPage = allDishes
         .slice(pagesVisited, pagesVisited + dishesPerPage)
         .map(dish => (
-            <EachDish dish={dish} enableOrdering={enableOrdering} cart={cart} setCart={setCart} ></EachDish>
+            <EachDish token={token} dish={dish} enableOrdering={enableOrdering} cart={cart} setCart={setCart} ></EachDish>
         ));
 
     const pageCount = Math.ceil(allDishes.length / dishesPerPage);
@@ -155,7 +204,7 @@ const ListDishes = ({ enableOrdering = false, cart = null, setCart = null }) => 
                     {/* <AddDish dishesList={dishesList} setDishesList={setDishesList} > </AddDish> */}
 
                     {allDishes.map(dish => (
-                        <EachDish dish={dish} enableOrdering={enableOrdering} cart={cart} setCart={setCart} ></EachDish>
+                        <EachDish token={token} dish={dish} enableOrdering={enableOrdering} cart={cart} setCart={setCart} ></EachDish>
                     ))}
                     {/* <EachDish dish={allDishes[0]} enableOrdering={enableOrdering} cart={cart} setCart={setCart} ></EachDish> */}
                 </Fragment>
