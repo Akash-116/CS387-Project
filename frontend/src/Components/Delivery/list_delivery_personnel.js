@@ -13,12 +13,13 @@ const createDeliveryPersonElem = (deliveryPerson) => {
 			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/employee/single",{
 				method: "DELETE",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(delp)
+				body: JSON.stringify(delp),
+				credentials: 'include'
 			});
 			// Here, fetch defualt is GET. So, no further input
 			const jsonData = await response.json();
 			if (!jsonData.success) {
-				alert("Something Went Wrong");
+				alert(jsonData.message+"");
 			}
 			window.location.reload();
 
@@ -66,7 +67,7 @@ const DeliveryPersons = () => {
 
 		try {
 			// console.log(process.env.REACT_APP_BACKEND_SERVER)
-			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/delivery/all")
+			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/delivery/all", {credentials: 'include'})
 			// Here, fetch defualt is GET. So, no further input
 			const jsonData = await response.json();
 			if (jsonData.success) {
@@ -76,7 +77,7 @@ const DeliveryPersons = () => {
 			}
 			else {
 				// console.log(jsonData.message);
-				alert("Something Went Wrong");
+				alert(jsonData.message+"");
 
 			}
 

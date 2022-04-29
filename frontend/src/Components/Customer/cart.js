@@ -52,14 +52,14 @@ const OffersModal = ({ offer, setOffer }) => {
 
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/all")
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/all", {credentials: 'include'})
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if (jsonData.success) {
                 setOffersList(jsonData.data);
             }
             else {
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
 
             }
 

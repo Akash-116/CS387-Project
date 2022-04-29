@@ -41,7 +41,7 @@ const AddOrder = () => {
     const FetchDishes=async ()=>{
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/all");
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/all", {credentials: 'include'});
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if(jsonData.success){
@@ -49,7 +49,7 @@ const AddOrder = () => {
             }
             else{
                 console.log(jsonData.message);
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
                 window.location.reload();
             }
 
@@ -61,7 +61,7 @@ const AddOrder = () => {
     const FetchAreas=async ()=>{
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/areas/all");
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/areas/all", {credentials: 'include'});
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if(jsonData.success){
@@ -69,7 +69,7 @@ const AddOrder = () => {
             }
             else{
                 console.log(jsonData.message);
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
                 window.location.reload();
             }
 
@@ -81,7 +81,7 @@ const AddOrder = () => {
     const FetchUsers=async ()=>{
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/all");
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/all", {credentials: 'include'});
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if(jsonData.success){
@@ -89,7 +89,7 @@ const AddOrder = () => {
             }
             else{
                 console.log(jsonData.message);
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
                 window.location.reload();
             }
 
@@ -102,11 +102,12 @@ const AddOrder = () => {
         const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/orders/add_order_dish",{
             method : "POST",
             headers : {"Content-Type" : "application/json"},
-            body : JSON.stringify(order_dish)
+            body : JSON.stringify(order_dish),
+            credentials: 'include'
         });
         const jsonData = await response.json();
         if(!jsonData.success){
-            alert("Something Went Wrong");
+            alert(jsonData.message+"");
             console.log(jsonData.message);
         }
 
@@ -123,7 +124,8 @@ const AddOrder = () => {
             const response=await fetch(process.env.REACT_APP_BACKEND_SERVER + "/orders/add",{
                 method : "POST",
                 headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(order)
+                body : JSON.stringify(order),
+                credentials: 'include'
             });
             const jsonData=await response.json();
             if(jsonData.success){
@@ -144,7 +146,7 @@ const AddOrder = () => {
             }
             else{
                 console.log(jsonData.message);
-                alert("Something Went Wrong");  
+                alert(jsonData.message+"");  
             }
             window.location.reload();
 

@@ -46,14 +46,14 @@ const ListCustomers = () => {
         // console.log("A");
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/all")
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/all", {credentials: 'include'})
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if (jsonData.success) {
                 setCustomersList(jsonData.data);
             }
             else {
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
                 console.log(jsonData.message);
             }
 
