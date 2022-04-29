@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link, } from "react-router-dom";
+import Darkmode from 'darkmode-js';
 
 import { useState } from "react";
 import './App.css';
@@ -11,7 +12,6 @@ import Page1 from "./Components/page1";
 import Page2 from "./Components/page2";
 import Page3 from "./Components/page3";
 import { PageView } from "./Components/pageView";
-import Preferences from "./Components/Preferences/Preferences";
 import Login from "./Components/Login/Login";
 import useToken from "./Components/App/useToken";
 import Offers from "./Components/Offers/Offers";
@@ -46,6 +46,8 @@ import EditItem from "./Components/Items/edit_item";
 // }
 
 
+
+
 function App() {
   // const [token, setToken] = useState()
 
@@ -59,7 +61,29 @@ function App() {
   const [cartOffer, setCartOffer] = useState({ offer_id: -1, name: "None", discount: 0 })
 
   useEffect(() => {
+
     setsgnup(false);
+
+    const darkmode = new Darkmode(
+      {
+        bottom: '32px', // default: '32px'
+        right: 'unset', // default: '32px'
+        left: '32px', // default: 'unset'
+        time: '0.5s', // default: '0.3s'
+        mixColor: '#fff', // default: '#fff'
+        backgroundColor: '#ffffff',  // default: '#fff'
+        buttonColorDark: '#000000',  // default: '#100f2c'
+        buttonColorLight: '#ffffff', // default: '#fff'
+        saveInCookies: true, // default: true,
+        label: '🌓', // default: ''
+        autoMatchOsTheme: true // default: true
+
+      }
+    );
+    darkmode.showWidget();
+    console.log("DARKMODE : ", darkmode.isActivated()) // will return true
+
+
   }, []);
 
   if (!token && !sgnup) {
@@ -100,7 +124,7 @@ function App() {
     <Router>
       <div id='wrapper'>
 
-        <nav class=" overflow-auto navbar navbar-expand-md bg-dark navbar-dark sticky-top"
+        <nav class=" p-0  navbar navbar-expand-md bg-dark navbar-dark "
         >
           <Link to="/" className="navbar-brand m-4">YARA</Link>
 
@@ -111,12 +135,12 @@ function App() {
           <div class="justify-content-between collapse navbar-collapse" id="collapsibleNavbar">
 
             {/* Different userroles are
-1. Manager
-2. Billing Manager
-3. Head Waiter
-4. Delivery
-5. Chef
-6. customer */}
+            1. Manager
+            2. Billing Manager
+            3. Head Waiter
+            4. Delivery
+            5. Chef
+            6. customer */}
             <div className="d-flex">
               {(token.userrole === "customer") &&
                 <ul class="navbar-nav">
@@ -143,44 +167,33 @@ function App() {
                   {(token.data.e_type === "Manager") &&
                     <ul class="navbar-nav">
 
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                          View
+                        </a>
+                        <div class="dropdown-menu">
 
-                      <li class="nav-item">
-                        <Link to="/preferences" className="nav-link">Preferences</Link>
+                          <Link to="/customers" className="dropdown-item">Customers</Link>
+                          <Link to="/employees" className="dropdown-item">Employees</Link>
+                          <Link to="/offers" className="dropdown-item">Offers</Link>
+                          <Link to="/items" className="dropdown-item">Items</Link>
+                          <Link to="/delivery_persons" className="dropdown-item">DeliveryPersons</Link>
+                          <Link to="/tables" className="dropdown-item">Tables</Link>
+
+                        </div>
                       </li>
-                      <li class="nav-item">
-                        <Link to="/customers" className="nav-link">Customers</Link>
-                      </li>
-                      <li class="nav-item">
-                        <Link to="/employees" className="nav-link">Employees</Link>
-                      </li>
-                      <li class="nav-item">
-                        <Link to="/offers" className="nav-link">Offers</Link>
-                      </li>
-                      <li class="nav-item">
-                        <Link to="/items" className="nav-link">Items</Link>
-                      </li>
-                      <li class="nav-item">
-                        <Link to="/analytics" className="nav-link">Analytics</Link>
-                      </li>
-                      <li class="nav-item">
-                        <Link to="/delivery_persons" className="nav-link">DeliveryPersons</Link>
-                      </li>
-                      <li class="nav-item">
-                        <Link to="/tables" className="nav-link">Tables</Link>
-                      </li>
+
+
                       <li class="nav-item">
                         <Link to="/orders" className="nav-link">Orders</Link>
                       </li>
                       <li class="nav-item">
                         <Link to="/dishes" className="nav-link">Dishes</Link>
                       </li>
-                      <li class="nav-item">
-                        <Link to="/error" className="nav-link">ErrorPg</Link>
-                      </li>
 
                       <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                          create
+                          Create
                         </a>
                         <div class="dropdown-menu">
                           <Link to="/create/customer" className="dropdown-item">Customer</Link>
@@ -198,6 +211,10 @@ function App() {
                           <Link to="/edit/item" className="dropdown-item">Item</Link>
                         </div>
                       </li>
+                      <li class="nav-item">
+                        <Link to="/analytics" className="nav-link"><i className="fas fa-line-chart"></i> Analytics</Link>
+                      </li>
+
                     </ul>
                   }
                   {(token.data.e_type === "Billing Manager") &&
@@ -350,7 +367,6 @@ function App() {
             <Route path="/home" element={<CustomerHome token={token} cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerHome>} ></Route>
             <Route path="/customer/details" element={<CustomerDetails token={token} setToken={setToken}></CustomerDetails>} ></Route>
             <Route path="/customer/prevorders" element={<PrevOrder token={token}></PrevOrder>} ></Route>
-            <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
             <Route path="/customers" element={<ListCustomers></ListCustomers>} ></Route>
             <Route path="/items" element={<ListItems></ListItems>} ></Route>
             <Route path="/employees" element={<ListEmployees></ListEmployees>} ></Route>

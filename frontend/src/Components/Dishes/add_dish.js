@@ -1,9 +1,9 @@
-import React, { Fragment, useState,useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 
 
-const select_item=(item)=>{
+const select_item = (item) => {
     return (
-        <option value={JSON.stringify({item_id: item.item_id,item_name : item.item_name, unit : item.unit})}>{item.item_name}</option>
+        <option value={JSON.stringify({ item_id: item.item_id, item_name: item.item_name, unit: item.unit })}>{item.item_name}</option>
     )
 }
 
@@ -18,26 +18,26 @@ const AddDish = ({ dishesList, setDishesList }) => {
     const [cost, setCost] = useState(null);
     const [items, setItems] = useState([]);
     const [totalitems, setTotalitems] = useState([]);
-    const [currentitem, setCurrentitem] = useState({item_id : null,item_name : '',unit : ''});
+    const [currentitem, setCurrentitem] = useState({ item_id: null, item_name: '', unit: '' });
     const [currentitemquan, setCurrentitemquan] = useState(null);
 
     const [newid, setNewid] = useState(null);
 
     const [add_item, setAdd_item] = useState(true)
 
-    const FetchAllItems=async ()=>{
+    const FetchAllItems = async () => {
         console.log("FetchItems");
         try {
-            
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/items/all", {credentials: 'include'});
+
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/items/all", { credentials: 'include' });
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
-            if(jsonData.success){
+            if (jsonData.success) {
                 setTotalitems(jsonData.data);
                 console.log(jsonData.data);
             }
-            else{
-                alert(jsonData.message+"");
+            else {
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
                 window.location.reload();
             }
@@ -48,16 +48,16 @@ const AddDish = ({ dishesList, setDishesList }) => {
     }
 
 
-    const Add_Dish_item = async(dish_item)=>{
-        const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/add_item",{
-            method : "POST",
-            headers : {"Content-Type" : "application/json"},
-            body : JSON.stringify(dish_item),
+    const Add_Dish_item = async (dish_item) => {
+        const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/add_item", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dish_item),
             credentials: 'include'
         });
         const jsonData = await response.json();
-        if(!jsonData.success){
-            alert(jsonData.message+"");
+        if (!jsonData.success) {
+            alert(jsonData.message + "");
             console.log(jsonData.message);
         }
 
@@ -67,7 +67,7 @@ const AddDish = ({ dishesList, setDishesList }) => {
     const onSubmitForm = async (e) => {
         e.preventDefault();
         try {
-            var dish={
+            var dish = {
                 dish_name: dishname,
                 recipe: recipe,
                 time_taken: timetaken,
@@ -75,31 +75,31 @@ const AddDish = ({ dishesList, setDishesList }) => {
                 cost: cost,
                 photo: photo
             }
-            const response=await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/add",{
-                method : "POST",
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(dish),
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dish),
                 credentials: 'include'
             });
-            const jsonData=await response.json();
-            if(jsonData.success){
-                var dish_id=jsonData.data;
+            const jsonData = await response.json();
+            if (jsonData.success) {
+                var dish_id = jsonData.data;
                 setNewid(dish_id);
                 console.log(items);
-                items.forEach(item=>{
-                    console.log(item.item_name,item.item_id);
-                    var dish_item={
-                        dish_id : dish_id,
-                        item_id : item.item_id,
-                        quantity : item.quantity
+                items.forEach(item => {
+                    console.log(item.item_name, item.item_id);
+                    var dish_item = {
+                        dish_id: dish_id,
+                        item_id: item.item_id,
+                        quantity: item.quantity
                     }
                     Add_Dish_item(dish_item);
                 });
                 alert("Success");
             }
-            else{
+            else {
                 console.log(jsonData.message);
-                alert(jsonData.message+"");  
+                alert(jsonData.message + "");
             }
             window.location.reload();
 
@@ -109,33 +109,33 @@ const AddDish = ({ dishesList, setDishesList }) => {
         }
     };
 
-    const show_selected_items=(item)=>{
-        return(
+    const show_selected_items = (item) => {
+        return (
             <Fragment>
 
-            <div>Item : {item.item_name}</div>
-            <div>Quantity : {item.quantity}{item.unit}</div>
+                <div>Item : {item.item_name}</div>
+                <div>Quantity : {item.quantity}{item.unit}</div>
             </Fragment>
-            
+
 
         )
     }
 
-    function Toggle_add_item(){
+    function Toggle_add_item() {
         setAdd_item(!add_item);
     }
 
-    const Add_cur_item=()=>{
+    const Add_cur_item = () => {
         console.log(currentitem.item_id);
-        setItems([...items,{item_id : currentitem.item_id,item_name : currentitem.item_name,unit: currentitem.unit,quantity : currentitemquan}]);
+        setItems([...items, { item_id: currentitem.item_id, item_name: currentitem.item_name, unit: currentitem.unit, quantity: currentitemquan }]);
         setCurrentitemquan(null);
         setAdd_item(true);
     }
 
     useEffect(() => {
-      FetchAllItems();
+        FetchAllItems();
     }, []);
-    
+
 
     return (
         <Fragment>
@@ -150,8 +150,8 @@ const AddDish = ({ dishesList, setDishesList }) => {
                         <label for="dishname" class="col-sm-3 col-form-label">Name : </label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="dishname"
-                            value={dishname}
-                            onChange={e=>setDishname(e.target.value)}>
+                                value={dishname}
+                                onChange={e => setDishname(e.target.value)}>
                             </input>
                         </div>
                     </div>
@@ -159,26 +159,26 @@ const AddDish = ({ dishesList, setDishesList }) => {
                     <div class="row mb-3">
                         <label for="dishingredients" class="col-sm-3 col-form-label">Ingredients : </label>
                         <div class="col-sm-7">
-                            {items.map(item=>(
+                            {items.map(item => (
                                 show_selected_items(item)
                             ))}
                             {(add_item) &&
-                            <button type="button" onClick={e=>Toggle_add_item()}>Add Item</button>}
-                            {(!add_item)&&
-                            <div>
-                                <label>Item:</label>
-                                <select className='form-select' onChange={e => setCurrentitem(JSON.parse(e.target.value))}>
-                                    <option hidden disabled selected value="none"> -- select an option -- </option>
-                                    {totalitems.map(item=>(
+                                <button className='mt-4 btn btn-primary' type="button" onClick={e => Toggle_add_item()}>Add Item</button>}
+                            {(!add_item) &&
+                                <div>
+                                    <label>Item:</label>
+                                    <select className='form-select' onChange={e => setCurrentitem(JSON.parse(e.target.value))}>
+                                        <option hidden disabled selected value="none"> -- select an option -- </option>
+                                        {totalitems.map(item => (
                                             select_item(item)
-                                    ))}
-                                </select>
-                                <label>Quantity</label>
-                                <input type="number" class="form-control" id="dishtimetaken"
-                                value={currentitemquan}
-                                onChange={e=>setCurrentitemquan(e.target.value)}></input>
-                                <button type="button" onClick={e=>Add_cur_item()}>Add</button>
-                            </div>
+                                        ))}
+                                    </select>
+                                    <label>Quantity</label>
+                                    <input type="number" class="form-control" id="dishtimetaken"
+                                        value={currentitemquan}
+                                        onChange={e => setCurrentitemquan(e.target.value)}></input>
+                                    <button className='btn btn-primary mt-4' type="button" onClick={e => Add_cur_item()}>Add</button>
+                                </div>
                             }
                         </div>
                     </div>
@@ -187,15 +187,15 @@ const AddDish = ({ dishesList, setDishesList }) => {
                         <label for="dishrecipe" class="col-sm-3 col-form-label">Recipe : </label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="dishrecipe"
-                            value={recipe}
-                            onChange={e=>setRecipe(e.target.value)}>
+                                value={recipe}
+                                onChange={e => setRecipe(e.target.value)}>
                             </input>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="dishtype" class="col-sm-3 col-form-label">Type : </label>
                         <div class="col-sm-7">
-                            <select class="form-control" id="dishtype" onChange={e=>setDishtype(e.target.value)}>
+                            <select class="form-control" id="dishtype" onChange={e => setDishtype(e.target.value)}>
                                 <option hidden disabled selected> -- select an option -- </option>
                                 <option value={"Veg Starter"} >Veg Starter</option>
                                 <option value={"Non-Veg Starter"} >Non-Veg Starter</option>
@@ -210,8 +210,8 @@ const AddDish = ({ dishesList, setDishesList }) => {
                         <label for="dishtimetaken" class="col-sm-3 col-form-label">Time Taken : </label>
                         <div class="col-sm-7">
                             <input type="number" class="form-control" id="dishtimetaken"
-                            value={timetaken}
-                            onChange={e=>setTimetaken(e.target.value)}>
+                                value={timetaken}
+                                onChange={e => setTimetaken(e.target.value)}>
                             </input>
                         </div>
                     </div>
@@ -220,8 +220,8 @@ const AddDish = ({ dishesList, setDishesList }) => {
                         <label for="dishtimetaken" class="col-sm-3 col-form-label">Cost : </label>
                         <div class="col-sm-7">
                             <input type="number" class="form-control" id="dishtimetaken"
-                            value={cost}
-                            onChange={e=>setCost(e.target.value)}>
+                                value={cost}
+                                onChange={e => setCost(e.target.value)}>
                             </input>
                         </div>
                     </div>

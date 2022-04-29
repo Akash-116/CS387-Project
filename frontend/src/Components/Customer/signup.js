@@ -1,8 +1,6 @@
 import React, { Fragment, useState } from 'react';
 
 
-
-
 const SignUp = ({ setsgnup }) => {
 
     // const [selectedImage, setSelectedImage] = useState(null);
@@ -57,7 +55,7 @@ const SignUp = ({ setsgnup }) => {
                 window.location = "/";
             }
             else {
-                alert(jsonData.message+"");
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
             }
             // window.location.reload();
@@ -73,70 +71,75 @@ const SignUp = ({ setsgnup }) => {
 
     return (
         <Fragment>
-            <div>
-                <h2>Register</h2>
-            </div>
+            <div className='container border shadow rounded-15 p-5 mt-5'>
+                <div className='d-flex mb-4 justify-content-center' >
+                    <h2>Register</h2>
+                </div>
 
-            <div className='container border pt-5 pb-5'>
-                <form onSubmit={onSubmitForm}>
+                <div className='container  pt-2 pb-5'>
+                    <form onSubmit={onSubmitForm}>
 
-                    <div class="row mb-3">
-                        <label for="eusername" class="col-sm-3 col-form-label">Username : </label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" id="eusername"
-                                value={username}
-                                onChange={e => setusername(e.target.value)}>
-                            </input>
+                        <div class="row mb-3">
+                            <label for="eusername" class="col-sm-3 col-form-label">Username : </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="eusername"
+                                    value={username}
+                                    onChange={e => setusername(e.target.value)}>
+                                </input>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="ename" class="col-sm-3 col-form-label">Name : </label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" id="ename"
-                                value={name}
-                                onChange={e => { setname(e.target.value) }}>
-                            </input>
+                        <div class="row mb-3">
+                            <label for="ename" class="col-sm-3 col-form-label">Name : </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="ename"
+                                    value={name}
+                                    onChange={e => { setname(e.target.value) }}>
+                                </input>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="ephno" class="col-sm-3 col-form-label">Ph. No : </label>
-                        <div class="col-sm-7">
-                            <input type="number" class="form-control" id="ephno"
-                                value={phno}
-                                onChange={e => setphno(e.target.value)}>
-                            </input>
+                        <div class="row mb-3">
+                            <label for="ephno" class="col-sm-3 col-form-label">Ph. No : </label>
+                            <div class="col-sm-7">
+                                <input type="number" class="form-control" id="ephno"
+                                    value={phno}
+                                    onChange={e => setphno(e.target.value)}>
+                                </input>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="epwd" class="col-sm-3 col-form-label">Password : </label>
-                        <div class="col-sm-7">
-                            <input type="text" class="form-control" id="epwd"
-                                value={pswd}
-                                onChange={e => { setpswd(e.target.value) }}>
-                            </input>
+                        <div class="row mb-3">
+                            <label for="epwd" class="col-sm-3 col-form-label">Password : </label>
+                            <div class="col-sm-7">
+                                <input type="text" class="form-control" id="epwd"
+                                    value={pswd}
+                                    onChange={e => { setpswd(e.target.value) }}>
+                                </input>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="eaddress" class="col-sm-3 col-form-label">Address : </label>
-                        <div class="col-sm-7">
-                            <textarea class="form-control" id="eaddress"
-                                value={addr}
-                                onChange={e => { setaddr(e.target.value) }}>
-                            </textarea>
+                        <div class="row mb-3">
+                            <label for="eaddress" class="col-sm-3 col-form-label">Address : </label>
+                            <div class="col-sm-7">
+                                <textarea class="form-control" id="eaddress"
+                                    value={addr}
+                                    onChange={e => { setaddr(e.target.value) }}>
+                                </textarea>
+                            </div>
                         </div>
-                    </div>
 
 
 
-                    <button type="submit" class="btn btn-primary" disabled={!username || !pswd || username === "" || pswd === ""}>Register</button>
-                </form>
+                        <button type="submit" class="btn btn-primary"
+                            disabled={!username || !pswd || username === "" || pswd === ""}>
+                            Register
+                        </button>
+                    </form>
 
-                <div>
-                    Already have an account?
-                    Go to <button onClick={e => setsgnup(false)}> login</button>
+                    <div className='mt-5 mb-2'>
+                        Already have an account?
+                        <br></br>
+                    </div>
+                    <button className='btn btn-primary' onClick={e => setsgnup(false)}> login</button>
                 </div>
             </div>
-
 
         </Fragment>
     );

@@ -6,15 +6,26 @@ const CreateItemElem = ({ item }) => {
 
     return (
         <Fragment>
-
-            <div className='border p-3 m-3 shadow rounded'>
+            <div className='border   mt-3 shadow rounded-15 overflow-hidden'>
                 <div className='row'>
-                    <div className='col-sm-12'>
-                        <h3><b>Name </b> : {item.item_id} - {item.item_name} </h3>
-                        <h3><b>Cost </b> : {item.cost} </h3>
-                        <h3><b>Quantity Left </b> : {item.quan_inv}{item.unit} </h3>
+                    <div className='col-sm-3 bg-yellow-grad d-flex justify-content-center
+                 align-items-center'>
+
+                        <i className='fa fa-3x fa-pepper-hot'></i>
+                    </div>
+                    <div className='col-sm-7 '>
+                        <div className='mt-3 pb-1 ms-3 d-flex flex-column align-items-start'>
+
+                            <h5 className='text-capitalize'>  {item.item_id}. {item.item_name} </h5>
+                            <p><b>Cost </b> : {item.cost} </p>
+                            <p><b>Quantity Left </b> : {item.quan_inv}{item.unit} </p>
+                        </div>
+
+
                     </div>
                 </div>
+
+
 
 
             </div>
@@ -93,7 +104,7 @@ const ListItems = () => {
             {itemsListPage}
 
             {/* So elaborate classes, so that the bootstrap matches this pagination implementation */}
-            <div className='container justify-content-center'>
+            <div className='container d-flex   p-2 justify-content-center'>
 
                 <ReactPaginate
                     previousLabel={"< "}

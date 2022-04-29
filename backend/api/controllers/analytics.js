@@ -126,7 +126,6 @@ exports.get_freq_customers = function (req, res) {
         });
     }
 }
-
 exports.get_best_delivery = function (req, res) {
     if (req.session.role != 'Manager') {
         res.status(500).send({

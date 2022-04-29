@@ -30,3 +30,75 @@ code {
 .rounded-7 {
   border-radius: 7px;
 }
+
+.bg-green-grad {
+  background-color: #3bb78f;
+  background-image: linear-gradient(315deg, #3bb78f 0%, #0bab64 74%);
+}
+
+.bg-blue-grad {
+  background-color: #045de9;
+  background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
+}
+
+.bg-pink-grad {
+  background-color: #eec0c6;
+  background-image: linear-gradient(315deg, #eec0c6 0%, #e58c8a 74%);
+
+}
+
+.bg-yellow-grad {
+  background-color: #f9484a;
+  background-image: linear-gradient(315deg, #f9484a 0%, #fbd72b 74%);
+}
+
+.bg-grey-grad {
+  background-color: #2f4353;
+  background-image: linear-gradient(315deg, #2f4353 0%, #d2ccc4 74%);
+}
+
+.bg-red-grad {
+  background-color: #ee9617;
+  background-image: linear-gradient(315deg, #ee9617 0%, #fe5858 74%);
+}
+
+
+.bg-violet-dark {
+  background-color: #370D32;
+}
+
+.bg-violet-light {
+  background-color: #CDA4C8;
+
+}
+
+.text-blue-dark {
+  color: #1150b7;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+.overflow-y-auto {
+  overflow-y: auto;
+}
+
+.overflow-y-visible {
+  overflow-y: visible;
+}
+
+.overflow-x-visible {
+  overflow-x: visible;
+}
+
+
+.p-8 {
+  padding: 8ch;
+  padding-left: 12ch;
+  padding-right: 12ch;
+}
+
+.mt-10 {
+  margin-top: 15ch;
+}

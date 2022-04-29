@@ -10,7 +10,7 @@ const createDeliveryPersonElem = (deliveryPerson) => {
 	const delp = { e_id: deliveryPerson.e_id };
 	const onDelete = async () => {
 		try {
-			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/employee/single",{
+			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/employee/single", {
 				method: "DELETE",
 				headers: { "Content-Type": "application/json" },
 				body: JSON.stringify(delp),
@@ -19,7 +19,7 @@ const createDeliveryPersonElem = (deliveryPerson) => {
 			// Here, fetch defualt is GET. So, no further input
 			const jsonData = await response.json();
 			if (!jsonData.success) {
-				alert(jsonData.message+"");
+				alert(jsonData.message + "");
 			}
 			window.location.reload();
 
@@ -27,26 +27,26 @@ const createDeliveryPersonElem = (deliveryPerson) => {
 			console.error(error.message);
 
 		}
-		
+
 	}
 	return (
 		<Fragment>
-			
+
 			<tr>
-				<th>{deliveryPerson.e_id}</th>
-				<th>{deliveryPerson.name}</th>
-				<th>{deliveryPerson.prim_area_id}</th>
-				<th>{deliveryPerson.sec_area_id}</th>
-				<th>
-					
+				<td>{deliveryPerson.e_id}</td>
+				<td>{deliveryPerson.name}</td>
+				<td>{deliveryPerson.prim_area_id}</td>
+				<td>{deliveryPerson.sec_area_id}</td>
+				{/* <th>
+
 					<Link to="/edit/employee" className="nav-link"><button class='btn btn-warning'>Edit</button></Link>
-					
-				</th>
-				<th>
-					
-						<button class='btn btn-danger' onClick={ onDelete}>Remove</button>
-					
-				</th>
+
+				</th> */}
+				<td>
+
+					<button class='btn btn-danger' onClick={onDelete}>Remove</button>
+
+				</td>
 
 			</tr>
 			{/* <p>{deliveryPerson.name}</p> */}
@@ -67,7 +67,7 @@ const DeliveryPersons = () => {
 
 		try {
 			// console.log(process.env.REACT_APP_BACKEND_SERVER)
-			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/delivery/all", {credentials: 'include'})
+			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/delivery/all", { credentials: 'include' })
 			// Here, fetch defualt is GET. So, no further input
 			const jsonData = await response.json();
 			if (jsonData.success) {
@@ -77,7 +77,7 @@ const DeliveryPersons = () => {
 			}
 			else {
 				// console.log(jsonData.message);
-				alert(jsonData.message+"");
+				alert(jsonData.message + "");
 
 			}
 

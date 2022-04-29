@@ -1,15 +1,13 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { Fragment as tr, useState, useEffect } from 'react';
 import AddOffer from './add_offer';
-import { BrowserRouter as Router, Routes, Route, Link, } from "react-router-dom";
 
-import offersListTest from "./offersListTest";
 // import offersList from "./offersListTest";
 
 
 const createOfferElem = (offer) => {
     const onDelete = async () => {
         try {
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/delete/"+offer.offer_id, {
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/delete/" + offer.offer_id, {
                 method: "DELETE",
                 credentials: 'include'
             });
@@ -27,19 +25,25 @@ const createOfferElem = (offer) => {
 
     }
     return (
-        <Fragment>
-            <div className=' border  m-3 shadow rounded'>
-                <h3><u>{offer.name}</u> </h3>
-                {/* <p>{offer.description} </p> */}
-                <table className='table'>
-                    <th className='fs-5 ps-5 text-start'>Discount : {offer.discount}%</th>
-                    <th className='text-end pe-5'><button className='btn btn-danger'onClick={onDelete}>Delete</button></th>
+        <tr className='table-row'>
+            {/* <div className='d-flex justify-content-between border  m-0  p-1  rounded'> */}
+            <td>
+                <h5>{offer.name} </h5>
 
-                </table>
-            </div>
+            </td>
+            <td>
+
+                <p>Discount : {offer.discount}%</p>
+            </td>
+            <td>
+                <button className='btn btn-danger' onClick={onDelete}>Delete</button>
+
+            </td>
+            {/* <p>{offer.description} </p> */}
+            {/* </div> */}
             {/* <p>{offer.name}</p> */}
 
-        </Fragment>
+        </tr>
     );
 };
 
@@ -61,14 +65,14 @@ const Offers = () => {
 
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/all", {credentials: 'include'})
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/all", { credentials: 'include' })
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if (jsonData.success) {
                 setOffersList(jsonData.data);
             }
-            else{
-                alert(jsonData.message+"");
+            else {
+                alert(jsonData.message + "");
 
             }
 
@@ -94,13 +98,25 @@ const Offers = () => {
 
             <h2>Offers Page</h2>
 
-            <AddOffer offersList={offersList} setOffersList={setOffersList} > </AddOffer>
-            <h2>Offers List</h2>
+            <div className='border rounded-15 shadow pt-5 mb-5' >
 
-            {offersList.map(offer => (
-                createOfferElem(offer)
-            ))}
+                <AddOffer offersList={offersList} setOffersList={setOffersList} > </AddOffer>
+            </div>
+            <h2 className='mb-5'>Offers List</h2>
 
+            <div className='p-3 border rounded-7 shadow' >
+
+                <table className='table table-hover ' >
+
+                    <tbody>
+
+                        {offersList.map(offer => (
+                            createOfferElem(offer)
+                        ))}
+                    </tbody>
+                </table>
+
+            </div>
         </div>
     );
 };

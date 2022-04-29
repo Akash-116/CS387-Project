@@ -6,23 +6,28 @@ import ReactPaginate from "react-paginate";
 const CreateCustElem = ({ cust }) => {
 
 
-    const setBgColor = (order) => {
-        if (order.status === "Preparing") { return "bg-success" }
-        else { return "bg-primary" }
-    }
 
 
     return (
         <Fragment>
 
-            <div className='border p-3 m-3 shadow rounded'>
+            <div className='border   mt-3 shadow rounded-15 overflow-hidden'>
                 <div className='row'>
-                    <div className='col-sm-12'>
-                        <h3><b>CID </b> : {cust.c_id} - {cust.name} </h3>
-                        <h3><b>Ph.No. </b> : {cust.ph_no} </h3>
-                        <h3><b>Address </b> : {cust.addr} </h3>
-                        <h3><b>No. Orders </b> : {cust.num_orders} </h3>
-                        <h3><b>No. Dishes </b> : {cust.num_dish} </h3>
+                    <div className='col-sm-3 bg-pink-grad d-flex justify-content-center
+                 align-items-center'>
+
+                        <i className='fa-3x fas fa-user-tag'></i>
+                    </div>
+                    <div className='col-sm-7 mb-3'>
+                        <div className='mt-3 pb-1 ms-3 d-flex flex-column align-items-start'>
+
+                            <h3><b></b>{cust.name} </h3>
+                            <hr className='align-self-stretch m-1 '></hr>
+                            <p className='mb-0'><b>Ph.No. </b> : {cust.ph_no} </p>
+                            <p className='mb-0'><b>Address </b> : {cust.addr} </p>
+                            <p className='mb-0'><b>No. Orders </b> : {cust.num_orders} </p>
+                            <p className='mb-0'><b>No. Dishes </b> : {cust.num_dish} </p>
+                        </div>
 
 
                     </div>
@@ -46,14 +51,14 @@ const ListCustomers = () => {
         // console.log("A");
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/all", {credentials: 'include'})
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/all", { credentials: 'include' })
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if (jsonData.success) {
                 setCustomersList(jsonData.data);
             }
             else {
-                alert(jsonData.message+"");
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
             }
 
@@ -104,34 +109,35 @@ const ListCustomers = () => {
             {customersListPage}
 
             {/* So elaborate classes, so that the bootstrap matches this pagination implementation */}
-            <div className='container justify-content-center'>
+            <div className='container d-flex  mt-3 p-2 justify-content-center'>
 
-                <ReactPaginate
-                    previousLabel={"< "}
-                    nextLabel={">"}
-                    pageCount={pageCount}
-                    onPageChange={changePage}
+                <div>
+                    <ReactPaginate
+                        previousLabel={"< "}
+                        nextLabel={">"}
+                        pageCount={pageCount}
+                        onPageChange={changePage}
 
-                    pageRangeDisplayed={1}
-                    marginPagesDisplayed={2}
+                        pageRangeDisplayed={1}
+                        marginPagesDisplayed={2}
 
-                    containerClassName={"pagination"}
+                        containerClassName={"pagination"}
 
-                    breakClassName={"page-item"}
-                    pageClassName={"page-item"}
-                    previousClassName={"page-item"}
-                    disabledClassName={"page-item"}
-                    nextClassName={"page-item"}
-                    activeClassName={"page-item bg-warning"}
+                        breakClassName={"page-item"}
+                        pageClassName={"page-item"}
+                        previousClassName={"page-item"}
+                        disabledClassName={"page-item"}
+                        nextClassName={"page-item"}
+                        activeClassName={"page-item bg-warning"}
 
-                    pageLinkClassName={"page-link"}
-                    breakLinkClassName={"page-link"}
-                    activeLinkClassName={"page-link bg-info"}
-                    previousLinkClassName={"page-link"}
-                    nextLinkClassName={"page-link"}
-                    disabledLinkClassName={"page-link"}
-                />
-
+                        pageLinkClassName={"page-link"}
+                        breakLinkClassName={"page-link"}
+                        activeLinkClassName={"page-link bg-info"}
+                        previousLinkClassName={"page-link"}
+                        nextLinkClassName={"page-link"}
+                        disabledLinkClassName={"page-link"}
+                    />
+                </div>
             </div>
 
         </div>
