@@ -115,7 +115,7 @@ exports.get_customer = function (req, res) {
 }
 
 exports.get_all_customers = function (req, res) {
-    if (req.session.role != 'Manager'){
+    if ((req.session.role != 'Manager') && (req.session.role != 'Billing Manager')) {
         res.status(500).send({
             success: false,
             message: 'no access'
@@ -142,17 +142,17 @@ exports.get_all_customers = function (req, res) {
 }
 
 exports.edit_customer = function (req, res) {
-    var user = req.body;  
-    if((req.session.role != 'customer') || (req.session.pid != user.c_id)){
+    var user = req.body;
+    if ((req.session.role != 'customer') || (req.session.pid != user.c_id)) {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
-    else{
+    else {
         pgquery = 'update customer set username=$1, name = $2,ph_no=$3::bigint,addr=$4 where c_id=$5::int';
 
-        client.query(pgquery, [user.username, user.name, user.ph_no, user.addr,user.c_id], function (err, res1) {
+        client.query(pgquery, [user.username, user.name, user.ph_no, user.addr, user.c_id], function (err, res1) {
             if (err) {
                 console.log(err.message);
                 res.status(500).send({
@@ -171,13 +171,13 @@ exports.edit_customer = function (req, res) {
 
 exports.get_customer_previous = function (req, res) {
     var c_id = req.params.c_id;
-    if((req.session.pid != c_id) || ((req.session.role != 'customer') && (req.session.role != 'Manager'))){
+    if ((req.session.pid != c_id) || ((req.session.role != 'customer') && (req.session.role != 'Manager'))) {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
-    else{
+    else {
         var pgquery = 'select * from orders as A,order_dishes as B,dish as C where A.c_id=$1::int and A.order_id=B.order_id and B.dish_id=C.dish_id';
 
         client.query(pgquery, [c_id], function (err, res1) {
@@ -199,13 +199,13 @@ exports.get_customer_previous = function (req, res) {
 
 exports.give_dish_rating = function (req, res) {
     var data = req.body;
-    if(req.session.role != 'customer'){
+    if (req.session.role != 'customer') {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
-    else{
+    else {
         pgquery = 'update order_dishes set rating=$3::real where order_id=$2::int and dish_id=$1::int';
 
         pgquery1 = 'update dish set rating=(rating*num_ratings+$2::real)/(num_ratings+1) , num_ratings=num_ratings+1 where dish_id=$1::int';

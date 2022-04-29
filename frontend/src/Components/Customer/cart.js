@@ -1,6 +1,24 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 
+
+const computeTotalCost = (cart) => {
+    var ans = 0;
+    cart.forEach(dish => {
+        ans += (dish.count) * (dish.dish.cost)
+    });
+    return ans;
+}
+
+function json2array(json) {
+    var result = [];
+    var keys = Object.keys(json);
+    keys.forEach(function (key) {
+        result.push(json[key]);
+    });
+    return result;
+}
+/* Build elements */
 const buildDishInCart = (dish) => {
 
     if (dish.count === 0) { return }
@@ -13,25 +31,6 @@ const buildDishInCart = (dish) => {
         </div>
     )
 }
-
-const computeTotalCost = (cart) => {
-    var ans = 0;
-    cart.forEach(dish => {
-        ans += (dish.count) * (dish.dish.cost)
-    });
-    return ans;
-}
-function json2array(json) {
-    var result = [];
-    var keys = Object.keys(json);
-    keys.forEach(function (key) {
-        result.push(json[key]);
-    });
-    return result;
-}
-
-
-
 const createOfferElem = (offer) => {
     return (
         <Fragment>
@@ -43,7 +42,7 @@ const createOfferElem = (offer) => {
 };
 
 
-
+/* Offers Modal */
 const OffersModal = ({ offer, setOffer }) => {
 
     const [offersList, setOffersList] = useState([]);
@@ -52,14 +51,14 @@ const OffersModal = ({ offer, setOffer }) => {
 
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/all", {credentials: 'include'})
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/all", { credentials: 'include' })
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if (jsonData.success) {
                 setOffersList(jsonData.data);
             }
             else {
-                alert(jsonData.message+"");
+                alert(jsonData.message + "");
 
             }
 
@@ -146,8 +145,73 @@ const OffersModal = ({ offer, setOffer }) => {
 }
 
 
+const Add_Order_Dish = async (order_dish) => {
+    const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/orders/add_order_dish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(order_dish),
+        credentials: 'include'
+    });
+    const jsonData = await response.json();
+    if (!jsonData.success) {
+        alert(jsonData.message + "");
+        console.log(jsonData.message);
+    }
 
-const CustomerCart = ({ cart, setCart, offer, setOffer }) => {
+}
+
+
+const confirmOrder = async (cart, offer, token) => {
+    console.log("Order Confirm")
+    try {
+        var order = {
+            c_id: token.data.c_id,
+            // area_id: token.data.areaid,
+            order_type: "Online"
+        }
+        console.log(cart);
+        // throw 500;
+
+
+        const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/orders/add", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(order),
+            credentials: 'include'
+        });
+        const jsonData = await response.json();
+        if (jsonData.success) {
+            var order_id = jsonData.data;
+            // setNewid(order_id);
+            // console.log(order_id);
+            // console.log(orderDishes);
+            Object.values(cart).forEach(dishAndCount => {
+                // console.log(dish.dish_id, dish.dish_name);
+                var dish = dishAndCount.dish
+                var order_dish = {
+                    dish_id: dish.dish_id,
+                    order_id: order_id,
+                    quantity: dishAndCount.count
+                }
+                Add_Order_Dish(order_dish);
+            });
+            alert("Success");
+            window.location.reload();
+        }
+        else {
+            console.log(jsonData.message);
+            alert(jsonData.message + "");
+        }
+
+    } catch (error) {
+        console.error(error.message);
+        alert("Error connectin to backend");
+    }
+
+}
+
+
+const CustomerCart = ({ token, cart, setCart, offer, setOffer }) => {
 
     // const [offer, setOffer] = useState(cartOffer)
 
@@ -167,25 +231,21 @@ const CustomerCart = ({ cart, setCart, offer, setOffer }) => {
                 </div>
                 <div className='d-flex justify-content-between m-2'>
                     <p>Offer Selected :</p>
-                    {(Object.keys(offer).length === 0) && <p>None</p>} {!(Object.keys(offer).length === 0) && <p>{offer.name} - {offer.discount} % off </p>}
+                    <p>{offer.name} - {offer.discount} % off </p>
                     <p><OffersModal offer={offer} setOffer={setOffer} ></OffersModal> </p>
                 </div>
-                {!(Object.keys(offer).length === 0) &&
 
-                    <div>
+                <div className='d-flex justify-content-between m-2'>
+                    <p>Net Discount : </p>
+                    <b className='text-danger'>{(offer.discount / 100) * computeTotalCost(json2array(cart))}</b>
+                </div>
+                <hr></hr>
+                <div className='d-flex justify-content-between m-2'>
+                    <p>Final Amount : </p>
+                    <b className='text-success'>{((100 - offer.discount) / 100) * computeTotalCost(json2array(cart))}</b>
+                </div>
 
-
-                        <div className='d-flex justify-content-between m-2'>
-                            <p>Net Discount : </p>
-                            <b className='text-danger'>{(offer.discount / 100) * computeTotalCost(json2array(cart))}</b>
-                        </div>
-                        <hr></hr>
-                        <div className='d-flex justify-content-between m-2'>
-                            <p>Final Amount : </p>
-                            <b className='text-success'>{((100 - offer.discount) / 100) * computeTotalCost(json2array(cart))}</b>
-                        </div>
-                    </div>
-                }
+                <button onClick={e => confirmOrder(cart, offer, token)} className='btn btn-primary'>Confirm</button>
 
 
 

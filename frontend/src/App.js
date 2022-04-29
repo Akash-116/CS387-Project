@@ -11,7 +11,6 @@ import Page1 from "./Components/page1";
 import Page2 from "./Components/page2";
 import Page3 from "./Components/page3";
 import { PageView } from "./Components/pageView";
-import Dashboard from "./Components/Dashboard/customer_dashboard";
 import Preferences from "./Components/Preferences/Preferences";
 import Login from "./Components/Login/Login";
 import useToken from "./Components/App/useToken";
@@ -35,6 +34,7 @@ import ListCustomers from "./Components/Customer/list_customer";
 import ListEmployees from "./Components/Employee/list_employee";
 import ListItems from "./Components/Items/list_items";
 import EditEmployee from "./Components/Employee/edit_employee";
+import EditItem from "./Components/Items/edit_item";
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
 // }
@@ -100,7 +100,8 @@ function App() {
     <Router>
       <div id='wrapper'>
 
-        <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+        <nav class=" overflow-auto navbar navbar-expand-md bg-dark navbar-dark sticky-top"
+        >
           <Link to="/" className="navbar-brand m-4">YARA</Link>
 
           <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
@@ -109,9 +110,15 @@ function App() {
 
           <div class="justify-content-between collapse navbar-collapse" id="collapsibleNavbar">
 
+            {/* Different userroles are
+1. Manager
+2. Billing Manager
+3. Head Waiter
+4. Delivery
+5. Chef
+6. customer */}
             <div className="d-flex">
               {(token.userrole === "customer") &&
-
                 <ul class="navbar-nav">
                   <li class="nav-item">
                     <Link to="/home" className="nav-link">Order</Link>
@@ -131,65 +138,182 @@ function App() {
 
 
               {!(token.userrole === "customer") &&
+                <div>
 
-                <ul class="navbar-nav">
+                  {(token.data.e_type === "Manager") &&
+                    <ul class="navbar-nav">
 
 
-                  <li class="nav-item">
-                    <Link to="/dashboard" className="nav-link">Dashboard</Link>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/preferences" className="nav-link">Preferences</Link>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/customers" className="nav-link">Customers</Link>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/employees" className="nav-link">Employees</Link>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/offers" className="nav-link">Offers</Link>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/items" className="nav-link">Items</Link>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/analytics" className="nav-link">Analytics</Link>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/delivery_persons" className="nav-link">DeliveryPersons</Link>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/tables" className="nav-link">Tables</Link>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/orders" className="nav-link">Orders</Link>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/dishes" className="nav-link">Dishes</Link>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/error" className="nav-link">ErrorPg</Link>
-                  </li>
+                      <li class="nav-item">
+                        <Link to="/preferences" className="nav-link">Preferences</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/customers" className="nav-link">Customers</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/employees" className="nav-link">Employees</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/offers" className="nav-link">Offers</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/items" className="nav-link">Items</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/analytics" className="nav-link">Analytics</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/delivery_persons" className="nav-link">DeliveryPersons</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/tables" className="nav-link">Tables</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/orders" className="nav-link">Orders</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/dishes" className="nav-link">Dishes</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/error" className="nav-link">ErrorPg</Link>
+                      </li>
 
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                      create
-                    </a>
-                    <div class="dropdown-menu">
-                      <Link to="/create/customer" className="dropdown-item">Customer</Link>
-                      <Link to="/create/employee" className="dropdown-item">Employee</Link>
-                      <Link to="/create/dish" className="dropdown-item">Dish</Link>
-                      <Link to="/create/order" className="dropdown-item">Order</Link>
-                      <Link to="/create/table" className="dropdown-item">Table</Link>
-                    </div>
-                  </li>
-                  <li class="nav-item">
-                    <Link to="/edit_details" className="nav-link">Edit your details</Link>
-                  </li>
-                </ul>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                          create
+                        </a>
+                        <div class="dropdown-menu">
+                          <Link to="/create/customer" className="dropdown-item">Customer</Link>
+                          <Link to="/create/employee" className="dropdown-item">Employee</Link>
+                          <Link to="/create/dish" className="dropdown-item">Dish</Link>
+                          <Link to="/create/order" className="dropdown-item">Order</Link>
+                          <Link to="/create/table" className="dropdown-item">Table</Link>
+                        </div>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                          Edit
+                        </a>
+                        <div class="dropdown-menu">
+                          <Link to="/edit/item" className="dropdown-item">Item</Link>
+                        </div>
+                      </li>
+                    </ul>
+                  }
+                  {(token.data.e_type === "Billing Manager") &&
+                    <ul class="navbar-nav">
+
+
+                      <li class="nav-item">
+                        <Link to="/offers" className="nav-link">Offers</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/delivery_persons" className="nav-link">DeliveryPersons</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/tables" className="nav-link">Tables</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/orders" className="nav-link">Orders</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/dishes" className="nav-link">Dishes</Link>
+                      </li>
+
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                          create
+                        </a>
+                        <div class="dropdown-menu">
+                          <Link to="/create/customer" className="dropdown-item">Customer</Link>
+                          <Link to="/create/order" className="dropdown-item">Order</Link>
+                        </div>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                          Edit
+                        </a>
+                      </li>
+                    </ul>
+                  }
+                  {(token.data.e_type === "Chef") &&
+                    <ul class="navbar-nav">
+
+
+                      <li class="nav-item">
+                        <Link to="/offers" className="nav-link">Offers</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/items" className="nav-link">Items</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/dishes" className="nav-link">Dishes</Link>
+                      </li>
+
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                          create
+                        </a>
+                        <div class="dropdown-menu">
+                          <Link to="/create/dish" className="dropdown-item">Dish</Link>
+                        </div>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                          Edit
+                        </a>
+                      </li>
+                    </ul>
+                  }
+                  {(token.data.e_type === "Head Waiter") &&
+                    <ul class="navbar-nav">
+
+                      <li class="nav-item">
+                        <Link to="/offers" className="nav-link">Offers</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/tables" className="nav-link">Tables</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/orders" className="nav-link">Orders</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/dishes" className="nav-link">Dishes</Link>
+                      </li>
+
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                          create
+                        </a>
+                        <div class="dropdown-menu">
+                        </div>
+                      </li>
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                          Edit
+                        </a>
+                        <div class="dropdown-menu">
+                        </div>
+                      </li>
+                    </ul>
+                  }
+                  {(token.data.e_type === "Delivery") &&
+                    <ul class="navbar-nav">
+
+
+                      <li class="nav-item">
+                        <Link to="/offers" className="nav-link">Offers</Link>
+                      </li>
+                      <li class="nav-item">
+                        <Link to="/delivery_persons" className="nav-link">Delivery People</Link>
+                      </li>
+                    </ul>
+                  }
+
+                </div>
               }
             </div>
+
             <div className="d-flex me-5">
               <button className=" btn btn-danger ms-1" onClick={e => { Logout(e) }}>Logout</button>
             </div>
@@ -203,7 +327,7 @@ function App() {
 
 
         <div class="container-fluid text-center mt-2">
-          <p>Hello, Role : {token.data.username}</p>
+          <h5 className="text-capitalize">Welcome  {token.data.username} - {token.data.e_type}</h5>
 
           {/* <Routes>
             <Route exact path="PV" element={<PageView></PageView>}>
@@ -222,11 +346,10 @@ function App() {
           </Routes> */}
           <Routes>
             <Route path="/" element={<h3>Welcome to YARA</h3>} ></Route>
-            <Route path="/cart" element={<CustomerCart cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerCart>} ></Route>
-            <Route path="/home" element={<CustomerHome token={token} cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerHome>} ></Route>
+            <Route path="/cart" element={<CustomerCart token={token} cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerCart>} ></Route>
+            <Route path="/home" element={<CustomerHome cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerHome>} ></Route>
             <Route path="/customer/details" element={<CustomerDetails token={token} setToken={setToken}></CustomerDetails>} ></Route>
             <Route path="/customer/prevorders" element={<PrevOrder token={token}></PrevOrder>} ></Route>
-            <Route path="/dashboard" element={<Dashboard></Dashboard>} ></Route>
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
             <Route path="/customers" element={<ListCustomers></ListCustomers>} ></Route>
             <Route path="/items" element={<ListItems></ListItems>} ></Route>
@@ -244,6 +367,8 @@ function App() {
             <Route path="/create/employee" element={<AddEmployee></AddEmployee>} ></Route>
             <Route path="/create/customer" element={<AddCustomer></AddCustomer>}></Route>
             <Route path="/edit_details" element={<EditEmployee token={token} setToken={setToken}></EditEmployee>} ></Route>
+
+            <Route path="/edit/item" element={<EditItem></EditItem>}></Route>
 
             <Route
               path="*"

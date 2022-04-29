@@ -1,8 +1,8 @@
-import React, { Fragment, useState,useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 
 
 
-const select_area=(area)=>{
+const select_area = (area) => {
     return (
         <option value={area.area_id}>{area.loc}, {area.city}</option>
     )
@@ -21,7 +21,7 @@ const AddEmployee = () => {
     const [primareaid, setprimareaid] = useState(null);
     const [secareaid, setsecareaid] = useState(null);
     const [addr, setaddr] = useState(null);
-    
+
     const [newid, setnewid] = useState(null);
     const [areas, setareas] = useState([]);
 
@@ -37,17 +37,17 @@ const AddEmployee = () => {
     //     photo: null,
     // };
 
-    const FetchAreas=async ()=>{
+    const FetchAreas = async () => {
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/areas/all", {credentials: 'include'});
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/areas/all", { credentials: 'include' });
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
-            if(jsonData.success){
+            if (jsonData.success) {
                 setareas(jsonData.data);
             }
-            else{
-                alert(jsonData.message+"");
+            else {
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
                 // window.location.reload();
             }
@@ -68,34 +68,34 @@ const AddEmployee = () => {
             // setDishesList(prevState => [...prevState, newDish])
             // offersList.push(newDish);
             // console.log("offersList : ", offersList);
-            var employee={
-                username : username,
-                name : name,
-                pswd : pswd,
-                ph_no : phno,
-                e_type : role,
-                addr : addr,
-                prim_area_id : primareaid,
-                sec_area_id : secareaid
+            var employee = {
+                username: username,
+                name: name,
+                pswd: pswd,
+                ph_no: phno,
+                e_type: role,
+                addr: addr,
+                prim_area_id: primareaid,
+                sec_area_id: secareaid
             }
 
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/employee/create",{
-                method : "POST",
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(employee),
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/employee/create", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(employee),
                 credentials: 'include'
             });
-            
+
             const jsonData = await response.json();
-            if(jsonData.success){
+            if (jsonData.success) {
                 setnewid(jsonData.data);
                 alert("Success");
+                window.location.reload();
             }
-            else{
-                alert(jsonData.message+"");
+            else {
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
             }
-            window.location.reload();
 
         } catch (error) {
             console.error(error.message);
@@ -109,8 +109,8 @@ const AddEmployee = () => {
         FetchAreas();
     }, [])
 
-    
-    
+
+
 
 
     return (
@@ -126,8 +126,8 @@ const AddEmployee = () => {
                         <label for="eusername" class="col-sm-3 col-form-label">Username : </label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="eusername"
-                            value={username}
-                            onChange={e=>setusername(e.target.value)}>
+                                value={username}
+                                onChange={e => setusername(e.target.value)}>
                             </input>
                         </div>
                     </div>
@@ -135,29 +135,30 @@ const AddEmployee = () => {
                         <label for="ename" class="col-sm-3 col-form-label">Name : </label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="ename"
-                            value={name}
-                            onChange={e=>{setname(e.target.value)}}>
+                                value={name}
+                                onChange={e => { setname(e.target.value) }}>
                             </input>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="erole" class="col-sm-3 col-form-label">Role : </label>
                         <div class="col-sm-7">
-                        <select className='form-select' onChange={e => setrole(e.target.value)}>
-                            <option hidden disabled selected value="none"> -- select an option -- </option>
-                            <option value="Chef">Chef</option>
-                            <option value="Manager">Manager</option>
-                            <option value="Delivery">Delivery Person</option>
-                            <option value="Head Waiter" >Head Waiter</option>
-                        </select>
+                            <select className='form-select' onChange={e => setrole(e.target.value)}>
+                                <option hidden disabled selected value="none"> -- select an option -- </option>
+                                <option value="Chef">Chef</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Delivery">Delivery Person</option>
+                                <option value="Head Waiter" >Head Waiter</option>
+                                <option value="Billing Manager" >Billing Manager</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="ephno" class="col-sm-3 col-form-label">Ph. No : </label>
                         <div class="col-sm-7">
                             <input type="tel" class="form-control" id="ephno"
-                            value={phno}
-                            onChange={e=>setphno(e.target.value)}>
+                                value={phno}
+                                onChange={e => setphno(e.target.value)}>
                             </input>
                         </div>
                     </div>
@@ -167,33 +168,33 @@ const AddEmployee = () => {
                         <label for="epwd" class="col-sm-3 col-form-label">Password : </label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="epwd"
-                            value={pswd}
-                            onChange={e=>{setpswd(e.target.value)}}>
+                                value={pswd}
+                                onChange={e => { setpswd(e.target.value) }}>
                             </input>
                         </div>
                     </div>
-                    {(role==="Delivery") &&
+                    {(role === "Delivery") &&
                         <div>
                             <div class="row mb-3">
                                 <label for="eprimdelarea" class="col-sm-3 col-form-label">Primary Delivery Area : </label>
                                 <div class="col-sm-7">
-                                <select className='form-select' onChange={e => setprimareaid(e.target.value)}>
-                                    <option hidden disabled selected value="none"> -- select an option -- </option>
-                                    {areas.map(area=>(
-                                         select_area(area)
-                                    ))}
-                                </select>
+                                    <select className='form-select' onChange={e => setprimareaid(e.target.value)}>
+                                        <option hidden disabled selected value="none"> -- select an option -- </option>
+                                        {areas.map(area => (
+                                            select_area(area)
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="esecdelarea" class="col-sm-3 col-form-label">Secondary Delivery Area : </label>
                                 <div class="col-sm-7">
-                                <select className='form-select' onChange={e => setsecareaid(e.target.value)}>
-                                    <option hidden disabled selected value="none"> -- select an option -- </option>
-                                    {areas.map(area=>(
-                                         select_area(area)
-                                    ))}
-                                </select>
+                                    <select className='form-select' onChange={e => setsecareaid(e.target.value)}>
+                                        <option hidden disabled selected value="none"> -- select an option -- </option>
+                                        {areas.map(area => (
+                                            select_area(area)
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -203,8 +204,8 @@ const AddEmployee = () => {
                         <label for="eaddress" class="col-sm-3 col-form-label">Address : </label>
                         <div class="col-sm-7">
                             <textarea class="form-control" id="eaddress"
-                            value={addr}
-                            onChange={e=>{setaddr(e.target.value)}}>
+                                value={addr}
+                                onChange={e => { setaddr(e.target.value) }}>
                             </textarea>
                         </div>
                     </div>

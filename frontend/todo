@@ -1,14 +1,51 @@
-Add Item Page (should include adding to inventory)
-Edit Item Page
+AKASH:
 
-Per Day Page
+    [DONE] Add Order in cart
+    [DONE] Add Item Page
+
+    [LITE] Per Day Page
+    
+    [DONE]Edit Item Page
+    [DONE]Add Item Page
+
+    [DONE - work in progress]Frontend dep on employee role (final option)
+
+/////////////////
+Thivesh:
+
+    [DONE] +/- in cart, menu
+/////////////////
+
+    [DONE] Items list
+
+
+Delete Offer
+
 
 Edit Dish
 Delete Dish
 
-Analytics
 
 delivery person's page (final option)
+
+Functionality Testing bugs -
+
+Create EMployee -
+    Add Billing Manager Role
+    Mask Password
+
+Create Dish -
+    dish_item_unique constraint doesn't exist
+
+delivery person's page
+
+
+
+
+
+delivery person's page (final option)
+Per Day Page (final option)
+
 
 Functionality Testing bugs -
 

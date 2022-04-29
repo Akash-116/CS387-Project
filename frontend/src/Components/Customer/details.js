@@ -1,51 +1,51 @@
 import React, { useState } from 'react';
 
 
-const CustomerDetails = ({token,setToken}) => {
+const CustomerDetails = ({ token, setToken }) => {
     console.log(token);
-    const user=token.data;
+    const user = token.data;
 
     const [cUsername, setCUsername] = useState(user.username);
     const [cName, setCName] = useState(user.name);
     const [cPhNo, setCPhNo] = useState(user.ph_no);
     const [cAddress, setCAddress] = useState(user.addr);
-    const [cNumDish, setCNumDish] = useState(user.num_orders);
-    const [cNumOrder, setCNumOrder] = useState(user.num_dish);
+    const [cNumDish, setCNumDish] = useState(user.num_dish);
+    const [cNumOrder, setCNumOrder] = useState(user.num_orders);
     const [editDetails, setEditDetails] = useState(false);
 
 
-    const SaveEditDetails=async ()=>{
-        var new_user={
-            username : cUsername,
-            name : cName,
-            ph_no : cPhNo,
-            addr : cAddress,
-            c_id : user.c_id
+    const SaveEditDetails = async () => {
+        var new_user = {
+            username: cUsername,
+            name: cName,
+            ph_no: cPhNo,
+            addr: cAddress,
+            c_id: user.c_id
         }
         try {
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/edit",{
-                method : "POST",
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(new_user),
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/edit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(new_user),
                 credentials: 'include'
             });
-            
+
             const jsonData = await response.json();
-            if(jsonData.success){
+            if (jsonData.success) {
                 alert("Success");
                 setEditDetails(false);
-                new_user.num_dish=cNumDish;
-                new_user.num_orders=cNumOrder;
-                var new_token={
-                    success : token.success,
-                    token : token.token,
-                    data : new_user,
-                    userrole : token.userrole
+                new_user.num_dish = cNumDish;
+                new_user.num_orders = cNumOrder;
+                var new_token = {
+                    success: token.success,
+                    token: token.token,
+                    data: new_user,
+                    userrole: token.userrole
                 }
                 setToken(new_token);
             }
-            else{
-                alert(jsonData.message+"");
+            else {
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
             }
 

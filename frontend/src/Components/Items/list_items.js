@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import ReactPaginate from "react-paginate";
+import AddItem from './add_item';
 
 const CreateItemElem = ({ item }) => {
 
@@ -28,19 +29,19 @@ const ListItems = () => {
     const [itemlist, setItemlist] = useState([])
 
 
-    const FetchAllItems=async ()=>{
+    const FetchAllItems = async () => {
         console.log("FetchItems");
         try {
-            
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/items/all", {credentials: 'include'});
+
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/items/all", { credentials: 'include' });
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
-            if(jsonData.success){
+            if (jsonData.success) {
                 setItemlist(jsonData.data);
                 console.log(jsonData.data);
             }
-            else{
-                alert(jsonData.message+"");
+            else {
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
                 window.location.reload();
             }
@@ -86,6 +87,8 @@ const ListItems = () => {
             {/* {ordersList.map(order => (
                 <CreateOrderElem order={order}></CreateOrderElem>
             ))} */}
+
+            <AddItem></AddItem>
 
             {itemsListPage}
 
