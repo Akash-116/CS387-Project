@@ -216,9 +216,9 @@ exports.edit_employee = function (req, res) {
         });
     }
     else {
-        pgquery = 'update employee set name = $2,salary=$3::int,ph_no=$4::bigint,addr=$5,e_type=$6,status=$7 where e_id = $1::int';
+        pgquery = 'update employee set name = $2,ph_no=$3::bigint,addr=$4 where e_id = $1::int';
 
-        client.query(pgquery, [user.e_id, user.name, user.salary, user.ph_no, user.addr, user.e_type, user.status], function (err, res1) {
+        client.query(pgquery, [user.e_id, user.name, user.ph_no, user.addr], function (err, res1) {
             if (err) {
                 console.log(err.message);
                 res.status(500).send({

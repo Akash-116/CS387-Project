@@ -1,7 +1,7 @@
 const client = require("../../connectDB").client;
 
 exports.get_all_tables = function (req, res) {
-    pgquery = 'select * from table_status';
+    pgquery = 'select * from table_status order by table_id';
     if ((req.session.role != 'Manager') && (req.session.role != 'Billing Manager') && (req.session.role != 'Head Waiter')) {
         res.status(500).send({
             success: false,
@@ -84,7 +84,7 @@ exports.get_empty_tables = function (req, res) {
                     console.log("No Empty Tables");
                     res.status(500).send({
                         success: false,
-                        messsage: "No Empty Tables"
+                        message: "No Empty Tables"
                     });
                 }
                 else {

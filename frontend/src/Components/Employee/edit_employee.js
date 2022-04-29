@@ -9,7 +9,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 // }
 
 
-const EditEmployee = ({token,setToken}) => {
+const EditEmployee = ({ token, setToken }) => {
 
 	// const [selectedImage, setSelectedImage] = useState(null);
 	console.log("sup?");
@@ -68,7 +68,7 @@ const EditEmployee = ({token,setToken}) => {
 			name: name,
 			ph_no: phno,
 			addr: addr,
-			e_id:user.e_id
+			e_id: user.e_id
 		}
 		try {
 			// console.log("need to add :", newDish);
@@ -78,7 +78,7 @@ const EditEmployee = ({token,setToken}) => {
 			// setDishesList(prevState => [...prevState, newDish])
 			// offersList.push(newDish);
 			// console.log("offersList : ", offersList);
-			
+
 
 			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/employee/edit", {
 				method: "POST",
@@ -114,7 +114,7 @@ const EditEmployee = ({token,setToken}) => {
 
 	};
 
-	
+
 
 
 
@@ -134,7 +134,7 @@ const EditEmployee = ({token,setToken}) => {
 						<div class="col-sm-7">
 							<input type="text" class="form-control" id="username"
 								value={username}
-								onChange={e => setusername(e.target.value)} disabled={!editDetails} >
+								onChange={e => setusername(e.target.value)} disabled >
 							</input>
 						</div>
 					</div>
@@ -158,7 +158,7 @@ const EditEmployee = ({token,setToken}) => {
 					</div>
 
 
-					
+
 					{/* {(role === "Delivery") &&
 						<div>
 							<div class="row mb-3">
