@@ -178,7 +178,7 @@ exports.get_customer_previous = function (req, res) {
         });
     }
     else {
-        var pgquery = 'select * from orders as A,order_dishes as B,dish as C where A.c_id=$1::int and A.order_id=B.order_id and B.dish_id=C.dish_id';
+        var pgquery = 'select A.*,B.dish_id,B.quantity,B.rating,C.dish_name,C.recipe,C.time_taken,C.dish_type,C.cost,C.photo from orders as A,order_dishes as B,dish as C where A.c_id=$1::int and A.order_id=B.order_id and B.dish_id=C.dish_id';
 
         client.query(pgquery, [c_id], function (err, res1) {
             if (err) {
@@ -199,6 +199,7 @@ exports.get_customer_previous = function (req, res) {
 
 exports.give_dish_rating = function (req, res) {
     var data = req.body;
+    console.log(data);
     if (req.session.role != 'customer') {
         res.status(500).send({
             success: false,
@@ -206,9 +207,9 @@ exports.give_dish_rating = function (req, res) {
         });
     }
     else {
-        pgquery = 'update order_dishes set rating=$3::real where order_id=$2::int and dish_id=$1::int';
+        pgquery = 'update order_dishes set rating=$3::int where order_id=$2::int and dish_id=$1::int returning order_id,dish_id';
 
-        pgquery1 = 'update dish set rating=(rating*num_ratings+$2::real)/(num_ratings+1) , num_ratings=num_ratings+1 where dish_id=$1::int';
+        pgquery1 = 'update dish set rating=(rating*num_ratings+$2::real)/(num_ratings+1) , num_ratings=num_ratings+1 where dish_id=$1::int returning dish_id';
 
         client.query(pgquery, [data.dish_id, data.order_id, data.rating], function (err, res1) {
             if (err) {
@@ -218,19 +219,39 @@ exports.give_dish_rating = function (req, res) {
                 });
             }
             else {
-                client.query(pgquery1, [data.dish_id, data.rating], function (err1, res2) {
-                    if (err1) {
-                        res.status(500).send({
-                            success: false,
-                            message: err1.message
-                        });
-                    }
-                    else {
-                        res.status(200).send({
-                            success: true
-                        });
-                    }
-                });
+                if (res1.rows.length < 1) {
+                    console.log("No order,dish pair with those ids");
+                    res.status(500).send({
+                        success: false,
+                        message: "No order,dish pair with those ids"
+                    })
+                }
+                else {
+                    client.query(pgquery1, [data.dish_id, data.rating], function (err1, res2) {
+                        if (err1) {
+                            res.status(500).send({
+                                success: false,
+                                message: err1.message
+                            });
+                        }
+                        else {
+                            if (res2.rows.length < 1) {
+                                console.log("No dish with that ID");
+                                res.status(500).send({
+                                    success: false,
+                                    message: "No dish with that ID"
+                                });
+                            }
+                            else {
+                                res.status(200).send({
+                                    success: true
+                                });
+                            }
+
+                        }
+                    });
+                }
+
             }
         });
     }

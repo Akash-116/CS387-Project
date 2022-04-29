@@ -5,6 +5,43 @@ import testOrders from '../TestData/testOrders';
 import ReactPaginate from "react-paginate";
 
 
+const PostRating = async (oid, did, rat) => {
+    if (rat < 1 || rat > 5) {
+        alert("Rating should be between 1 and 5");
+    }
+    else {
+        try {
+            var data = {
+                order_id: oid,
+                dish_id: did,
+                rating: rat
+            }
+            console.log("In PostRating", data);
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/dish_rating", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data),
+                credentials: 'include'
+            });
+            const jsonData = await response.json();
+            if (jsonData.success) {
+                alert("Success");
+                window.location.reload();
+            }
+            else {
+                console.log(jsonData.message);
+                alert(jsonData.message + "");
+            }
+            // window.location.reload();
+
+        } catch (error) {
+            console.error(error.message);
+            alert("Error connectin to backend");
+        }
+    }
+
+}
+
 
 const CreateOrderElem = ({ order }) => {
 
@@ -95,8 +132,14 @@ const CreateOrderElem = ({ order }) => {
                                     {(order.dishes).map(dish => (
                                         <div className='d-flex justify-content-between'>
                                             <p className='m-0'>{dish.dish_name} x{dish.quantity}</p>
-
-
+                                            {(dish.rating == null) &&
+                                                <div>
+                                                    <input type="number" id="rating" onChange={e => { dish.temp_rating = e.target.value }}></input>
+                                                    <button type="button" onClick={e => { PostRating(order.order_id, dish.dish_id, dish.temp_rating) }}>Post Rating</button>
+                                                </div>
+                                            }
+                                            {(dish.rating != null) &&
+                                                <div><label>Rating : </label>{dish.rating}</div>}
                                         </div>
                                     ))}
 
@@ -132,6 +175,8 @@ function json2array(json) {
 const groupByOrder = (orders) => {
     var res = {}
 
+    console.log("Groupby : ", orders);
+
     orders.forEach(order => {
         if (!(res[order.order_id])) {
 
@@ -147,6 +192,7 @@ const groupByOrder = (orders) => {
                 "delivery_person": order.delivery_person,
                 "status": order.status,
                 "order_type": order.order_type,
+                "offer_id": order.offer_id,
 
                 "dishes": []
             }
@@ -154,14 +200,13 @@ const groupByOrder = (orders) => {
         res[order.order_id]["dishes"].push({
             "dish_id": order.dish_id,
             "quantity": order.quantity,
-            "offer_id": order.offer_id,
             "dish_name": order.dish_name,
             "recipe": order.recipe,
             "time_taken": order.time_taken,
             "dish_type": order.dish_type,
             "cost": order.cost,
-            "rating": order.rating,
             "photo": order.photo,
+            "rating": order.rating
         })
 
 
@@ -175,8 +220,8 @@ const groupByOrder = (orders) => {
 
 }
 
-const PrevOrder = ({token}) => {
-    const user=token.data;
+const PrevOrder = ({ token }) => {
+    const user = token.data;
 
     const [ordersList, setOrdersList] = useState([]);
 
@@ -185,7 +230,7 @@ const PrevOrder = ({token}) => {
         // console.log("A");
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/previous_orders/"+user.c_id, {credentials: 'include'})
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/previous_orders/" + user.c_id, { credentials: 'include' })
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if (jsonData.success) {
@@ -193,7 +238,7 @@ const PrevOrder = ({token}) => {
                 console.log(ordersList)
             }
             else {
-                alert(jsonData.message+"");
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
             }
 
