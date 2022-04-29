@@ -34,7 +34,7 @@ import DeliveryPersons from "./Components/Delivery/list_delivery_personnel";
 import ListCustomers from "./Components/Customer/list_customer";
 import ListEmployees from "./Components/Employee/list_employee";
 import ListItems from "./Components/Items/list_items";
-
+import EditEmployee from "./Components/Employee/edit_employee";
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
 // }
@@ -184,6 +184,9 @@ function App() {
                       <Link to="/create/table" className="dropdown-item">Table</Link>
                     </div>
                   </li>
+                  <li class="nav-item">
+                    <Link to="/edit_details" className="nav-link">Edit your details</Link>
+                  </li>
                 </ul>
               }
             </div>
@@ -240,6 +243,8 @@ function App() {
             <Route path="/create/table" element={<AddTable></AddTable>} ></Route>
             <Route path="/create/employee" element={<AddEmployee></AddEmployee>} ></Route>
             <Route path="/create/customer" element={<AddCustomer></AddCustomer>}></Route>
+            <Route path="/edit_details" element={<EditEmployee token={token} setToken={setToken}></EditEmployee>} ></Route>
+
             <Route
               path="*"
               element={

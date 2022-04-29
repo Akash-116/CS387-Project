@@ -55,32 +55,42 @@ const AddOffer = ({ offersList, setOffersList }) => {
             </div>
 
             <form className="d-flex m-5" onSubmit={onSubmitForm}>
+                <table className='table table-borderless'>
+                    <tbody>
 
-                <label>
-                    <p>Name</p>
-                    <input type="text"
-                        className="form-control"
-                        value={newOffer.name}
-                        onChange={e => newOffer.name = e.target.value}
-                    />
-                </label>
-                <label>
-                    <p>Description</p>
-                    <input type="text"
-                        className="form-control"
-                        value={newOffer.description}
-                        onChange={e => newOffer.description = e.target.value}
-                    />
-                </label>
-                <label>
-                    <p>Percent</p>
-                    <input type="number"
-                        className="form-control"
-                        value={newOffer.discount}
-                        onChange={e => newOffer.discount = e.target.value}
-                    />
-                </label>
-                <button className="btn btn-success">Add</button>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Percentage Discount</th>
+                        <th></th>
+                        
+                    </tr>
+                    <tr>
+                        <th><input type="text"
+                            className="form-control"
+                            value={newOffer.name}
+                            onChange={e => newOffer.name = e.target.value}
+                        /></th>
+                        <th><input type="text"
+                            className="form-control"
+                            value={newOffer.description}
+                            onChange={e => newOffer.description = e.target.value}
+                        /></th>
+                        <th>
+                            <input type="number"
+                                className="form-control"
+                                value={newOffer.discount}
+                                onChange={e => newOffer.discount = e.target.value}
+                            />
+                        </th>
+                        <th>
+                            <button className="btn btn-success">Add</button>
+                        </th>
+                        </tr>
+                    </tbody>
+
+                </table>
+                
             </form>
 
 

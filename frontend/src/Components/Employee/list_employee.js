@@ -4,7 +4,27 @@ import ReactPaginate from "react-paginate";
 
 
 const CreateEmployeeElem = ({ emp }) => {
+    const onDelete = async () => {
+        try {
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/employee/single", {
+                method: "DELETE",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(emp),
+                credentials: 'include'
+            });
+            // Here, fetch defualt is GET. So, no further input
+            const jsonData = await response.json();
+            if (!jsonData.success) {
+                alert(jsonData.message + "");
+            }
+            window.location.reload();
 
+        } catch (error) {
+            console.error(error.message);
+
+        }
+
+    }
 
     return (
         <Fragment>
@@ -19,7 +39,9 @@ const CreateEmployeeElem = ({ emp }) => {
                         <h3><b>e_type </b> : {emp.e_type} </h3>
                         <h3><b>salary </b> : {emp.salary} </h3>
                         <h3><b>status </b> : {emp.status} </h3>
-
+                        <button className='btn btn-danger' onClick={onDelete}>
+                        Delete
+                        </button>
 
                     </div>
                 </div>

@@ -100,6 +100,25 @@ const EachDish = ({ token, dish, enableOrdering = false, cart = null, setCart = 
         tcart[dish.dish_id]["count"] = tcounter;
         setCart(tcart);
     }
+    const onDelete = async () => {
+        try {
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/delete/" + dish.dish_id, {
+                method: "DELETE",
+                credentials: 'include'
+            });
+            // Here, fetch defualt is GET. So, no further input
+            const jsonData = await response.json();
+            if (!jsonData.success) {
+                alert(jsonData.message + "");
+            }
+            window.location.reload();
+
+        } catch (error) {
+            console.error(error.message);
+
+        }
+
+    }
 
     useEffect(() => {
         UpdateCounter();
@@ -125,6 +144,9 @@ const EachDish = ({ token, dish, enableOrdering = false, cart = null, setCart = 
                     <div className='d-flex'>
                         <p> {[...Array(dish.rating)].map(e => <i className='text-warning fa fa-star'></i>)}   </p>
                     </div>
+                    <div className='d-flex'>
+                        <button className='btn btn-danger' onClick={onDelete}>Delete</button>
+                    </div>
 
                     {(enableOrdering) &&
                         <div>
@@ -135,6 +157,7 @@ const EachDish = ({ token, dish, enableOrdering = false, cart = null, setCart = 
                             <button className='m-2 mt-0 mb-0 btn btn-primary' onClick={e => { incrementCount(dish); }}><i className='fa fa-plus'></i> </button>
                         </div>
                     }
+
 
                 </div>
             </div>
