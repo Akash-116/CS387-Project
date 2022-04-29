@@ -63,12 +63,12 @@ for c_id in C:
         if order_type == "Online":
             deliver_p = delivery_persons[random.randint(0, num_delivers-1)]
             status = random.choice(
-                ['Preparing', 'Out for delivery', 'Delivered', 'Served'])
+                ['Preparing', 'Out for delivery', 'Delivered'])
             table_id = "NULL"
             area_id = random.randint(1, num_areas)
         else:
             deliver_p = "NULL"
-            status = random.choice(['Preparing', 'Served'])
+            status = random.choice(['Preparing', 'Served', 'Completed'])
             table_id = random.randint(1, num_tables)
             area_id = "NULL"
         ft_h = random.randint(rt_h, 23)
@@ -86,7 +86,7 @@ for c_id in C:
         if(status == "Preparing"):
             dt = "NULL"
             ft = "NULL"
-        elif(status == "Out for delivey"):
+        elif(status == "Out for delivey" or status == "Served"):
             ft = str(ft_h).zfill(2)+':'+str(ft_m).zfill(2)+':00'
             dt = "NULL"
         else:

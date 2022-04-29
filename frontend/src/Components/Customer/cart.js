@@ -227,6 +227,42 @@ const CustomerCart = ({ token, cart, setCart, offer, setOffer }) => {
 
     // const [offer, setOffer] = useState(cartOffer)
 
+    const FetchCart = async () => {
+        try {
+            console.log("Token : ", token)
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/cart/all/" + token.data.c_id, { credentials: 'include' });
+            // Here, fetch defualt is GET. So, no further input
+            const jsonData = await response.json();
+            console.log(jsonData);
+            if (jsonData.success) {
+                var tcart = {};
+                jsonData.data.forEach(dish => {
+                    if (!(tcart[dish.dish_id])) { tcart[dish.dish_id] = {} }
+                    // var temp_dish = dish;
+                    // temp_dish.quantity = null;
+                    tcart[dish.dish_id]["dish"] = { dish_id: dish.dish_id, dish_name: dish.dish_name, recipe: dish.recipe, time_taken: dish.time_taken, dish_type: dish.dish_type, cost: dish.cost, rating: dish.rating, num_ratings: dish.num_ratings, photo: dish.photo };
+                    tcart[dish.dish_id]["count"] = dish.quantity;
+
+                    if (dish.quantity === 0) { delete tcart[dish.dish_id] }
+                });
+                setCart(tcart);
+            }
+            else {
+                // alert(jsonData.message + "");
+                console.log(jsonData.message);
+            }
+
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
+
+    useEffect(() => {
+        if (cart === {}) {
+            FetchCart();
+        }
+    }, []);
+
     return (
         <div className='container'>
             <div className=' border shadow rounded-15 p-5 m-4'>

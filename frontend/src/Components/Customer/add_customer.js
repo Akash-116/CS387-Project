@@ -1,4 +1,4 @@
-import React, { Fragment, useState} from 'react';
+import React, { Fragment, useState } from 'react';
 
 
 
@@ -11,7 +11,7 @@ const AddCustomer = () => {
     const [phno, setphno] = useState(null);
     const [pswd, setpswd] = useState(null);
     const [addr, setaddr] = useState(null);
-    
+
     const [newid, setnewid] = useState(null);
 
 
@@ -38,40 +38,40 @@ const AddCustomer = () => {
             // setDishesList(prevState => [...prevState, newDish])
             // offersList.push(newDish);
             // console.log("offersList : ", offersList);
-            var customer={};
-            if(phno===""){
-                customer={
-                    username : username,
-                    name : name,
-                    pswd : pswd,
-                    addr : addr
+            var customer = {};
+            if (phno === "") {
+                customer = {
+                    username: username,
+                    name: name,
+                    pswd: pswd,
+                    addr: addr
                 }
             }
-            else{
-                customer={
-                    username : username,
-                    name : name,
-                    pswd : pswd,
-                    ph_no : phno,
-                    addr : addr
+            else {
+                customer = {
+                    username: username,
+                    name: name,
+                    pswd: pswd,
+                    ph_no: phno,
+                    addr: addr
                 }
             }
-            
 
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/create",{
-                method : "POST",
-                headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(customer),
+
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/create", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(customer),
                 credentials: 'include'
             });
-            
+
             const jsonData = await response.json();
-            if(jsonData.success){
+            if (jsonData.success) {
                 setnewid(jsonData.data);
                 alert("Success");
             }
-            else{
-                alert(jsonData.message+"");
+            else {
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
             }
             window.location.reload();
@@ -98,8 +98,8 @@ const AddCustomer = () => {
                         <label for="eusername" class="col-sm-3 col-form-label">Username : </label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="eusername"
-                            value={username}
-                            onChange={e=>setusername(e.target.value)}>
+                                value={username}
+                                onChange={e => setusername(e.target.value)}>
                             </input>
                         </div>
                     </div>
@@ -107,8 +107,8 @@ const AddCustomer = () => {
                         <label for="ename" class="col-sm-3 col-form-label">Name : </label>
                         <div class="col-sm-7">
                             <input type="text" class="form-control" id="ename"
-                            value={name}
-                            onChange={e=>{setname(e.target.value)}}>
+                                value={name}
+                                onChange={e => { setname(e.target.value) }}>
                             </input>
                         </div>
                     </div>
@@ -116,17 +116,17 @@ const AddCustomer = () => {
                         <label for="ephno" class="col-sm-3 col-form-label">Ph. No : </label>
                         <div class="col-sm-7">
                             <input type="number" class="form-control" id="ephno"
-                            value={phno}
-                            onChange={e=>setphno(e.target.value)}>
+                                value={phno}
+                                onChange={e => setphno(e.target.value)}>
                             </input>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="epwd" class="col-sm-3 col-form-label">Password : </label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="epwd"
-                            value={pswd}
-                            onChange={e=>{setpswd(e.target.value)}}>
+                            <input type="password" class="form-control" id="epwd"
+                                value={pswd}
+                                onChange={e => { setpswd(e.target.value) }}>
                             </input>
                         </div>
                     </div>
@@ -134,15 +134,15 @@ const AddCustomer = () => {
                         <label for="eaddress" class="col-sm-3 col-form-label">Address : </label>
                         <div class="col-sm-7">
                             <textarea class="form-control" id="eaddress"
-                            value={addr}
-                            onChange={e=>{setaddr(e.target.value)}}>
+                                value={addr}
+                                onChange={e => { setaddr(e.target.value) }}>
                             </textarea>
                         </div>
                     </div>
 
 
 
-                    <button type="submit" class="btn btn-primary" disabled={!username || !pswd || username === "" || pswd===""}>Submit</button>
+                    <button type="submit" class="btn btn-primary" disabled={!username || !pswd || username === "" || pswd === ""}>Submit</button>
                 </form>
             </div>
 

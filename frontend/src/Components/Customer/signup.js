@@ -57,7 +57,7 @@ const SignUp = ({ setsgnup }) => {
                 window.location = "/";
             }
             else {
-                alert(jsonData.message+"");
+                alert(jsonData.message + "");
                 console.log(jsonData.message);
             }
             // window.location.reload();
@@ -110,7 +110,7 @@ const SignUp = ({ setsgnup }) => {
                     <div class="row mb-3">
                         <label for="epwd" class="col-sm-3 col-form-label">Password : </label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="epwd"
+                            <input type="password" class="form-control" id="epwd"
                                 value={pswd}
                                 onChange={e => { setpswd(e.target.value) }}>
                             </input>

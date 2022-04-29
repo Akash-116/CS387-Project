@@ -56,7 +56,7 @@ const CustomerHome = ({ token, cart, setCart }) => {
                 setCart(tcart);
             }
             else {
-                alert(jsonData.message + "");
+                // alert(jsonData.message + "");
                 console.log(jsonData.message);
             }
 
@@ -66,7 +66,9 @@ const CustomerHome = ({ token, cart, setCart }) => {
     }
 
     useEffect(() => {
-        FetchCart();
+        if (cart === {}) {
+            FetchCart();
+        }
     }, []);
 
 

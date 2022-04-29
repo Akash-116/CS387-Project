@@ -146,7 +146,7 @@ create table day_to_day_items
 
 
 create table orders
-    (order_id serial, c_id int not null, area_id int, table_id int,  offer_id int, dat date not null, received_time time, finished_time time, delivered_time time, delivery_person int, status text check (status in ('Preparing','Out for delivery','Delivered','Served')), order_type text not null check (order_type in ('Online','Dine')), primary key(order_id),
+    (order_id serial, c_id int not null, area_id int, table_id int,  offer_id int, dat date not null, received_time time, finished_time time, delivered_time time, delivery_person int, status text check (status in ('Preparing','Out for delivery','Delivered','Served','Completed')), order_type text not null check (order_type in ('Online','Dine')), primary key(order_id),
      foreign key(c_id) references customer on delete
      set null,
      foreign key(area_id) references area on delete
