@@ -7,7 +7,7 @@ import csv
 # start=time.time()
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--name', default='db-project')
+parser.add_argument('--db', default='db-project')
 parser.add_argument('--user', default='postgres')
 parser.add_argument('--pswd', default='postgres')
 parser.add_argument('--host', default='127.0.0.1')
@@ -17,7 +17,7 @@ parser.add_argument('--data', default='./data')
 
 args = parser.parse_args()
 
-db = args.name
+db = args.db
 user = args.user
 pswd = args.pswd
 host = args.host
@@ -177,24 +177,24 @@ for row in offer:
     offer_rows.append(new_row)
 offer_file.close()
 
-offer_valid_file = open(data_path+'/offer_valid.csv')
-offer_valid = csv.reader(offer_valid_file)
-offer_valid_header = next(offer_valid)
-offer_valid_rows = []
-for row in offer_valid:
-    new_row = []
-    for i in range(len(row)):
-        col = row[i]
-        if(col == 'NULL'):
-            new_row.append(None)
-        else:
-            try:
-                temp = int(col)
-                new_row.append(temp)
-            except:
-                new_row.append(col)
-    offer_valid_rows.append(new_row)
-offer_valid_file.close()
+# offer_valid_file = open(data_path+'/offer_valid.csv')
+# offer_valid = csv.reader(offer_valid_file)
+# offer_valid_header = next(offer_valid)
+# offer_valid_rows = []
+# for row in offer_valid:
+#     new_row = []
+#     for i in range(len(row)):
+#         col = row[i]
+#         if(col == 'NULL'):
+#             new_row.append(None)
+#         else:
+#             try:
+#                 temp = int(col)
+#                 new_row.append(temp)
+#             except:
+#                 new_row.append(col)
+#     offer_valid_rows.append(new_row)
+# offer_valid_file.close()
 
 # day_file=open(data_path+'/day.csv')
 # day=csv.reader(day_file)
@@ -272,12 +272,12 @@ for row in order_dishes:
     order_dishes_rows.append(new_row)
 order_dishes_file.close()
 
-relations = ['item', 'dish', 'dish_items', 'table_status', 'area', 
-             'customer', 'employee', 'offer', 'offer_valid', 'orders', 'order_dishes']
-data = [item_rows, dish_rows, dish_items_rows, table_rows, area_rows, 
-        customer_rows, employee_rows, offer_rows, offer_valid_rows, orders_rows, order_dishes_rows]
-headers = [item_header, dish_header, dish_items_header, table_header, area_header, 
-           customer_header, employee_header, offer_header, offer_valid_header, orders_header, order_dishes_header]
+relations = ['item', 'dish', 'dish_items', 'table_status', 'area',
+             'customer', 'employee', 'offer', 'orders', 'order_dishes']
+data = [item_rows, dish_rows, dish_items_rows, table_rows, area_rows,
+        customer_rows, employee_rows, offer_rows, orders_rows, order_dishes_rows]
+headers = [item_header, dish_header, dish_items_header, table_header, area_header,
+           customer_header, employee_header, offer_header, orders_header, order_dishes_header]
 
 dsn = "dbname="+db+" user="+user + " host="+host+" password="+pswd
 
@@ -294,8 +294,8 @@ num_relations = len(relations)
 
 with conn:
     with conn.cursor() as c:
-        # try:
-            c.execute('set datestyle to "ISO, DMY";show datestyle;')
+        try:
+            c.execute('set datestyle to "ISO, DMY";')
             c.execute(open(ddl_path, "r").read())
             for i in range(num_relations):
                 temp_sql = sql1+relations[i]+'('
@@ -305,12 +305,12 @@ with conn:
                     temp_sql = temp_sql[:-1]
                 temp_sql = temp_sql+')'
                 temp_sql = temp_sql+sql2
-                # try:
-                extras.execute_values(c, temp_sql, data[i])
-        #         except:
-        #             print(f"Insertion of relation {relations[i]} got error")
-        #             break
-        # except:
-        #     print('Error in excuting ddl file')
+                try:
+                    extras.execute_values(c, temp_sql, data[i])
+                except:
+                    print(f"Insertion of relation {relations[i]} got error")
+                    break
+        except:
+            print('Error in excuting ddl file')
     c.close()
 conn.close()

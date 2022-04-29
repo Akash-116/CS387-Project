@@ -7,7 +7,7 @@ import AddTable from './add_table';
 // import tablesList from "./tablesListTest";
 
 
-const CreateTableElem = ({table}) => {
+const CreateTableElem = ({ table }) => {
 
 	const [status, setTableStatus] = useState(table.status);
 	// console.log("tryna create");
@@ -29,7 +29,7 @@ const CreateTableElem = ({table}) => {
 
 			}
 			else {
-				alert(jsonData.message+"");
+				alert(jsonData.message + "");
 				console.log(jsonData.message);
 			}
 			window.location.reload();
@@ -57,19 +57,19 @@ const CreateTableElem = ({table}) => {
 					<table className='table'>
 						<th>
 
-						<select className='form-select' onChange={e => setTableStatus(e.target.value)}>
-							<option hidden disabled selected value={table.status}> {st} </option>
-							<option value="O">occupied</option>
-							<option value="E">not occupied</option>
-						</select>
+							<select className='form-select' onChange={e => setTableStatus(e.target.value)}>
+								<option hidden disabled selected value={status}> {st} </option>
+								<option value="O">occupied</option>
+								<option value="E">not occupied</option>
+							</select>
 						</th>
-					<th>
-						<button className='btn btn-warning' type="submit">Update</button>
+						<th>
+							<button className='btn btn-warning' type="submit">Update</button>
 						</th>
 					</table>
-						
+
 				</form></th>
-				
+
 			</tr>
 		</Fragment>
 	);
@@ -88,7 +88,7 @@ const Tables = () => {
 
 		try {
 			// console.log(process.env.REACT_APP_BACKEND_SERVER)
-			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/tables/all", {credentials: 'include'})
+			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/tables/all", { credentials: 'include' })
 			// Here, fetch defualt is GET. So, no further input
 			const jsonData = await response.json();
 			if (jsonData.success) {
@@ -96,7 +96,7 @@ const Tables = () => {
 			}
 			else {
 				// console.log(jsonData.message);
-				alert(jsonData.message+"");
+				alert(jsonData.message + "");
 
 			}
 
@@ -125,11 +125,11 @@ const Tables = () => {
 			<div className=' border  m-3 shadow rounded'><table className='table table-hover'>
 				<thead>
 					<tr>
-					<th>ID</th>
-					<th>Location</th>
-					<th>Status</th>
-					{/* <th></th> */}
-				</tr>
+						<th>ID</th>
+						<th>Location</th>
+						<th>Status</th>
+						{/* <th></th> */}
+					</tr>
 				</thead>
 				<tbody>{tablesList.map(table => {
 					console.log(table);
@@ -137,10 +137,10 @@ const Tables = () => {
 				}
 
 				)}</tbody>
-				
+
 			</table></div>
-			
-			
+
+
 			{/* <button className = 'btn btn-primary' type="submit" >Add new Table </button> */}
 
 		</div>

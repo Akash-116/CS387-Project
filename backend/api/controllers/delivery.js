@@ -77,16 +77,27 @@ exports.free_delivery_persons_prim = function (req, res) {
 
         client.query(pgquery, [area_id], function (err, res1) {
             if (err) {
+                console.log(err.message);
                 res.status(500).send({
                     success: false,
                     message: err.message
                 });
             }
             else {
-                res.status(200).send({
-                    success: true,
-                    data: res1.rows
-                });
+                if (res1.rows.length < 1) {
+                    console.log("No Free Prims");
+                    res.status(500).send({
+                        success: false,
+                        message: "No Free Prims"
+                    })
+                }
+                else {
+                    res.status(200).send({
+                        success: true,
+                        data: res1.rows
+                    });
+                }
+
             }
         });
     }
@@ -111,10 +122,20 @@ exports.free_delivery_persons_sec = function (req, res) {
                 });
             }
             else {
-                res.status(200).send({
-                    success: true,
-                    data: res1.rows
-                });
+                if (res1.rows.length < 1) {
+                    console.log("No Free SecDels");
+                    res.status(500).send({
+                        success: false,
+                        message: "No Free SecDels"
+                    });
+                }
+                else {
+                    res.status(200).send({
+                        success: true,
+                        data: res1.rows
+                    });
+                }
+
             }
         });
     }

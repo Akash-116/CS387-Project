@@ -149,7 +149,7 @@ const AddEmployee = () => {
                                 <option value="Manager">Manager</option>
                                 <option value="Delivery">Delivery Person</option>
                                 <option value="Head Waiter" >Head Waiter</option>
-                                <option value="Billing Manager" >Billing Manager</option>
+                                <option value="Billing Manager">Billing Manager</option>
                             </select>
                         </div>
                     </div>
@@ -167,7 +167,7 @@ const AddEmployee = () => {
                     <div class="row mb-3">
                         <label for="epwd" class="col-sm-3 col-form-label">Password : </label>
                         <div class="col-sm-7">
-                            <input type="text" class="form-control" id="epwd"
+                            <input type="password" class="form-control" id="epwd"
                                 value={pswd}
                                 onChange={e => { setpswd(e.target.value) }}>
                             </input>

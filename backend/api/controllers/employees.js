@@ -1,6 +1,4 @@
-const dotenv = require("dotenv");
 const bcrypt = require('bcrypt');
-const { request } = require("express");
 const saltRounds = 10;
 const client = require("../../connectDB").client;
 
@@ -172,6 +170,12 @@ exports.delete_employee = function (req, res) {
         res.status(500).send({
             success: false,
             message: 'no access'
+        });
+    }
+    else if (e_id == req.session.pid) {
+        res.status(500).send({
+            success: false,
+            message: "Can't delete on your own"
         });
     }
     else {

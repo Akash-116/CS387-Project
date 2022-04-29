@@ -32,7 +32,7 @@ drop table if exists order_dishes cascade ;
 drop table if exists offer cascade ;
 
 
-drop table if exists offer_valid cascade ;
+-- drop table if exists offer_valid cascade ;
 
 
 drop table if exists day_to_day_dishes cascade ;
@@ -123,13 +123,13 @@ create table cart
 create table offer(offer_id serial, name text, discount int, primary key(offer_id));
 
 
-create table offer_valid
-    (offer_id int not null, dat date, dish_id int, --c_type_id int,
- unique(offer_id,dat,dish_id),
-     foreign key(offer_id) references offer on delete cascade, -- foreign key(dat) references day on delete cascade,
+-- create table offer_valid
+--     (offer_id int not null, dat date, dish_id int, --c_type_id int,
+--  unique(offer_id,dat,dish_id),
+--      foreign key(offer_id) references offer on delete cascade, -- foreign key(dat) references day on delete cascade,
 
-     foreign key(dish_id) references dish on delete cascade --foreign key(c_type_id) references customer_type on delete cascade
-);
+--      foreign key(dish_id) references dish on delete cascade --foreign key(c_type_id) references customer_type on delete cascade
+-- );
 
 -- create table day( dat date, day text check (day in ('Mon','Tue','Wed','Thu','Fri','Sat','Sun')), constraint day_prim primary key(dat));
 
@@ -162,7 +162,7 @@ create table orders
 create table order_dishes
     (order_id int not null, dish_id int not null, quantity int,rating real, constraint order_dish_unique unique(order_id,dish_id),
      foreign key(order_id) references orders on delete cascade,
-     foreign key(dish_id) references dish on delete cascade,
+     foreign key(dish_id) references dish on delete cascade
     --  foreign key(offer_id) references offer on delete set null
     );
 
@@ -171,6 +171,9 @@ create function update_dishes() returns trigger language plpgsql as $$
     begin
         insert into day_to_day_dishes values((select dat from orders where order_id=NEW.order_id),NEW.dish_id,NEW.quantity) on conflict on constraint day_dish_prim do update set dish_count=day_to_day_dishes.dish_count+NEW.quantity;
         update customer set num_dish=customer.num_dish+NEW.quantity where c_id=(select c_id from orders where order_id=NEW.order_id);
+        if(NEW.rating is not null) then
+            update dish set rating=(dish.rating*dish.num_ratings+NEW.rating)/(num_ratings+1),num_ratings=num_ratings+1 where dish_id=NEW.dish_id;
+        end if;
         return NEW;
     end
     $$;
@@ -198,6 +201,12 @@ for each row execute procedure update_items();
 create function update_customer_on_order() returns trigger language plpgsql as $$
     begin
         update customer set num_orders=customer.num_orders+1 where c_id=NEW.c_id;
+        if(NEW.order_type='Dine' and NEW.table_id is not null) then
+            update table_status set status='O' where table_id=NEW.table_id;
+        end if;
+        if(NEW.order_type='Online' and NEW.delivery_person is not null) then
+            update employee set d_status='On Delivery' where e_id=NEW.delivery_person;
+        end if;
 
         return NEW;
     end

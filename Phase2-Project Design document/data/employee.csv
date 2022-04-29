@@ -1,9 +1,9 @@
 name,salary,ph_no,addr,e_type,join_date,status,left_date,prim_area_id,sec_area_id,username,pswd
-thivesh,100000,1234567890,"318,3",Manager,02/04/2019,Working,NULL,NULL,NULL,thivesh,abcd
-Satwik,1000000,1234567890,"310,16",Chef,03/04/2019,Working,NULL,NULL,NULL,Satwik,abcd
-Karthikeya,40000,1234567890,"312,16",Head Waiter,04/04/2019,Working,NULL,NULL,NULL,Karthikeya,abcd
-Akash,20000,1234567890,"316,16",Waiter,05/04/2019,Left,05/05/2019,NULL,NULL,Akash,abcd
-Mukesh,20000,1234567890,"28,2",Waiter,05/04/2019,Working,NULL,NULL,NULL,Mukesh,abcd
-Veda,20000,1234567890,"305,3",Waiter,06/04/2019,Leave,NULL,NULL,NULL,Veda,abcd
-Savya,25000,1234567890,"310,16",Delivery,07/04/2019,Working,NULL,1,2,Savya,abcd
-Kranthi,25000,1234567890,"325,3",Delivery,08/04/2019,Leave,NULL,2,1,Kranthi,abcd
+thivesh,100000,1234567890,"318,3",Manager,02/04/2019,Working,NULL,NULL,NULL,Admin,$2b$10$F8/0YRuLUwO9qOhHKqXJxuU9eoB1BhDWi5b./b0HOspBvAFnVCi9K
+Satwik,1000000,1234567890,"310,16",Chef,03/04/2019,Working,NULL,NULL,NULL,Satwik,$2b$10$F8/0YRuLUwO9qOhHKqXJxuU9eoB1BhDWi5b./b0HOspBvAFnVCi9K
+Karthikeya,40000,1234567890,"312,16",Head Waiter,04/04/2019,Working,NULL,NULL,NULL,Karthikeya,$2b$10$F8/0YRuLUwO9qOhHKqXJxuU9eoB1BhDWi5b./b0HOspBvAFnVCi9K
+Akash,20000,1234567890,"316,16",Delivery,05/04/2019,Left,05/05/2019,NULL,NULL,Akash,$2b$10$F8/0YRuLUwO9qOhHKqXJxuU9eoB1BhDWi5b./b0HOspBvAFnVCi9K
+Mukesh,20000,1234567890,"28,2",Billing Manager,05/04/2019,Working,NULL,NULL,NULL,Mukesh,$2b$10$F8/0YRuLUwO9qOhHKqXJxuU9eoB1BhDWi5b./b0HOspBvAFnVCi9K
+Veda,20000,1234567890,"305,3",Delivery,06/04/2019,Leave,NULL,NULL,NULL,Veda,$2b$10$F8/0YRuLUwO9qOhHKqXJxuU9eoB1BhDWi5b./b0HOspBvAFnVCi9K
+Savya,25000,1234567890,"310,16",Delivery,07/04/2019,Working,NULL,1,2,Savya,$2b$10$F8/0YRuLUwO9qOhHKqXJxuU9eoB1BhDWi5b./b0HOspBvAFnVCi9K
+Kranthi,25000,1234567890,"325,3",Delivery,08/04/2019,Leave,NULL,2,1,Kranthi,$2b$10$F8/0YRuLUwO9qOhHKqXJxuU9eoB1BhDWi5b./b0HOspBvAFnVCi9K

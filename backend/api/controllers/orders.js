@@ -55,15 +55,15 @@ exports.get_single_order = function (req, res) {
 
 exports.add_order = function (req, res) {
     var order = req.body;
-    var pgquery = "insert into orders(c_id,area_id,dat,received_time,status,order_type) values($1::int,$2::int,CURRENT_DATE,CURRENT_TIME,'Preparing',$3) returning order_id";
-    if ((req.session.role != 'Manager') && (req.session.role != 'Billing Manager') && (req.session.role != 'customer')) {
+    var pgquery = "insert into orders(c_id,area_id,dat,received_time,status,order_type,table_id,offer_id,delivery_person) values($1::int,$2::int,CURRENT_DATE,CURRENT_TIME,'Preparing',$3,$4::int,$5::int,$6::int) returning order_id";
+    if ((req.session.role != 'Manager') && (req.session.role != 'Billing Manager')) {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
     else {
-        client.query(pgquery, [order.c_id, order.area_id, order.order_type], function (err, res1) {
+        client.query(pgquery, [order.c_id, order.area_id, order.order_type, order.table_id, order.offer_id, order.delivery_person], function (err, res1) {
             if (err) {
                 res.status(500).send({
                     success: false,
