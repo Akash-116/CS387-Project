@@ -162,7 +162,7 @@ const Add_Order_Dish = async (order_dish) => {
 
 
 const confirmOrder = async (cart, offer, token) => {
-    console.log("Order Confirm")
+    console.log("Order Confirm, CART : ", cart)
     try {
         var order = {
             c_id: token.data.c_id,
@@ -185,6 +185,7 @@ const confirmOrder = async (cart, offer, token) => {
             // setNewid(order_id);
             // console.log(order_id);
             // console.log(orderDishes);
+            console.log(cart)
             Object.values(cart).forEach(dishAndCount => {
                 // console.log(dish.dish_id, dish.dish_name);
                 var dish = dishAndCount.dish
@@ -195,8 +196,19 @@ const confirmOrder = async (cart, offer, token) => {
                 }
                 Add_Order_Dish(order_dish);
             });
-            alert("Success");
-            window.location.reload();
+            try {
+                const response2 = await fetch(process.env.REACT_APP_BACKEND_SERVER + `/cart/clear/${token.data.c_id}`, {
+                    method: "DELETE",
+                    credentials: 'include',
+                });
+
+                alert("Success");
+                window.location.reload();
+            } catch (error) {
+                console.error(error.message);
+
+            }
+
         }
         else {
             console.log(jsonData.message);

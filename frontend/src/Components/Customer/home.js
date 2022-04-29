@@ -37,6 +37,7 @@ const CustomerHome = ({ token, cart, setCart }) => {
 
     const FetchCart = async () => {
         try {
+            console.log("Token : ", token)
             const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/cart/all/" + token.data.c_id, { credentials: 'include' });
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
