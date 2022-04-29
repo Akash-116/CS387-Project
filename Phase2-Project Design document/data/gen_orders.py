@@ -59,30 +59,39 @@ for c_id in C:
         rt_m = random.randint(0, 59)
         rt = str(rt_h).zfill(2)+':'+str(rt_m).zfill(2)+':00'
         # print(rt)
+        order_type = random.choice(["Online", "Dine"])
+        if order_type == "Online":
+            deliver_p = delivery_persons[random.randint(0, num_delivers-1)]
+            status = random.choice(
+                ['Preparing', 'Out for delivery', 'Delivered', 'Served'])
+            table_id = "NULL"
+            area_id = random.randint(1, num_areas)
+        else:
+            deliver_p = "NULL"
+            status = random.choice(['Preparing', 'Served'])
+            table_id = random.randint(1, num_tables)
+            area_id = "NULL"
         ft_h = random.randint(rt_h, 23)
         if rt_h == ft_h:
             ft_m = random.randint(rt_m, 59)
         else:
             ft_m = random.randint(0, 59)
-        ft = str(ft_h).zfill(2)+':'+str(ft_m).zfill(2)+':00'
+
         dt_h = random.randint(ft_h, 23)
         if dt_h == ft_h:
             dt_m = random.randint(ft_m, 59)
         else:
             dt_m = random.randint(0, 59)
-        dt = str(dt_h).zfill(2)+':'+str(dt_m).zfill(2)+':00'
-        order_type = random.choice(["Online", "Dine"])
-        if order_type == "Online":
-            deliver_p = random.randint(1, num_delivers)
-            status = random.choice(
-                ['Preparing', 'Out for delivery', 'Delivered', 'Served'])
-            table_id = "NULL"
-            area_id = "NULL"
+
+        if(status == "Preparing"):
+            dt = "NULL"
+            ft = "NULL"
+        elif(status == "Out for delivey"):
+            ft = str(ft_h).zfill(2)+':'+str(ft_m).zfill(2)+':00'
+            dt = "NULL"
         else:
-            deliver_p = "NULL"
-            status = random.choice(['Preparing', 'Served'])
-            table_id = random.randint(1, num_tables)
-            area_id = random.randint(1, num_areas)
+            ft = str(ft_h).zfill(2)+':'+str(ft_m).zfill(2)+':00'
+            dt = str(dt_h).zfill(2)+':'+str(dt_m).zfill(2)+':00'
 
         off_null = random.choice([True, False])
         if(off_null):
