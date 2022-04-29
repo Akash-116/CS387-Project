@@ -61,3 +61,17 @@ app.post('/logout', async (req, res) => {
         });
     }
 });
+
+app.post('/home', async (req, res) => {
+    if((req.session.role != 'customer')){
+        res.status(500).send({
+            success: false,
+            message: 'no access'
+        });
+    }
+    else{
+        res.status(200).send({
+            success : true,
+        });
+    }
+});
