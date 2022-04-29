@@ -34,16 +34,16 @@ const Offers = () => {
     const [offersList, setOffersList] = useState([]);
 
     const getOffersList = async () => {
-        
+
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
             const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/all")
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
-            if(jsonData.success){
+            if (jsonData.success) {
                 setOffersList(jsonData.data);
             }
-            else{
+            else {
                 alert("Something Went Wrong");
 
             }
@@ -54,9 +54,9 @@ const Offers = () => {
         }
 
     }
-    
-    console.log("type of offerList :", typeof (offersList));
-    console.log("offersList : ", offersList);
+
+    // console.log("type of offerList :", typeof (offersList));
+    // console.log("offersList : ", offersList);
     // offersList.push("Asaks");
 
     useEffect(() => {

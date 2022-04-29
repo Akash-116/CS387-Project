@@ -42,9 +42,10 @@ const CustomerHome = ({ cart, setCart }) => {
             </h1>
             <div className='row'>
                 <div className='col-4'>
-                    <div className=' border shadow rounded-lg m-4'>
-                        <h1>CART</h1>
+                    <div className=' border shadow rounded-10 p-2 m-4'>
+                        <h1><i className='fa fa-shopping-cart'></i></h1>
                         <hr></hr>
+                        <b>DISHES</b>
                         {/* <h1>{cart[2]["count"]}</h1>
                         <h1>{cart[1]["count"]}</h1> */}
                         {(json2array(cart)).map(dish => (
@@ -52,7 +53,7 @@ const CustomerHome = ({ cart, setCart }) => {
                         ))}
                         <hr></hr>
                         <div className='d-flex justify-content-between m-2'>
-                            <p>Total cost</p>
+                            <b>Total cost</b>
                             <p>{computeTotalCost(json2array(cart))}</p>
                         </div>
 

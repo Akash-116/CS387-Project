@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 const bcrypt = require('bcrypt')
 const saltRounds = 10
 
-const client=require("../../connectDB").client;
+const client = require("../../connectDB").client;
 
 exports.create_customer = function (req, res) {
     var user = req.body;
@@ -53,7 +53,7 @@ exports.get_customer = function (req, res) {
     var pswd = req.body.pswd;
     console.log(username);
     pgquery = 'select * from customer where username=$1::text';
-    
+
     client.query(pgquery, [username], function (err, res1) {
         if (err) {
             console.log(err.message)
@@ -110,17 +110,17 @@ exports.get_customer = function (req, res) {
             }
         }
     });
-    
+
 }
 
 exports.get_all_customers = function (req, res) {
-    if (req.session.role != 'manager'){
+    if (req.session.role != 'manager') {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
-    else{
+    else {
         pgquery = 'select * from customer';
         client.query(pgquery, function (err, res1) {
             if (err) {
@@ -146,7 +146,7 @@ exports.edit_customer = function (req, res) {
     pgquery = 'update customer set username=$1, name = $2,ph_no=$3::bigint,addr=$4 where c_id=$5::int';
     // if((req.session.role != 'customer'))
 
-    client.query(pgquery, [user.username, user.name, user.ph_no, user.addr,user.c_id], function (err, res1) {
+    client.query(pgquery, [user.username, user.name, user.ph_no, user.addr, user.c_id], function (err, res1) {
         if (err) {
             console.log(err.message);
             res.status(500).send({

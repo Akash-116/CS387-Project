@@ -31,6 +31,8 @@ import PrevOrder from "./Components/Customer/prev_orders";
 import AddTable from "./Components/Tables/add_table";
 import Tables from "./Components/Tables/list_table";
 import DeliveryPersons from "./Components/Delivery/list_delivery_personnel";
+import ListCustomers from "./Components/Customer/list_customer";
+import ListEmployees from "./Components/Employee/list_employee";
 
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
@@ -53,7 +55,7 @@ function App() {
   console.log("token is created : ", token);
 
   const [cart, setCart] = useState({})
-
+  const [cartOffer, setCartOffer] = useState({ offer_id: -1, name: "None", discount: 0 })
   useEffect(() => {
     setsgnup(false);
   }, [])
@@ -110,6 +112,12 @@ function App() {
                   </li>
                   <li class="nav-item">
                     <Link to="/preferences" className="nav-link">Preferences</Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/customers" className="nav-link">Customers</Link>
+                  </li>
+                  <li class="nav-item">
+                    <Link to="/employees" className="nav-link">Employees</Link>
                   </li>
                   <li class="nav-item">
                     <Link to="/offers" className="nav-link">Offers</Link>
@@ -180,12 +188,14 @@ function App() {
           </Routes> */}
           <Routes>
             <Route path="/" element={<h3>Welcome to YARA</h3>} ></Route>
-            <Route path="/cart" element={<CustomerCart cart={cart} setCart={setCart}></CustomerCart>} ></Route>
-            <Route path="/home" element={<CustomerHome cart={cart} setCart={setCart} ></CustomerHome>} ></Route>
-            <Route path="/customer/details" element={<CustomerDetails token={token} setToken={setToken} ></CustomerDetails>} ></Route>
-            <Route path="/customer/prevorders" element={<PrevOrder  token={token}></PrevOrder>} ></Route>
+            <Route path="/cart" element={<CustomerCart cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerCart>} ></Route>
+            <Route path="/home" element={<CustomerHome cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerHome>} ></Route>
+            <Route path="/customer/details" element={<CustomerDetails  ></CustomerDetails>} ></Route>
+            <Route path="/customer/prevorders" element={<PrevOrder  ></PrevOrder>} ></Route>
             <Route path="/dashboard" element={<Dashboard></Dashboard>} ></Route>
             <Route path="/preferences" element={<Preferences></Preferences>} ></Route>
+            <Route path="/customers" element={<ListCustomers></ListCustomers>} ></Route>
+            <Route path="/employees" element={<ListEmployees></ListEmployees>} ></Route>
             <Route path="/offers" element={<Offers></Offers>} ></Route>
             <Route path="/analytics" element={<Analytics></Analytics>} ></Route>
             <Route path="/tables" element={<Tables></Tables>} ></Route>

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PaginationComp from '../Pagination';
+import Form from 'react-bootstrap/Form';
+import { Button } from 'react-bootstrap';
 
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -31,15 +33,73 @@ const UploadAndDisplayImage = () => {
 
 const Preferences = () => {
 
+  const [val, setVal] = useState(1)
 
 
 
   return (
     <div>
       <h5>Preferences - Ths is a dummy component (rough work kinda)</h5>
+      <p>5. Lets try react-bootstrap/Radio</p>
+
+      <div className='bordered m-5 p-5 shadow'>
+        <h2>Val is : {val}</h2>
+        <Form>
+          <div key={`default-radio`} className="mb-3">
+            <Form.Check
+              type={"radio"}
+              id={`default-radio`}
+              label={<h1>1asdasd</h1>}
+              value={1}
+              name="aka"
+              // checked={(val === 1)}
+              onChange={e => setVal(e.target.value)}
+            />
+
+            <Form.Check
+              type={"radio"}
+              id={`disabled-default-radio`}
+              label={<h5>asdasd</h5>}
+              value={2}
+              name="aka"
+              // checked={(val === 2)}
+              onChange={e => setVal(e.target.value)}
+            />
+          </div>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+
+        </Form>
+      </div>
+
+      <p>4. Lets try react-bootstrap/Form</p>
+      <div className='justify-content-start border shadow p-5 m-5'>
+        <Form>
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Text className="text-muted">
+              We'll never share your email with anyone else.
+            </Form.Text>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="password" placeholder="Password" />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Check type="checkbox" label="Check me out" />
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Form>
+
+      </div>
 
       <p>3. Lets try Pagination</p>
-      <PaginationComp></PaginationComp>
+      {/* <PaginationComp></PaginationComp> */}
 
 
       <p>1. Lets try creating a nice table first</p>

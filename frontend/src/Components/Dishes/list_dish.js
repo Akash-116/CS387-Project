@@ -12,7 +12,7 @@ const name2acronym = (str) => {
             res += char;
         });
         return res;
-    
+
     } catch (error) {
         return ''
     }
@@ -60,12 +60,12 @@ const EachDish = ({ dish, enableOrdering = false, cart = null, setCart = null })
 
     return (
         <Fragment>
-            <div className='row border  m-3 shadow rounded'>
+            <div className='row border  m-3 shadow rounded-15 overflow-hidden '>
                 {/* Acronym */}
                 <div className='col-sm-3 border bg-info fs-1 text-uppercase d-flex justify-content-center
                  align-items-center'>{name2acronym(dish.dish_name)}</div>
                 {/* Remaining body */}
-                <div className='col-sm-9 '>
+                <div className='col-sm-9 pt-2 pb-2'>
                     <div className='d-flex justify-content-between'>
                         <h5 className='text-capitalize '>{dish.dish_id} - {dish.dish_name}</h5>
                         <h4>₹{dish.cost}</h4>
@@ -80,11 +80,11 @@ const EachDish = ({ dish, enableOrdering = false, cart = null, setCart = null })
 
                     {(enableOrdering) &&
                         <div>
-                            <button className='m-2 btn btn-primary' onClick={e => { decrementCount(dish); }}><i className='fa fa-minus'></i> </button>
+                            <button className='m-2 mt-0 mb-0 btn btn-primary' onClick={e => { decrementCount(dish); }}><i className='fa fa-minus'></i> </button>
                             <span>
                                 {counter}
                             </span>
-                            <button className='m-2 btn btn-primary' onClick={e => { incrementCount(dish); }}><i className='fa fa-plus'></i> </button>
+                            <button className='m-2 mt-0 mb-0 btn btn-primary' onClick={e => { incrementCount(dish); }}><i className='fa fa-plus'></i> </button>
                         </div>
                     }
 
@@ -151,8 +151,6 @@ const ListDishes = ({ enableOrdering = false, cart = null, setCart = null }) => 
             {(enableOrdering) &&
                 <Fragment>
 
-                    <h2>Dishes Page</h2>
-                    <p>{cart2[1]}</p>
 
                     {/* <AddDish dishesList={dishesList} setDishesList={setDishesList} > </AddDish> */}
 
