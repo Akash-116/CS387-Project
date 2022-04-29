@@ -102,9 +102,9 @@ const OffersModal = ({ offer, setOffer }) => {
 
                                         <Form.Check
                                             type={"radio"}
-                                            label={createOfferElem({ odder_id: -1, name: "None", discount: 0 })}
+                                            label={createOfferElem({ offer_id: null, name: "None", discount: 0 })}
                                             id={-1}
-                                            value={JSON.stringify({ odder_id: -1, name: "None", discount: 0 })}
+                                            value={JSON.stringify({ offer_id: null, name: "None", discount: 0 })}
                                             name="chooseOffer"
                                             onChange={e => setOffer(JSON.parse(e.target.value))}
                                         />
@@ -161,71 +161,109 @@ const Add_Order_Dish = async (order_dish) => {
 }
 
 
-const confirmOrder = async (cart, offer, token) => {
-    console.log("Order Confirm, CART : ", cart)
-    try {
-        var order = {
-            c_id: token.data.c_id,
-            // area_id: token.data.areaid,
-            order_type: "Online"
-        }
-        console.log(cart);
-        // throw 500;
+const confirmOrder = async (cart, areaid, offer, token) => {
+    console.log("Order Confirm, CART : ", cart);
+    if (areaid == null) {
+        alert("Area is Required");
+    }
+    else {
+        try {
+            var order = {
+                c_id: token.data.c_id,
+                area_id: areaid,
+                order_type: "Online",
+                offer_id: offer.offer_id
+            }
+            console.log(cart);
+            // throw 500;
 
 
-        const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/orders/add", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(order),
-            credentials: 'include'
-        });
-        const jsonData = await response.json();
-        if (jsonData.success) {
-            var order_id = jsonData.data;
-            // setNewid(order_id);
-            // console.log(order_id);
-            // console.log(orderDishes);
-            console.log(cart)
-            Object.values(cart).forEach(dishAndCount => {
-                // console.log(dish.dish_id, dish.dish_name);
-                var dish = dishAndCount.dish
-                var order_dish = {
-                    dish_id: dish.dish_id,
-                    order_id: order_id,
-                    quantity: dishAndCount.count
-                }
-                Add_Order_Dish(order_dish);
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/orders/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(order),
+                credentials: 'include'
             });
-            try {
-                const response2 = await fetch(process.env.REACT_APP_BACKEND_SERVER + `/cart/clear/${token.data.c_id}`, {
-                    method: "DELETE",
-                    credentials: 'include',
+            const jsonData = await response.json();
+            if (jsonData.success) {
+                var order_id = jsonData.data;
+                // setNewid(order_id);
+                // console.log(order_id);
+                // console.log(orderDishes);
+                console.log(cart)
+                Object.values(cart).forEach(dishAndCount => {
+                    // console.log(dish.dish_id, dish.dish_name);
+                    var dish = dishAndCount.dish
+                    var order_dish = {
+                        dish_id: dish.dish_id,
+                        order_id: order_id,
+                        quantity: dishAndCount.count
+                    }
+                    Add_Order_Dish(order_dish);
                 });
-
-                alert("Success");
-                window.location.reload();
-            } catch (error) {
-                console.error(error.message);
+                try {
+                    const response2 = await fetch(process.env.REACT_APP_BACKEND_SERVER + `/cart/clear/${token.data.c_id}`, {
+                        method: "DELETE",
+                        credentials: 'include',
+                    });
+                    const jsonData2 = await response2.json();
+                    if (jsonData2.success) {
+                        alert("Success");
+                    }
+                    else {
+                        console.log(jsonData2.message);
+                        alert(jsonData2.message);
+                    }
+                    window.location.reload();
+                } catch (error) {
+                    console.error(error.message);
+                }
 
             }
+            else {
+                console.log(jsonData.message);
+                alert(jsonData.message + "");
+            }
 
+        } catch (error) {
+            console.error(error.message);
+            alert("Error connectin to backend");
         }
-        else {
-            console.log(jsonData.message);
-            alert(jsonData.message + "");
-        }
-
-    } catch (error) {
-        console.error(error.message);
-        alert("Error connectin to backend");
     }
+
 
 }
 
+const select_area = (area) => {
+    return (
+        <option value={area.area_id}>{area.loc}, {area.city}</option>
+    )
+}
 
 const CustomerCart = ({ token, cart, setCart, offer, setOffer }) => {
+    const [areas, setareas] = useState([]);
+    const [areaid, setAreaid] = useState();
 
-    // const [offer, setOffer] = useState(cartOffer)
+    const FetchAreas = async () => {
+        try {
+            // console.log(process.env.REACT_APP_BACKEND_SERVER)
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/areas/all", { credentials: 'include' });
+            // Here, fetch defualt is GET. So, no further input
+            const jsonData = await response.json();
+            if (jsonData.success) {
+                setareas(jsonData.data);
+                // console.log(jsonData.data);
+            }
+            else {
+                console.log(jsonData.message);
+                alert(jsonData.message + "");
+                // window.location.reload();
+            }
+
+        } catch (error) {
+            console.error(error.message);
+        }
+    }
 
     const FetchCart = async () => {
         try {
@@ -258,9 +296,8 @@ const CustomerCart = ({ token, cart, setCart, offer, setOffer }) => {
     }
 
     useEffect(() => {
-        if (cart === {}) {
-            FetchCart();
-        }
+        FetchCart();
+        FetchAreas();
     }, []);
 
     return (
@@ -273,6 +310,17 @@ const CustomerCart = ({ token, cart, setCart, offer, setOffer }) => {
                     buildDishInCart(dish)
                 ))}
                 <hr></hr>
+                <div className='d-flex justify-content-between m-2'>
+                    <p>Area</p>
+                    <div class="col-sm-6">
+                        <select className='form-select' onChange={e => { e.preventDefault(); setAreaid(e.target.value) }}>
+                            <option hidden disabled selected value="none"> -- select an option -- </option>
+                            {areas.map(area => (
+                                select_area(area)
+                            ))}
+                        </select>
+                    </div>
+                </div>
                 <div className='d-flex justify-content-between m-2'>
                     <p>Total cost</p>
                     <b className='text-success'>{computeTotalCost(json2array(cart))}</b>
@@ -293,7 +341,7 @@ const CustomerCart = ({ token, cart, setCart, offer, setOffer }) => {
                     <b className='text-success'>{((100 - offer.discount) / 100) * computeTotalCost(json2array(cart))}</b>
                 </div>
 
-                <button onClick={e => confirmOrder(cart, offer, token)} className='btn btn-primary'>Confirm</button>
+                <button onClick={e => confirmOrder(cart, areaid, offer, token)} className='btn btn-primary'>Confirm</button>
 
 
 

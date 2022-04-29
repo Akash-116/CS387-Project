@@ -45,7 +45,7 @@ exports.delete_cart = function (req, res) {
         });
     }
     else {
-        pgquery = 'delete from cart where c_id=$1 returning c_id';
+        pgquery = 'delete from cart where c_id=$1::int returning c_id';
 
         client.query(pgquery, [id], function (err, res1) {
             if (err) {

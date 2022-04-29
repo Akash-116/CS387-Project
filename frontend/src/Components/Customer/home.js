@@ -66,9 +66,7 @@ const CustomerHome = ({ token, cart, setCart }) => {
     }
 
     useEffect(() => {
-        if (cart === {}) {
-            FetchCart();
-        }
+        FetchCart();
     }, []);
 
 

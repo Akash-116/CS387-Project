@@ -58,7 +58,7 @@ function App() {
   console.log("token is created : ", token);
 
   const [cart, setCart] = useState({})
-  const [cartOffer, setCartOffer] = useState({ offer_id: -1, name: "None", discount: 0 })
+  const [cartOffer, setCartOffer] = useState({ offer_id: null, name: "None", discount: 0 })
 
   useEffect(() => {
 
