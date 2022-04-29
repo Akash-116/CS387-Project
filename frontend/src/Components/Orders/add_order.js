@@ -197,6 +197,20 @@ const AddOrder = () => {
         }
     }
 
+    const DeleteOrder = async (order_id) => {
+        const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/orders/delete", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ order_id: order_id }),
+            credentials: 'include'
+        });
+        const jsonData = await response.json();
+        if (!jsonData.success) {
+            // alert(jsonData.message + "");
+            console.log(jsonData.message);
+        }
+    }
+
     const Add_Order_Dish = async (order_dish) => {
         const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/orders/add_order_dish", {
             method: "POST",
@@ -208,6 +222,9 @@ const AddOrder = () => {
         if (!jsonData.success) {
             alert(jsonData.message + "");
             console.log(jsonData.message);
+            // DeleteOrder(order_dish.order_id);
+            // alert('Ingrdients are not sufficient');
+            // window.location.reload();
         }
 
     }

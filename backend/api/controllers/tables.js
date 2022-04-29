@@ -63,7 +63,7 @@ exports.get_table = function (req, res) {
 }
 
 exports.get_empty_tables = function (req, res) {
-    pgquery = "select * from table_status where status='E' or status is null";
+    pgquery = "select * from table_status where status='E' or status is null order by table_id";
     if ((req.session.role != 'Manager') && (req.session.role != 'Billing Manager') && (req.session.role != 'Head Waiter')) {
         res.status(500).send({
             success: false,

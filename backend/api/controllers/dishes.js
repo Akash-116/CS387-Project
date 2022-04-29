@@ -1,66 +1,66 @@
-const client=require("../../connectDB").client;
+const client = require("../../connectDB").client;
 
-exports.get_all_dishes=function(req,res){
-    pgquery='select * from dish';
+exports.get_all_dishes = function (req, res) {
+    pgquery = 'select * from dish order by dish_id';
     // console.log(req.session.isAuth);
 
-    client.query(pgquery,  function(err, res1) {
+    client.query(pgquery, function (err, res1) {
         if (err) {
             console.log(err.message);
             res.status(500).send({
                 success: false,
                 message: err.message
             });
-        } 
+        }
         else {
             res.status(200).send({
-                success : true,
-                data : res1.rows
+                success: true,
+                data: res1.rows
             });
         }
     });
 }
 
-exports.get_dish=function(req,res){
-    var id=req.params.id;
+exports.get_dish = function (req, res) {
+    var id = req.params.id;
 
-    pgquery='select * from dish where dish_id=$1';
-    client.query(pgquery,[id],function(err,res1){
-        if(err){
+    pgquery = 'select * from dish where dish_id=$1';
+    client.query(pgquery, [id], function (err, res1) {
+        if (err) {
             res.status(500).send({
-                success : false,
-                message : err.message
+                success: false,
+                message: err.message
             });
         }
-        else{
-            if(res1.rows.length<1){
+        else {
+            if (res1.rows.length < 1) {
                 res.status(500).send({
-                    success : false,
-                    message : 'No Dish with that ID'
+                    success: false,
+                    message: 'No Dish with that ID'
                 });
             }
-            else{
+            else {
                 res.status(200).send({
-                    success : true,
-                    data : res1.rows[0]
+                    success: true,
+                    data: res1.rows[0]
                 });
             }
         }
     })
 }
 
-exports.delete_dish=function(req,res){
-    var id=req.params.id;
-    if((req.session.role != 'Manager') && (req.session.role != 'Chef')){
+exports.delete_dish = function (req, res) {
+    var id = req.params.id;
+    if ((req.session.role != 'Manager') && (req.session.role != 'Chef')) {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
-    else{
-        pgquery='delete from dish where dish_id=$1::int returning dish_id';
+    else {
+        pgquery = 'delete from dish where dish_id=$1::int returning dish_id';
 
-        client.query(pgquery, [id], function(err, res1) {
+        client.query(pgquery, [id], function (err, res1) {
             if (err) {
                 console.log(err.message)
                 res.status(500).send({
@@ -68,17 +68,17 @@ exports.delete_dish=function(req,res){
                     message: err.message
                 });
             } else {
-                var rows=res1.rows;
-                if(rows.length==0){
+                var rows = res1.rows;
+                if (rows.length == 0) {
                     console.log('No dish with that id');
                     res.status(500).send({
                         success: false,
                         message: 'No dish with that id'
                     });
                 }
-                else{
+                else {
                     res.status(200).send({
-                        success : true
+                        success: true
                     });
                 }
             }
@@ -86,34 +86,34 @@ exports.delete_dish=function(req,res){
     }
 }
 
-exports.get_items_dish=function(req,res){
-    var id=req.params.id;
-    if((req.session.role != 'Manager') && (req.session.role != 'Chef')){
+exports.get_items_dish = function (req, res) {
+    var id = req.params.id;
+    if ((req.session.role != 'Manager') && (req.session.role != 'Chef')) {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
-    else{
-        pgquery='select A.*,B.item_name from dish_items as A,item as B where dish_id=$1 and A.item_id=B.item_id';
-        client.query(pgquery,[id],function(err,res1){
-            if(err){
+    else {
+        pgquery = 'select A.*,B.item_name from dish_items as A,item as B where dish_id=$1 and A.item_id=B.item_id order by item_id';
+        client.query(pgquery, [id], function (err, res1) {
+            if (err) {
                 res.status(500).send({
-                    success : false,
-                    message : err.message
+                    success: false,
+                    message: err.message
                 });
             }
-            else{
-                if(res1.rows.length<1){
+            else {
+                if (res1.rows.length < 1) {
                     res.status(500).send({
-                        success : false,
-                        message : 'No Dish with that ID'
+                        success: false,
+                        message: 'No Dish with that ID'
                     });
                 }
-                else{
+                else {
                     res.status(200).send({
-                        success : true,
-                        data : res1.rows
+                        success: true,
+                        data: res1.rows
                     });
                 }
             }
@@ -121,18 +121,18 @@ exports.get_items_dish=function(req,res){
     }
 }
 
-exports.edit_dish=function(req,res){
-    var dish=req.body; 
-    if((req.session.role != 'Manager') && (req.session.role != 'Chef')){
+exports.edit_dish = function (req, res) {
+    var dish = req.body;
+    if ((req.session.role != 'Manager') && (req.session.role != 'Chef')) {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
-    else{
-        pgquery='update dish set dish_name = $2, recipe = $3, time_taken = $4::int where dish_id = $1';
+    else {
+        pgquery = 'update dish set dish_name = $2, recipe = $3, time_taken = $4::int where dish_id = $1';
 
-        client.query(pgquery, [dish.dish_id, dish.dish_name, dish.recipe, dish.time_taken], function(err, res1) {
+        client.query(pgquery, [dish.dish_id, dish.dish_name, dish.recipe, dish.time_taken], function (err, res1) {
             if (err) {
                 console.log(err.message);
                 res.status(500).send({
@@ -140,26 +140,26 @@ exports.edit_dish=function(req,res){
                     message: err.message
                 });
             }
-            else{
+            else {
                 res.status(200).send({
                     success: true
                 });
             }
         });
-    }                    
+    }
 }
 
-exports.add_dish=function(req,res){
-    var dish=req.body;
-    if((req.session.role != 'Manager') && (req.session.role != 'Chef')){
+exports.add_dish = function (req, res) {
+    var dish = req.body;
+    if ((req.session.role != 'Manager') && (req.session.role != 'Chef')) {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
-    else{
-        pgquery='insert into dish(dish_name, recipe, dish_type, time_taken,cost) values($1,$2,$3,$4::int,$5::int) returning dish_id';
-        client.query(pgquery, [dish.dish_name, dish.recipe, dish.dish_type, dish.time_taken,dish.cost], function(err, res1) {
+    else {
+        pgquery = 'insert into dish(dish_name, recipe, dish_type, time_taken,cost) values($1,$2,$3,$4::int,$5::int) returning dish_id';
+        client.query(pgquery, [dish.dish_name, dish.recipe, dish.dish_type, dish.time_taken, dish.cost], function (err, res1) {
             if (err) {
                 console.log(err.message);
                 res.status(500).send({
@@ -167,7 +167,7 @@ exports.add_dish=function(req,res){
                     message: err.message
                 });
             }
-            else{
+            else {
                 res.status(200).send({
                     success: true,
                     data: res1.rows[0].dish_id
@@ -177,61 +177,61 @@ exports.add_dish=function(req,res){
     }
 }
 
-exports.add_items_dish=function(req,res){
+exports.add_items_dish = function (req, res) {
     console.log(req.body);
     var id = req.body.dish_id;
     var item_id = req.body.item_id;
     var quantity = req.body.quantity;
-    
-    if((req.session.role != 'Manager') && (req.session.role != 'Chef')){
+
+    if ((req.session.role != 'Manager') && (req.session.role != 'Chef')) {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
-    else{
-        pgquery='insert into dish_items(dish_id, item_id, quantity) values($1::int,$2::int,$3::int) on conflict on  constraint dish_item_unique do update set quantity=dish_items.quantity+$3::int returning dish_id,item_id';
-        client.query(pgquery,[id, item_id, quantity],function(err,res1){
-            if(err){
-                console.log("Err",err.message);
+    else {
+        pgquery = 'insert into dish_items(dish_id, item_id, quantity) values($1::int,$2::int,$3::int) on conflict on  constraint dish_item_unique do update set quantity=dish_items.quantity+$3::int returning dish_id,item_id';
+        client.query(pgquery, [id, item_id, quantity], function (err, res1) {
+            if (err) {
+                console.log("Err", err.message);
                 res.status(500).send({
-                    success : false,
-                    message : err.message
+                    success: false,
+                    message: err.message
                 });
             }
-            else{
-                if(res1.rows.length<1){
-                    console.log("Else:","No item with that id pair");
+            else {
+                if (res1.rows.length < 1) {
+                    console.log("Else:", "No item with that id pair");
                     res.status(500).send({
-                        success : false,
-                        message : "No item with that id pair"
+                        success: false,
+                        message: "No item with that id pair"
                     })
                 }
-                else{
+                else {
                     res.status(200).send({
                         success: true
                     });
                 }
-                
+
             }
         })
     }
 }
 
-exports.update_item_dish=function(req,res){
+exports.update_item_dish = function (req, res) {
     var id = req.body.dish_id;
     var item_id = req.body.item_id;
     var quantity = req.body.quantity;
-    if((req.session.role != 'Manager') && (req.session.role != 'Chef')){
+    if ((req.session.role != 'Manager') && (req.session.role != 'Chef')) {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
-    else{
-        pgquery='update dish_items set quantity = $3::int where dish_id = $1 and item_id = $2 returning dish_id,item_id';
+    else {
+        pgquery = 'update dish_items set quantity = $3::int where dish_id = $1 and item_id = $2 returning dish_id,item_id';
 
-        client.query(pgquery, [id, item_id, quantity], function(err, res1) {
+        client.query(pgquery, [id, item_id, quantity], function (err, res1) {
             if (err) {
                 console.log(err.message);
                 res.status(500).send({
@@ -239,14 +239,14 @@ exports.update_item_dish=function(req,res){
                     message: err.message
                 });
             }
-            else{
-                if(res1.rows.length<1){
+            else {
+                if (res1.rows.length < 1) {
                     res.status(500).send({
-                        success : false,
-                        message : 'That item is not there in that dish'
+                        success: false,
+                        message: 'That item is not there in that dish'
                     });
                 }
-                else{
+                else {
                     res.status(200).send({
                         success: true
                     });
@@ -256,19 +256,19 @@ exports.update_item_dish=function(req,res){
     }
 }
 
-exports.delete_item_dish=function(req,res){
-    var id=req.body.dish_id;
+exports.delete_item_dish = function (req, res) {
+    var id = req.body.dish_id;
     var item_id = req.body.item_id;
-    if((req.session.role != 'Manager') && (req.session.role != 'Chef')){
+    if ((req.session.role != 'Manager') && (req.session.role != 'Chef')) {
         res.status(500).send({
             success: false,
             message: 'no access'
         });
     }
-    else{
-        pgquery='delete from dish_items where dish_id=$1::int and item_id=$2::int returning dish_id,item_id';
+    else {
+        pgquery = 'delete from dish_items where dish_id=$1::int and item_id=$2::int returning dish_id,item_id';
 
-        client.query(pgquery, [id, item_id], function(err, res1) {
+        client.query(pgquery, [id, item_id], function (err, res1) {
             if (err) {
                 console.log(err.message)
                 res.status(500).send({
@@ -276,17 +276,17 @@ exports.delete_item_dish=function(req,res){
                     message: err.message
                 });
             } else {
-                var rows=res1.rows;
-                if(rows.length==0){
+                var rows = res1.rows;
+                if (rows.length == 0) {
                     console.log('No item in that dish');
                     res.status(500).send({
                         success: false,
                         message: 'No item in that dish'
                     });
                 }
-                else{
+                else {
                     res.status(200).send({
-                        success : true
+                        success: true
                     });
                 }
             }

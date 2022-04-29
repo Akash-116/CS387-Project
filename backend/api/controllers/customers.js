@@ -122,7 +122,7 @@ exports.get_all_customers = function (req, res) {
         });
     }
     else {
-        pgquery = 'select * from customer';
+        pgquery = 'select * from customer order by c_id';
         client.query(pgquery, function (err, res1) {
             if (err) {
                 console.log(err.message);
@@ -178,7 +178,15 @@ exports.get_customer_previous = function (req, res) {
         });
     }
     else {
-        var pgquery = 'select A.*,B.dish_id,B.quantity,B.rating,C.dish_name,C.recipe,C.time_taken,C.dish_type,C.cost,C.photo from orders as A,order_dishes as B,dish as C where A.c_id=$1::int and A.order_id=B.order_id and B.dish_id=C.dish_id';
+        var pgquery = `with tbl1 as (select A.*,B.dish_id,B.quantity,B.rating,C.dish_name,C.recipe,C.time_taken,C.dish_type,C.cost,C.photo from orders as A,order_dishes as B,dish as C where A.c_id=$1::int and A.order_id=B.order_id and B.dish_id=C.dish_id)
+        (select *, 1 as statusrank from tbl1
+            where (status='Preparing') or (status='Out for delivery')
+            )
+            union
+            (select *, 2 as  statusrank from tbl1
+            where (status='Delivered') or (status='Served') or (status='Completed')
+            )
+            order by statusrank,order_id`
 
         client.query(pgquery, [c_id], function (err, res1) {
             if (err) {

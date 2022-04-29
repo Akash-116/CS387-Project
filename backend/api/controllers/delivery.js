@@ -9,7 +9,7 @@ exports.get_all = function (req, res) {
         });
     }
     else {
-        var pgquery = "select * from employee where e_type='Delivery' and left_date is null";
+        var pgquery = "select * from employee where e_type='Delivery' and left_date is null order by e_id";
 
         client.query(pgquery, function (err, res1) {
             if (err) {
@@ -73,7 +73,7 @@ exports.free_delivery_persons_prim = function (req, res) {
         });
     }
     else {
-        var pgquery = "select * from employee where prim_area_id=$1::int and e_type='Delivery' and d_status='Free'";
+        var pgquery = "select * from employee where prim_area_id=$1::int and e_type='Delivery' and d_status='Free' order by e_id";
 
         client.query(pgquery, [area_id], function (err, res1) {
             if (err) {
@@ -112,7 +112,7 @@ exports.free_delivery_persons_sec = function (req, res) {
         });
     }
     else {
-        var pgquery = "select * from employee where sec_area_id=$1::int and e_type='Delivery' and d_status='Free'";
+        var pgquery = "select * from employee where sec_area_id=$1::int and e_type='Delivery' and d_status='Free' order by e_id";
 
         client.query(pgquery, [area_id], function (err, res1) {
             if (err) {

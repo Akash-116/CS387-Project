@@ -36,9 +36,9 @@ exports.get_all_orders = function (req, res) {
         )
         union
         (select *, 2 as  statusrank from orders
-        where (status='Delivered') or (status='Served')
+        where (status='Delivered') or (status='Served') or (status='Completed')
         )
-        order by statusrank
+        order by statusrank,order_id
         offset ${req.query.offset}
         limit ${req.query.limit}`;
     }
@@ -253,6 +253,33 @@ exports.delivered = function (req, res) {
     }
     else {
         client.query(pgquery, [data.order_id], function (err, res1) {
+            if (err) {
+                res.status(500).send({
+                    success: false,
+                    message: err.message
+                });
+            }
+            else {
+                res.status(200).send({
+                    success: true
+                });
+            }
+        });
+    }
+}
+
+
+exports.delete_order = function (req, res) {
+    var order_id = req.body.order_id;
+    var pgquery = "delete from order where order_id=$1::int";
+    if ((req.session.role != 'Manager') && (req.session.role != 'Billing Manager') && (req.session.role != 'customer')) {
+        res.status(500).send({
+            success: false,
+            message: 'no access'
+        });
+    }
+    else {
+        client.query(pgquery, [order_id], function (err, res1) {
             if (err) {
                 res.status(500).send({
                     success: false,

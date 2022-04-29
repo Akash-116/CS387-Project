@@ -11,5 +11,5 @@ router.post('/assign_delivery', orders.assign_delivery);
 router.post('/assign_table', orders.assign_table);
 router.post('/finished', orders.finished);
 router.post('/delivered', orders.delivered);
-
+router.delete('/delete', orders.delete_order);
 module.exports = router;

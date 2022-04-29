@@ -9,7 +9,7 @@ exports.get_all_areas = function (req, res) {
         });
     }
     else {
-        var pgquery = "select * from area";
+        var pgquery = "select * from area order by area_id";
         client.query(pgquery, function (err, res1) {
             if (err) {
                 res.status(500).send({

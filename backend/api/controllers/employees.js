@@ -144,7 +144,7 @@ exports.get_all_employees = function (req, res) {
         });
     }
     else {
-        pgquery = 'select * from employee';
+        pgquery = 'select * from employee order by e_id';
 
         client.query(pgquery, function (err, res1) {
             if (err) {

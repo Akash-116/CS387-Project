@@ -10,11 +10,11 @@ const select_item = (item) => {
 const AddDish = ({ dishesList, setDishesList }) => {
 
     // const [selectedImage, setSelectedImage] = useState(null);
-    const [dishname, setDishname] = useState(null);
+    const [dishname, setDishname] = useState('');
     const [recipe, setRecipe] = useState("");
     const [timetaken, setTimetaken] = useState(null);
-    const [dishtype, setDishtype] = useState(null);
-    const [photo, setPhoto] = useState(null);
+    const [dishtype, setDishtype] = useState('');
+    const [photo, setPhoto] = useState('');
     const [cost, setCost] = useState(null);
     const [items, setItems] = useState([]);
     const [totalitems, setTotalitems] = useState([]);
@@ -66,47 +66,53 @@ const AddDish = ({ dishesList, setDishesList }) => {
 
     const onSubmitForm = async (e) => {
         e.preventDefault();
-        try {
-            var dish = {
-                dish_name: dishname,
-                recipe: recipe,
-                time_taken: timetaken,
-                dish_type: dishtype,
-                cost: cost,
-                photo: photo
-            }
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/add", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(dish),
-                credentials: 'include'
-            });
-            const jsonData = await response.json();
-            if (jsonData.success) {
-                var dish_id = jsonData.data;
-                setNewid(dish_id);
-                console.log(items);
-                items.forEach(item => {
-                    console.log(item.item_name, item.item_id);
-                    var dish_item = {
-                        dish_id: dish_id,
-                        item_id: item.item_id,
-                        quantity: item.quantity
-                    }
-                    Add_Dish_item(dish_item);
-                });
-                alert("Success");
-            }
-            else {
-                console.log(jsonData.message);
-                alert(jsonData.message + "");
-            }
-            window.location.reload();
-
-        } catch (error) {
-            console.error(error.message);
-            alert("Error connectin to backend");
+        if (dishname === '' || timetaken === null || timetaken === '' || dishtype === '' || cost === null || cost === '' || photo === '' || recipe === '') {
+            alert("Fill all the fields");
         }
+        else {
+            try {
+                var dish = {
+                    dish_name: dishname,
+                    recipe: recipe,
+                    time_taken: timetaken,
+                    dish_type: dishtype,
+                    cost: cost,
+                    photo: photo
+                }
+                const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/add", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(dish),
+                    credentials: 'include'
+                });
+                const jsonData = await response.json();
+                if (jsonData.success) {
+                    var dish_id = jsonData.data;
+                    setNewid(dish_id);
+                    console.log(items);
+                    items.forEach(item => {
+                        console.log(item.item_name, item.item_id);
+                        var dish_item = {
+                            dish_id: dish_id,
+                            item_id: item.item_id,
+                            quantity: item.quantity
+                        }
+                        Add_Dish_item(dish_item);
+                    });
+                    alert("Success");
+                }
+                else {
+                    console.log(jsonData.message);
+                    alert(jsonData.message + "");
+                }
+                window.location.reload();
+
+            } catch (error) {
+                console.error(error.message);
+                alert("Error connectin to backend");
+            }
+        }
+
     };
 
     const show_selected_items = (item) => {
