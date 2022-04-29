@@ -69,6 +69,32 @@ function App() {
   }
 
 
+  const Logout= async (e)=>{
+    e.preventDefault();
+    try {
+			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/logout", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				credentials: 'include'
+			});
+			const jsonData = await response.json();
+
+			if (jsonData.success) {
+        setToken({ token: 'ERROR' }); 
+        window.location = '/';
+			}
+			else {
+				alert(jsonData.message+"");
+				console.log(jsonData.message);
+			}
+
+		} catch (error) {
+			console.error(error.message);
+      alert("Error connecting to backend");
+		}
+  }
+
+
   return (
     <Router>
       <div id='wrapper'>
@@ -161,7 +187,7 @@ function App() {
               }
             </div>
             <div className="d-flex me-5">
-              <button className=" btn btn-danger ms-1" onClick={e => { setToken({ token: 'ERROR' }); window.location = '/' }}>Logout</button>
+              <button className=" btn btn-danger ms-1" onClick={e => { Logout(e) }}>Logout</button>
             </div>
 
 

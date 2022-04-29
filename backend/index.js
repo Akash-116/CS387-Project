@@ -51,9 +51,13 @@ var server = app.listen(process.env.port, function () {
 app.post('/logout', async (req, res) => {
     try {
         req.session.destroy();
-        return res.sendStatus(200);
+        return res.status(200).send({
+            success : true
+        });
     } catch (e) {
         console.error(e);
-        return res.sendStatus(500);
+        return res.status(500).send({
+            success : false
+        });
     }
 });
