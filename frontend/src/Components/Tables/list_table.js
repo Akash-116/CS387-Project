@@ -20,7 +20,8 @@ const CreateTableElem = ({table}) => {
 			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/tables/edit", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(newTableStatus)
+				body: JSON.stringify(newTableStatus),
+				credentials: 'include'
 			});
 			const jsonData = await response.json();
 			if (jsonData.success) {
@@ -28,7 +29,7 @@ const CreateTableElem = ({table}) => {
 
 			}
 			else {
-				alert("Something Went Wrong");
+				alert(jsonData.message+"");
 				console.log(jsonData.message);
 			}
 			window.location.reload();
@@ -87,7 +88,7 @@ const Tables = () => {
 
 		try {
 			// console.log(process.env.REACT_APP_BACKEND_SERVER)
-			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/tables/all")
+			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/tables/all", {credentials: 'include'})
 			// Here, fetch defualt is GET. So, no further input
 			const jsonData = await response.json();
 			if (jsonData.success) {
@@ -95,7 +96,7 @@ const Tables = () => {
 			}
 			else {
 				// console.log(jsonData.message);
-				alert("Something Went Wrong");
+				alert(jsonData.message+"");
 
 			}
 

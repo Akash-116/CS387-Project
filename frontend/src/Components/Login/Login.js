@@ -33,7 +33,8 @@ async function loginUser(credentials) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(credentials)
+      body: JSON.stringify(credentials),
+      credentials: 'include'
     })
       .then(data => {
         console.log("data TYPE is : ", typeof (data));

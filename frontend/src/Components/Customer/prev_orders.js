@@ -185,7 +185,7 @@ const PrevOrder = ({token}) => {
         // console.log("A");
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/previous_orders/"+user.c_id);
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/previous_orders/1", {credentials: 'include'})
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if (jsonData.success) {
@@ -193,7 +193,7 @@ const PrevOrder = ({token}) => {
                 console.log(ordersList)
             }
             else {
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
                 console.log(jsonData.message);
             }
 

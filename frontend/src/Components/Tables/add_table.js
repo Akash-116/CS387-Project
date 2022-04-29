@@ -19,7 +19,8 @@ const AddTable = ({ tablesList, setTablesList }) => {
 			const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/tables/add", {
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify(newTable)
+				body: JSON.stringify(newTable),
+				credentials: 'include'
 			});
 			const jsonData = await response.json();
 
@@ -28,7 +29,7 @@ const AddTable = ({ tablesList, setTablesList }) => {
 
 			}
 			else {
-				alert("Something Went Wrong");
+				alert(jsonData.message+"");
 				console.log(jsonData.message);
 			}
 			// tablesList.push(newTable);

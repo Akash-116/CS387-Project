@@ -20,7 +20,8 @@ const AddOffer = ({ offersList, setOffersList }) => {
             const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/offers/add",{
                 method : "POST",
                 headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(newOffer)
+                body : JSON.stringify(newOffer),
+                credentials: 'include'
             });
             
             const jsonData = await response.json();
@@ -29,7 +30,7 @@ const AddOffer = ({ offersList, setOffersList }) => {
                 
             }
             else{
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
                 console.log(jsonData.message);
             }
             

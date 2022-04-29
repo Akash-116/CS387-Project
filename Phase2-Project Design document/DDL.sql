@@ -136,7 +136,7 @@ create table employee(
     salary int,
     ph_no bigint,
     addr text,
-    e_type text check (e_type in ('Chef','Waiter','Head Waiter','Delivery','Manager')),
+    e_type text check (e_type in ('Chef','Head Waiter','Delivery','Manager','Billing Manager')),
     join_date date,
     status text check (status in ('Working','Leave','Left')),
     d_status text default 'Free' check (d_status in ('On Delivery','Free')),

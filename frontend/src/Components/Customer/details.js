@@ -26,7 +26,8 @@ const CustomerDetails = ({token,setToken}) => {
             const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/edit",{
                 method : "POST",
                 headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(new_user)
+                body : JSON.stringify(new_user),
+                credentials: 'include'
             });
             
             const jsonData = await response.json();
@@ -44,7 +45,7 @@ const CustomerDetails = ({token,setToken}) => {
                 setToken(new_token);
             }
             else{
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
                 console.log(jsonData.message);
             }
 

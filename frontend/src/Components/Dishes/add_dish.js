@@ -29,7 +29,7 @@ const AddDish = ({ dishesList, setDishesList }) => {
         console.log("FetchItems");
         try {
             
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/items/all");
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/items/all", {credentials: 'include'});
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if(jsonData.success){
@@ -37,7 +37,7 @@ const AddDish = ({ dishesList, setDishesList }) => {
                 console.log(jsonData.data);
             }
             else{
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
                 console.log(jsonData.message);
                 window.location.reload();
             }
@@ -52,11 +52,12 @@ const AddDish = ({ dishesList, setDishesList }) => {
         const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/add_item",{
             method : "POST",
             headers : {"Content-Type" : "application/json"},
-            body : JSON.stringify(dish_item)
+            body : JSON.stringify(dish_item),
+            credentials: 'include'
         });
         const jsonData = await response.json();
         if(!jsonData.success){
-            alert("Something Went Wrong");
+            alert(jsonData.message+"");
             console.log(jsonData.message);
         }
 
@@ -77,7 +78,8 @@ const AddDish = ({ dishesList, setDishesList }) => {
             const response=await fetch(process.env.REACT_APP_BACKEND_SERVER + "/dishes/add",{
                 method : "POST",
                 headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(dish)
+                body : JSON.stringify(dish),
+                credentials: 'include'
             });
             const jsonData=await response.json();
             if(jsonData.success){
@@ -97,7 +99,7 @@ const AddDish = ({ dishesList, setDishesList }) => {
             }
             else{
                 console.log(jsonData.message);
-                alert("Something Went Wrong");  
+                alert(jsonData.message+"");  
             }
             window.location.reload();
 

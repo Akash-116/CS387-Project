@@ -52,6 +52,7 @@ exports.get_customer = function (req, res) {
     var username = req.body.username;
     var pswd = req.body.pswd;
     console.log(username);
+    console.log(req.session);
     pgquery = 'select * from customer where username=$1::text';
 
     client.query(pgquery, [username], function (err, res1) {
@@ -95,7 +96,7 @@ exports.get_customer = function (req, res) {
                         }
                         else {
                             req.session.login = true;
-                            req.session.id = rows[0].c_id;
+                            req.session.pid = rows[0].c_id;
                             req.session.role = 'customer';
 
                             console.log(req.session);
@@ -114,7 +115,7 @@ exports.get_customer = function (req, res) {
 }
 
 exports.get_all_customers = function (req, res) {
-    if (req.session.role != 'manager') {
+    if (req.session.role != 'Manager'){
         res.status(500).send({
             success: false,
             message: 'no access'
@@ -141,78 +142,96 @@ exports.get_all_customers = function (req, res) {
 }
 
 exports.edit_customer = function (req, res) {
-    var user = req.body;
+    var user = req.body;  
+    if((req.session.role != 'customer') || (req.session.pid != user.c_id)){
+        res.status(500).send({
+            success: false,
+            message: 'no access'
+        });
+    }
+    else{
+        pgquery = 'update customer set username=$1, name = $2,ph_no=$3::bigint,addr=$4 where c_id=$5::int';
 
-    pgquery = 'update customer set username=$1, name = $2,ph_no=$3::bigint,addr=$4 where c_id=$5::int';
-    // if((req.session.role != 'customer'))
-
-    client.query(pgquery, [user.username, user.name, user.ph_no, user.addr, user.c_id], function (err, res1) {
-        if (err) {
-            console.log(err.message);
-            res.status(500).send({
-                success: false,
-                message: err.message
-            });
-        }
-        else {
-            res.status(200).send({
-                success: true
-            });
-        }
-    });
-
-
+        client.query(pgquery, [user.username, user.name, user.ph_no, user.addr,user.c_id], function (err, res1) {
+            if (err) {
+                console.log(err.message);
+                res.status(500).send({
+                    success: false,
+                    message: err.message
+                });
+            }
+            else {
+                res.status(200).send({
+                    success: true
+                });
+            }
+        });
+    }
 }
 
 exports.get_customer_previous = function (req, res) {
     var c_id = req.params.c_id;
+    if((req.session.pid != c_id) || ((req.session.role != 'customer') && (req.session.role != 'Manager'))){
+        res.status(500).send({
+            success: false,
+            message: 'no access'
+        });
+    }
+    else{
+        var pgquery = 'select * from orders as A,order_dishes as B,dish as C where A.c_id=$1::int and A.order_id=B.order_id and B.dish_id=C.dish_id';
 
-    var pgquery = 'select * from orders as A,order_dishes as B,dish as C where A.c_id=$1::int and A.order_id=B.order_id and B.dish_id=C.dish_id';
-
-    client.query(pgquery, [c_id], function (err, res1) {
-        if (err) {
-            res.status(500).send({
-                success: false,
-                message: err.message
-            });
-        }
-        else {
-            res.status(200).send({
-                success: true,
-                data: res1.rows
-            });
-        }
-    });
+        client.query(pgquery, [c_id], function (err, res1) {
+            if (err) {
+                res.status(500).send({
+                    success: false,
+                    message: err.message
+                });
+            }
+            else {
+                res.status(200).send({
+                    success: true,
+                    data: res1.rows
+                });
+            }
+        });
+    }
 }
 
 exports.give_dish_rating = function (req, res) {
     var data = req.body;
+    if(req.session.role != 'customer'){
+        res.status(500).send({
+            success: false,
+            message: 'no access'
+        });
+    }
+    else{
+        pgquery = 'update order_dishes set rating=$3::real where order_id=$2::int and dish_id=$1::int';
 
-    pgquery = 'update order_dishes set rating=$3::real where order_id=$2::int and dish_id=$1::int';
+        pgquery1 = 'update dish set rating=(rating*num_ratings+$2::real)/(num_ratings+1) , num_ratings=num_ratings+1 where dish_id=$1::int';
 
-    pgquery1 = 'update dish set rating=(rating*num_ratings+$2::real)/(num_ratings+1) , num_ratings=num_ratings+1 where dish_id=$1::int';
-
-    client.query(pgquery, [data.dish_id, data.order_id, data.rating], function (err, res1) {
-        if (err) {
-            res.status(500).send({
-                success: false,
-                message: err.message
-            });
-        }
-        else {
-            client.query(pgquery1, [data.dish_id, data.rating], function (err1, res2) {
-                if (err1) {
-                    res.status(500).send({
-                        success: false,
-                        message: err1.message
-                    });
-                }
-                else {
-                    res.status(200).send({
-                        success: true
-                    });
-                }
-            });
-        }
-    });
+        client.query(pgquery, [data.dish_id, data.order_id, data.rating], function (err, res1) {
+            if (err) {
+                res.status(500).send({
+                    success: false,
+                    message: err.message
+                });
+            }
+            else {
+                client.query(pgquery1, [data.dish_id, data.rating], function (err1, res2) {
+                    if (err1) {
+                        res.status(500).send({
+                            success: false,
+                            message: err1.message
+                        });
+                    }
+                    else {
+                        res.status(200).send({
+                            success: true
+                        });
+                    }
+                });
+            }
+        });
+    }
 }

@@ -61,7 +61,8 @@ const AddCustomer = () => {
             const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/customer/create",{
                 method : "POST",
                 headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(customer)
+                body : JSON.stringify(customer),
+                credentials: 'include'
             });
             
             const jsonData = await response.json();
@@ -70,7 +71,7 @@ const AddCustomer = () => {
                 alert("Success");
             }
             else{
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
                 console.log(jsonData.message);
             }
             window.location.reload();

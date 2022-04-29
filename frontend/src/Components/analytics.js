@@ -12,14 +12,14 @@ const Analytics = () => {
     const GetBestDish = async ()=>{
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/analytics/get_best_dish")
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/analytics/get_best_dish", {credentials: 'include'})
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if(jsonData.success){
                 setbestdish(jsonData.data);
             }
             else{
-                alert("Something Went Wrong in Best Dish");
+                alert(jsonData.message+" in Best Dish");
                 console.log(jsonData.message);
             }
 
@@ -32,14 +32,14 @@ const Analytics = () => {
     const GetBestDel = async ()=>{
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/analytics/get_best_delivery");
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/analytics/get_best_delivery", {credentials: 'include'});
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if(jsonData.success){
                 setbestdel(jsonData.data);
             }
             else{
-                alert("Something Went Wrong in BestDel");
+                alert(jsonData.message+" in BestDel");
                 console.log(jsonData.message);
             }
 
@@ -52,14 +52,14 @@ const Analytics = () => {
     const GetBestDay = async ()=>{
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/analytics/get_best_day");
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/analytics/get_best_day", {credentials: 'include'});
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if(jsonData.success){
                 setbestday(jsonData.data);
             }
             else{
-                alert("Something Went Wrong in BestDay");
+                alert(jsonData.message+" in BestDay");
                 console.log(jsonData.message);
             }
 
@@ -72,14 +72,14 @@ const Analytics = () => {
     const GetFreqCus = async ()=>{
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/analytics/get_freq_customers");
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/analytics/get_freq_customers", {credentials: 'include'});
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if(jsonData.success){
                 setfreqcus(jsonData.data);
             }
             else{
-                alert("Something Went Wrong in FreqCus");
+                alert(jsonData.message+" in FreqCus");
                 console.log(jsonData.message);
             }
 

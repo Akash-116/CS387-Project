@@ -40,16 +40,16 @@ const AddEmployee = () => {
     const FetchAreas=async ()=>{
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/areas/all");
+            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/areas/all", {credentials: 'include'});
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             if(jsonData.success){
                 setareas(jsonData.data);
             }
             else{
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
                 console.log(jsonData.message);
-                window.location.reload();
+                // window.location.reload();
             }
 
         } catch (error) {
@@ -82,7 +82,8 @@ const AddEmployee = () => {
             const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/employee/create",{
                 method : "POST",
                 headers : {"Content-Type" : "application/json"},
-                body : JSON.stringify(employee)
+                body : JSON.stringify(employee),
+                credentials: 'include'
             });
             
             const jsonData = await response.json();
@@ -91,7 +92,7 @@ const AddEmployee = () => {
                 alert("Success");
             }
             else{
-                alert("Something Went Wrong");
+                alert(jsonData.message+"");
                 console.log(jsonData.message);
             }
             window.location.reload();
@@ -107,6 +108,8 @@ const AddEmployee = () => {
     useEffect(() => {
         FetchAreas();
     }, [])
+
+    
     
 
 

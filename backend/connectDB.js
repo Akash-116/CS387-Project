@@ -40,5 +40,5 @@ const sessobj =
 //         },
 //     });
 
-// exports.sessobj=sessobj;
+exports.sessobj=sessobj;
 exports.client=client;

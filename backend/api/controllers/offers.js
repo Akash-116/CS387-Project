@@ -50,8 +50,14 @@ exports.get_offer=function(req,res){
 
 exports.add_offer=function(req,res){
     var offer=req.body;
-
-    pgquery='insert into offer(name, discount) values($1,$2::int) returning offer_id';
+    if((req.session.role != 'Manager')){
+        res.status(500).send({
+            success: false,
+            message: 'no access'
+        });
+    }
+    else{
+        pgquery='insert into offer(name, discount) values($1,$2::int) returning offer_id';
         client.query(pgquery, [offer.name, offer.discount], function(err, res1) {
             if (err) {
                 console.log(err.message);
@@ -67,23 +73,31 @@ exports.add_offer=function(req,res){
                 });
             }
         });
+    }
 }
 
 exports.add_dishes_offer=function(req,res){
     var offer=req.body;
-
-    pgquery='insert into offer_valid(offer_id, dat, dish_id) values($1::int,$2,$3::int)';
-    client.query(pgquery,[offer.offer_id, offer.dat, offer.dish_id],function(err,res1){
-        if(err){
-            res.status(500).send({
-                success : false,
-                message : err.message
-            });
-        }
-        else{
-            res.status(200).send({
-                success: true
-            });
-        }
-    })
+    if((req.session.role != 'Manager')){
+        res.status(500).send({
+            success: false,
+            message: 'no access'
+        });
+    }
+    else{
+        pgquery='insert into offer_valid(offer_id, dat, dish_id) values($1::int,$2,$3::int)';
+        client.query(pgquery,[offer.offer_id, offer.dat, offer.dish_id],function(err,res1){
+            if(err){
+                res.status(500).send({
+                    success : false,
+                    message : err.message
+                });
+            }
+            else{
+                res.status(200).send({
+                    success: true
+                });
+            }
+        })
+    }
 }
