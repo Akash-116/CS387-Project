@@ -85,6 +85,7 @@ exports.add_order_dish = function (req, res) {
     var dish_id = req.body.dish_id;
     var quantity = req.body.quantity;
     var offer_id = req.body.offer_id;
+    console.log(req.body);
     if ((req.session.role != 'Manager') && (req.session.role != 'Billing Manager') && (req.session.role != 'customer')) {
         res.status(500).send({
             success: false,
@@ -92,9 +93,10 @@ exports.add_order_dish = function (req, res) {
         });
     }
     else {
-        var pgquery = 'insert into order_dishes values($1::int,$2::int,$3::int,$4::int) on conflict on order_dish_unique do update set quantity=order_dishes.quantity+$3::int returning dish_id,order_id';
+        var pgquery = 'insert into order_dishes values($1::int,$2::int,$3::int,$4::int) on conflict on constraint order_dish_unique do update set quantity=order_dishes.quantity+$3::int returning dish_id,order_id';
         client.query(pgquery, [order_id, dish_id, quantity, offer_id], function (err, res1) {
             if (err) {
+                console.log(err);
                 res.status(500).send({
                     success: true,
                     message: err.message
@@ -102,6 +104,7 @@ exports.add_order_dish = function (req, res) {
             }
             else {
                 if (res1.rows.length < 1) {
+                    console.log("Dish Not Added to order");
                     res.status(500).send({
                         success: false,
                         message: "Dish Not Added to Order"
