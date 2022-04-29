@@ -93,8 +93,8 @@ exports.add_order_dish = function (req, res) {
         });
     }
     else {
-        var pgquery = 'insert into order_dishes values($1::int,$2::int,$3::int,$4::int) on conflict on constraint order_dish_unique do update set quantity=order_dishes.quantity+$3::int returning dish_id,order_id';
-        client.query(pgquery, [order_id, dish_id, quantity, offer_id], function (err, res1) {
+        var pgquery = 'insert into order_dishes values($1::int,$2::int,$3::int) on conflict on constraint order_dish_unique do update set quantity=order_dishes.quantity+$3::int returning dish_id,order_id';
+        client.query(pgquery, [order_id, dish_id, quantity], function (err, res1) {
             if (err) {
                 console.log(err);
                 res.status(500).send({

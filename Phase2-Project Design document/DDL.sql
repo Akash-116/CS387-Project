@@ -146,7 +146,7 @@ create table day_to_day_items
 
 
 create table orders
-    (order_id serial, c_id int not null, area_id int, table_id int, dat date not null, received_time time, finished_time time, delivered_time time, delivery_person int, status text check (status in ('Preparing','Out for delivery','Delivered','Served')), order_type text not null check (order_type in ('Online','Dine')), primary key(order_id),
+    (order_id serial, c_id int not null, area_id int, table_id int,  offer_id int, dat date not null, received_time time, finished_time time, delivered_time time, delivery_person int, status text check (status in ('Preparing','Out for delivery','Delivered','Served')), order_type text not null check (order_type in ('Online','Dine')), primary key(order_id),
      foreign key(c_id) references customer on delete
      set null,
      foreign key(area_id) references area on delete
@@ -154,16 +154,17 @@ create table orders
      foreign key(delivery_person) references employee on delete
      set null,
      foreign key(table_id) references table_status on delete
-     set null --  foreign key(dat) references day on delete cascade
+     set null, --  foreign key(dat) references day on delete cascade
+     foreign key(offer_id) references offer on delete set null
  );
 
 
 create table order_dishes
-    (order_id int not null, dish_id int not null, quantity int, offer_id int,rating real, constraint order_dish_unique unique(order_id,dish_id),
+    (order_id int not null, dish_id int not null, quantity int,rating real, constraint order_dish_unique unique(order_id,dish_id),
      foreign key(order_id) references orders on delete cascade,
      foreign key(dish_id) references dish on delete cascade,
-     foreign key(offer_id) references offer on delete
-     set null);
+    --  foreign key(offer_id) references offer on delete set null
+    );
 
 
 create function update_dishes() returns trigger language plpgsql as $$
