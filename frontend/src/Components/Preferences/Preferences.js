@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PaginationComp from '../Pagination';
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
+import ReactStars from "react-rating-stars-component";
+
 
 const UploadAndDisplayImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -35,13 +37,26 @@ const Preferences = () => {
 
   const [val, setVal] = useState(1)
 
+  const [starVal, setStarVal] = useState(0)
+
 
 
   return (
     <div>
       <h5>Preferences - Ths is a dummy component (rough work kinda)</h5>
-      <p>5. Lets try react-bootstrap/Radio</p>
 
+      <p>6. Lets try react-start</p>
+
+      <ReactStars
+        count={5}
+        onChange={setStarVal}
+
+      />
+
+
+
+
+      <p>5. Lets try react-bootstrap/Radio</p>
       <div className='bordered m-5 p-5 shadow'>
         <h2>Val is : {val}</h2>
         <Form>

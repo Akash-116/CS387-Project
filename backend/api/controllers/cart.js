@@ -18,13 +18,14 @@ exports.get_cart = function (req, res) {
                 });
             }
             else {
-                if (res1.rows.length < 1) {
-                    res.status(500).send({
-                        success: false,
-                        message: 'Nothing in the cart'
-                    });
-                }
-                else {
+                // if (res1.rows.length < 1) {
+                //     res.status(500).send({
+                //         success: false,
+                //         message: 'Nothing in the cart'
+                //     });
+                // }
+                // else 
+                {
                     console.log(res1.rows);
                     res.status(200).send({
                         success: true,

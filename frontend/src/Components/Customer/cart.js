@@ -98,7 +98,7 @@ const OffersModal = ({ offer, setOffer }) => {
                             <div>
                                 <h4>offer value : {offer.name}</h4>
                                 <div>
-                                    <div className='m-2 border rounded p-2'>
+                                    <div className='m-2 border rounded-15 shadow p-2'>
 
                                         <Form.Check
                                             type={"radio"}
@@ -110,7 +110,7 @@ const OffersModal = ({ offer, setOffer }) => {
                                         />
                                     </div>
                                     {offersList.map(offer => (
-                                        <div className='m-2 border rounded p-2'>
+                                        <div className='m-2 border mt-3 rounded-15 shadow p-2'>
 
                                             <Form.Check
                                                 type={"radio"}

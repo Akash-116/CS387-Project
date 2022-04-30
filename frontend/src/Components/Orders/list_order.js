@@ -96,10 +96,10 @@ const CreateOrderElem = ({ order }) => {
                         </div>
                         <hr className='align-self-stretch'></hr>
                         <p>Recieved Time : {order.received_time}</p>
-                        {(order.status === "Preparing") &&
+                        {((order.status === "Preparing") || (order.status === "Out for delivery")) &&
                             <p className='text-success'> <b> Status : {order.status} </b></p>
                         }
-                        {!(order.status === "Preparing") &&
+                        {!((order.status === "Preparing") || (order.status === "Out for delivery")) &&
                             <p className='text-blue-dark'> <b> Status : {order.status} </b></p>
                         }
                     </div>

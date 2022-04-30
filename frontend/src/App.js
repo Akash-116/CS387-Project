@@ -364,7 +364,7 @@ function App() {
 
 
         <div class="container-fluid text-center mt-2">
-          <h5 className="text-capitalize">Welcome  {token.data.username} - {token.data.e_type}</h5>
+          <h5 className="text-capitalize">Welcome  {token.data.username} - {(token.data.e_type) ? token.data.e_type : "Customer"}</h5>
 
           {/* <Routes>
             <Route exact path="PV" element={<PageView></PageView>}>

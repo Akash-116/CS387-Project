@@ -12,6 +12,7 @@ const AddTable = ({ tablesList, setTablesList }) => {
 	const onSubmitForm = async (e) => {
 		e.preventDefault();
 		try {
+			if ((!(newTable.location)) || (newTable.location === "")) { alert("Empty Field not Allowed"); throw "Empty Field not Allowed" }
 			// console.log("need to add :", newTable);
 			// console.log("type of tableList :", typeof (tablesList));
 			// console.log("tablesList : ", tablesList);
@@ -29,7 +30,7 @@ const AddTable = ({ tablesList, setTablesList }) => {
 
 			}
 			else {
-				alert(jsonData.message+"");
+				alert(jsonData.message + "");
 				console.log(jsonData.message);
 			}
 			// tablesList.push(newTable);
@@ -62,10 +63,10 @@ const AddTable = ({ tablesList, setTablesList }) => {
 						onChange={e => newTable.location = e.target.value}
 					/></th>
 					<th><button className="btn btn-success">Add</button></th>
-					
+
 				</table>
-				
-				
+
+
 			</form>
 
 

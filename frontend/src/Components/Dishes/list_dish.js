@@ -128,7 +128,7 @@ const EachDish = ({ token, dish, enableOrdering = false, cart = null, setCart = 
         <Fragment>
             <div className='row border  m-3 shadow rounded-15 overflow-hidden '>
                 {/* Acronym */}
-                <div className='col-sm-3 border bg-info fs-1 text-uppercase d-flex justify-content-center
+                <div className='col-sm-3 border bg-blue-grad fs-1 text-uppercase d-flex justify-content-center
                  align-items-center'>{name2acronym(dish.dish_name)}</div>
                 {/* Remaining body */}
                 <div className='col-sm-9 pt-2 pb-2'>

@@ -139,7 +139,10 @@ const Analytics = () => {
     const GetRatedDish = async () => {
         try {
             // console.log(process.env.REACT_APP_BACKEND_SERVER)
-            const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/analytics/most_rated_dishes", { credentials: 'include' })
+            const response = await fetch(
+                process.env.REACT_APP_BACKEND_SERVER + "/analytics/most_rated_dishes",
+                { credentials: 'include' },
+            )
             // Here, fetch defualt is GET. So, no further input
             const jsonData = await response.json();
             console.log("getbestDish : ", jsonData)

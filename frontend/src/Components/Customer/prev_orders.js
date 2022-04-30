@@ -3,6 +3,8 @@ import { Location } from 'react-router-dom';
 
 import testOrders from '../TestData/testOrders';
 import ReactPaginate from "react-paginate";
+import ReactStars from "react-rating-stars-component";
+
 
 
 const PostRating = async (oid, did, rat) => {
@@ -43,63 +45,59 @@ const PostRating = async (oid, did, rat) => {
 }
 
 
-const CreateOrderElem = ({ order }) => {
+const DishInModal = ({ order, dish }) => {
+    // const [starVal, setStarVal] = useState(0)
+    var starVal = 0;
+
+    return (
+        <Fragment>
+            <div className='d-flex align-self-stretch
+ justify-content-between'>
+                <div>
+
+                    <p className='m-0'>{dish.dish_name} x{dish.quantity}</p>
+                </div>
+                {(dish.rating == null) &&
+                    <div className='d-flex'>
+                        {/* <p>StarVal : {starVal}</p> */}
+                        <ReactStars
+                            count={5}
+                            onChange={e => { starVal = e }}
+                            size={35}
+                        // isHalf={true}
+                        />
+                        {/* <input type="number" id="rating" onChange={e => { dish.temp_rating = e.target.value }}></input> */}
+                        <button className='btn btn-primary m-2' type="button" onClick={e => { PostRating(order.order_id, dish.dish_id, starVal) }}>Rate</button>
+
+                    </div>
+                }
+                {(dish.rating != null) &&
+                    <div>
+                        <p>Your Rating :{[...Array(Math.floor(dish.rating))].map(e => <i className='text-warning fa fa-star'></i>)}</p>
+
+                    </div>
+                }
+            </div>
+        </Fragment>
+    );
+}
 
 
-    const setBgColor = (order) => {
-        if (order.status === "Preparing") { return "bg-success" }
-        else { return "bg-primary" }
-    }
-
+const PrevOrderModal = ({ order }) => {
 
     return (
         <Fragment>
 
-            <div className='border p-2 mt-3 pb-0 shadow rounded'>
-                <div className='row'>
-                    {/* Left picture */}
-                    <div className={`col-sm-4  d-flex justify-content-center
-                 align-items-center ` + setBgColor(order)}>
-
-                        {(order.order_type !== "Online") &&
-                            <h1><i className='fa fa-table'></i>  {order.table_id} </h1>
-                        }
-                        {(order.order_type === "Online") &&
-                            <h1><i className='fa fa-globe'></i> </h1>
-                        }
-
-                    </div>
-
-                    {/* Right Elemental */}
-                    <div className='col-sm-8'>
-                        <h3><b>ID </b> : {order.order_id} - {order.order_type} </h3>
-
-                        <h5>Recieved Time : {order.received_time}</h5>
-                        {(order.status === "Preparing") &&
-                            <h5 className='text-success'> <b> Status : {order.status} </b></h5>
-                        }
-                        {!(order.status === "Preparing") &&
-                            <h5> <b> Status : {order.status} </b></h5>
-                        }
-                        <h5>Total Dishes : {(order.dishes).length}</h5>
-
-                        {/* {(order.dishes).map(dish => (
-                            <p className='m-0'>{dish.dish_name} x{dish.quantity}</p>
-                        ))} */}
-                    </div>
-                    {/* <!-- Button to Open the Modal --> */}
-                    <button type="button" class="btn btn-light mt-2 " data-bs-toggle="modal" data-bs-target={"#myModalPrevOrder" + order.order_id}>
-                        Expand
-                    </button>
-                </div>
-
-            </div>
+            {/* <!-- Button to Open the Modal --> */}
+            < button type="button" class="btn btn-light mt-0 " data-bs-toggle="modal" data-bs-target={"#myModalPrevOrder" + order.order_id}>
+                Expand
+            </button >
 
 
             {/* <!-- The Modal --> */}
-            <div class="modal" id={"myModalPrevOrder" + order.order_id}>
-                <div class="modal-dialog">
-                    <div class="modal-content">
+            < div class="  modal" id={"myModalPrevOrder" + order.order_id} >
+                <div class=" modal-dialog">
+                    <div class="  modal-content">
 
                         {/* <!-- Modal Header --> */}
                         <div class="modal-header">
@@ -129,18 +127,14 @@ const CreateOrderElem = ({ order }) => {
                                     <hr></hr>
                                     <h5> Dishes : </h5>
 
+
+
+
                                     {(order.dishes).map(dish => (
-                                        <div className='d-flex justify-content-between'>
-                                            <p className='m-0'>{dish.dish_name} x{dish.quantity}</p>
-                                            {(dish.rating == null) &&
-                                                <div>
-                                                    <input type="number" id="rating" onChange={e => { dish.temp_rating = e.target.value }}></input>
-                                                    <button type="button" onClick={e => { PostRating(order.order_id, dish.dish_id, dish.temp_rating) }}>Post Rating</button>
-                                                </div>
-                                            }
-                                            {(dish.rating != null) &&
-                                                <div><label>Rating : </label>{dish.rating}</div>}
-                                        </div>
+                                        <DishInModal
+                                            order={order}
+                                            dish={dish}
+                                        ></DishInModal>
                                     ))}
 
                                 </div>
@@ -155,6 +149,62 @@ const CreateOrderElem = ({ order }) => {
 
                     </div>
                 </div>
+            </div >
+
+        </Fragment>
+    );
+}
+
+const CreateOrderElem = ({ order }) => {
+
+
+    const setBgColor = (order) => {
+        if ((order.status === "Preparing") || (order.status === "Out for delivery")) { return "bg-green-grad" }
+        else { return "bg-blue-grad" }
+    }
+
+
+    return (
+        <Fragment>
+
+            <div className='border  mt-3 pb-0 shadow rounded'>
+                <div className='container'>
+
+                    <div className='row'>
+                        {/* Left picture */}
+                        <div className={`col-sm-4  d-flex justify-content-center
+                 align-items-center ` + setBgColor(order)}>
+
+                            {(order.order_type !== "Online") &&
+                                <h1><i className='fa fa-table'></i>  {order.table_id} </h1>
+                            }
+                            {(order.order_type === "Online") &&
+                                <h1><i className='fa fa-globe'></i> </h1>
+                            }
+
+                        </div>
+
+                        {/* Right Elemental */}
+                        <div className='col-sm-8'>
+                            <h3><b>ID </b> : {order.order_id} - {order.order_type} </h3>
+
+                            <h5>Recieved Time : {order.received_time}</h5>
+                            {(order.status === "Preparing") &&
+                                <h5 className='text-success'> <b> Status : {order.status} </b></h5>
+                            }
+                            {!(order.status === "Preparing") &&
+                                <h5> <b> Status : {order.status} </b></h5>
+                            }
+                            <h5>Total Dishes : {(order.dishes).length}</h5>
+
+                            {/* {(order.dishes).map(dish => (
+                            <p className='m-0'>{dish.dish_name} x{dish.quantity}</p>
+                        ))} */}
+                        </div>
+                        <PrevOrderModal order={order}></PrevOrderModal>
+                    </div>
+                </div>
+
             </div>
 
         </Fragment>
@@ -292,7 +342,7 @@ const PrevOrder = ({ token }) => {
             {ordersListPage}
 
             {/* So elaborate classes, so that the bootstrap matches this pagination implementation */}
-            <div className='container justify-content-center'>
+            <div className='container d-flex   p-2 justify-content-center'>
 
                 <ReactPaginate
                     previousLabel={"< "}
