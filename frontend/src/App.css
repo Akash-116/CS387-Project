@@ -100,3 +100,13 @@ footer {
   font-weight: 800;
   font-family: 'Times New Roman', Times, serif;
 }
+
+.analytics-table {
+  overflow: hidden;
+}
+
+.analytics-table h4 {
+  padding: 8px;
+  background-color: #282c34;
+  color: white;
+}

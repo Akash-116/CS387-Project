@@ -398,7 +398,7 @@ function App() {
             <Route path="/tables" element={<Tables></Tables>} ></Route>
             <Route path="/delivery_persons" element={<DeliveryPersons></DeliveryPersons>} ></Route>
 
-            <Route path="/orders" element={<ListOrders></ListOrders>} ></Route>
+            <Route path="/orders" element={<ListOrders ></ListOrders>} ></Route>
             <Route path="/dishes" element={<ListDishes token={token}></ListDishes>} ></Route>
             <Route path="/create/order" element={<AddOrder></AddOrder>} ></Route>
             <Route path="/create/dish" element={<AddDish></AddDish>} ></Route>

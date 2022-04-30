@@ -5,7 +5,7 @@ const bestCustTable = (freqcus) => {
 
 
     return (
-        <div className='contianer border rounded-15 shadow m-5'>
+        <div className='contianer border rounded-15 shadow m-5 analytics-table'>
 
             <h4>Most Frequent Customers</h4>
             <table className='table table-hover'>
@@ -25,7 +25,7 @@ const bestCustTable = (freqcus) => {
 }
 const bestDelTable = (bestdel) => {
     return (
-        <div className='contianer border rounded-15 shadow m-5'>
+        <div className='contianer border rounded-15 shadow m-5 analytics-table'>
 
             <h4>Best Delivery People</h4>
             <table className='table table-hover'>
@@ -45,7 +45,7 @@ const bestDelTable = (bestdel) => {
 }
 const bestDishTable = (bestdish) => {
     return (
-        <div className='contianer border rounded-15 shadow m-5'>
+        <div className='contianer border rounded-15 shadow m-5 analytics-table'>
 
             <h4>Most Ordered Dish</h4>
             <table className='table table-hover'>
@@ -66,7 +66,7 @@ const bestDishTable = (bestdish) => {
 
 const bestRatedTable = (bestrate) => {
     return (
-        <div className='contianer border rounded-15 shadow m-5'>
+        <div className='contianer border rounded-15 shadow m-5 analytics-table'>
 
             <h4>Most Rated Dishes</h4>
             <table className='table table-hover'>
@@ -86,7 +86,7 @@ const bestRatedTable = (bestrate) => {
 }
 const bestDayTable = (bestday) => {
     return (
-        <div className='contianer border rounded-15 shadow m-5'>
+        <div className='contianer border rounded-15 shadow m-5 analytics-table'>
 
             <h4>Most Busy Days</h4>
             <table className='table table-hover'>
