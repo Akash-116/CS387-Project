@@ -110,3 +110,27 @@ code {
   /* background-color: #e5ceee; */
 
 }
+
+.text-size-poster {
+  font-size: 6em;
+}
+
+.home-poster {
+  text-transform: uppercase;
+  text-shadow: #9c23cf 0px 0px 5px;
+  font-size: 6em;
+  color: #9c23cf;
+  font-weight: 800;
+  font-family: 'Times New Roman', Times, serif;
+  display: inline-block;
+}
+
+.home-poster-mini {
+  text-transform: lowercase;
+  text-shadow: #9c23cf 0px 0px 5px;
+  font-size: 3em;
+  color: #9c23cf;
+  font-weight: 800;
+  font-family: 'Times New Roman', Times, serif;
+  display: inline-block;
+}

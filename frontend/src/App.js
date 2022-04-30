@@ -35,6 +35,8 @@ import ListEmployees from "./Components/Employee/list_employee";
 import ListItems from "./Components/Items/list_items";
 import EditEmployee from "./Components/Employee/edit_employee";
 import EditItem from "./Components/Items/edit_item";
+import NoneComp from "./Components/noneComp";
+
 // function setToken(userToken) {
 //   sessionStorage.setItem('token', JSON.stringify(userToken));
 // }
@@ -82,6 +84,7 @@ function App() {
     );
     darkmode.showWidget();
     console.log("DARKMODE : ", darkmode.isActivated()) // will return true
+
 
 
   }, []);
@@ -382,7 +385,7 @@ function App() {
             />
           </Routes> */}
           <Routes>
-            <Route path="/" element={<h3>Welcome to YARA</h3>} ></Route>
+            <Route path="/" element={<NoneComp></NoneComp>} ></Route>
             <Route path="/cart" element={<CustomerCart token={token} cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerCart>} ></Route>
             <Route path="/home" element={<CustomerHome token={token} cart={cart} setCart={setCart} offer={cartOffer} setOffer={setCartOffer}></CustomerHome>} ></Route>
             <Route path="/customer/details" element={<CustomerDetails token={token} setToken={setToken}></CustomerDetails>} ></Route>
@@ -396,7 +399,7 @@ function App() {
             <Route path="/delivery_persons" element={<DeliveryPersons></DeliveryPersons>} ></Route>
 
             <Route path="/orders" element={<ListOrders></ListOrders>} ></Route>
-            <Route path="/dishes" element={<ListDishes></ListDishes>} ></Route>
+            <Route path="/dishes" element={<ListDishes token={token}></ListDishes>} ></Route>
             <Route path="/create/order" element={<AddOrder></AddOrder>} ></Route>
             <Route path="/create/dish" element={<AddDish></AddDish>} ></Route>
             <Route path="/create/table" element={<AddTable></AddTable>} ></Route>
