@@ -75,7 +75,7 @@ export default function Login({ setToken, setsgnup }) {
   return (
     <div className="login-wrapper mt-5">
 
-      <h2>YARA</h2>
+      <h2 className='navbar-logo fs-1'>YARA</h2>
       <div className='border rounded-15 mt-5 p-8 shadow'>
 
         <h1>Login</h1>

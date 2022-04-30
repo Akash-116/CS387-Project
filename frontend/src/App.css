@@ -90,3 +90,13 @@ footer {
 .space-for-footer {
   height: 140px;
 }
+
+
+.navbar-logo {
+  text-transform: uppercase;
+  text-shadow: #9c23cf 0px 0px 5px;
+  font-size: x-large;
+  color: #9c23cf;
+  font-weight: 800;
+  font-family: 'Times New Roman', Times, serif;
+}

@@ -126,7 +126,7 @@ function App() {
 
         <nav class=" p-0  navbar navbar-expand-md bg-dark navbar-dark "
         >
-          <Link to="/" className="navbar-brand m-4">YARA</Link>
+          <Link to="/" className="navbar-brand m-4 "><div className="navbar-logo">YARA</div></Link>
 
           <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
