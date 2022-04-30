@@ -143,8 +143,8 @@ const EachDish = ({ token, dish, enableOrdering = false, cart = null, setCart = 
                     <div className='d-flex'>
                         <p> {[...Array(Math.floor(dish.rating))].map(e => <i className='text-warning fa fa-star'></i>)}   </p>
                     </div>
-                    {!(enableOrdering) &&
-                        <div className='d-flex'>
+                    {(!(enableOrdering) && ((token.data.e_type === 'Manager') || (token.data.e_type === 'Chef'))) &&
+                        < div className='d-flex'>
                             <button className='btn btn-danger' onClick={onDelete}>Delete</button>
                         </div>
                     }
@@ -164,7 +164,7 @@ const EachDish = ({ token, dish, enableOrdering = false, cart = null, setCart = 
             </div>
 
 
-        </Fragment>
+        </Fragment >
     );
 }
 

@@ -102,3 +102,11 @@ code {
 .mt-10 {
   margin-top: 15ch;
 }
+
+.bg-violet-flower {
+  background-image: url("/src/Pics/free_vector_graphic_purple_swirls_and_flowers_147504.jpg");
+  background-repeat: repeat;
+  /* background-size: cover; */
+  /* background-color: #e5ceee; */
+
+}

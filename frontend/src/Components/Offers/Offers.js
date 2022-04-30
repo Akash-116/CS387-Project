@@ -36,6 +36,7 @@ const createOfferElem = (offer) => {
                 <p>Discount : {offer.discount}%</p>
             </td>
             <td>
+
                 <button className='btn btn-danger' onClick={onDelete}>Delete</button>
 
             </td>
