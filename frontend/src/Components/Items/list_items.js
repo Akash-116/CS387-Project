@@ -18,7 +18,7 @@ const CreateItemElem = ({ item }) => {
 
                             <h5 className='text-capitalize'>  {item.item_id}. {item.item_name} </h5>
                             <p><b>Cost </b> : {item.cost} </p>
-                            <p><b>Quantity Left </b> : {item.quan_inv}{item.unit} </p>
+                            <p><b>Quantity Left (in {item.unit}) </b> : {(item.quan_inv >= 0) ? item.quan_inv : "Not Enough"} </p>
                         </div>
 
 
