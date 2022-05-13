@@ -27,13 +27,13 @@ const select_dish = (dish) => {
 
 const select_tbl = (table) => {
     return (
-        <option value={JSON.stringify({ table_id: table.table_id, loc: table.loc, status: table.status })}>{table.loc}</option>
+        <option value={table.table_id}>{table.loc}</option>
     )
 }
 
 const select_del = (del) => {
     return (
-        <option value={JSON.stringify({ e_id: del.e_id, name: del.username })}>{del.username}</option>
+        <option value={del.e_id}>{del.username}</option>
     )
 }
 
@@ -238,7 +238,7 @@ const AddOrder = () => {
                 order_type: type,
                 delivery_person: curdel,
                 table_id: curtable,
-                offer_id: curoffer
+                offer_id: curoffer.offer_id
             }
             const response = await fetch(process.env.REACT_APP_BACKEND_SERVER + "/orders/add", {
                 method: "POST",
@@ -381,7 +381,7 @@ const AddOrder = () => {
                             <div class="row mb-3">
                                 <label for="eprimdelarea" class="col-sm-4 col-form-label">Delivery Person : </label>
                                 <div class="col-sm-6">
-                                    <select className='form-select' onChange={e => setCurdel(JSON.parse(e.target.value))}>
+                                    <select className='form-select' onChange={e => setCurdel(e.target.value)}>
                                         <option hidden disabled selected value="none"> -- select an option -- </option>
                                         {(primdels != null && primdels.length > 0) &&
                                             primdels.map(del => (
